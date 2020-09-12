@@ -1,0 +1,30 @@
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 4
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	Concat_annotated_experiments
+	1	Motifs_to_curate_PDF
+	1	Select_motifs_to_curate
+	1	all
+	4
+
+[Thu Sep 10 21:43:38 2020]
+Job 3: ; Concatenating the tables with the annotated experiments and the centrality p-value 
+
+[Thu Sep 10 21:43:38 2020]
+Error in rule Concat_annotated_experiments:
+    jobid: 3
+    output: /Users/ofornes/GitHub/JASPAR-Motif-Discovery/motif_discovery_pipeline/GRECO-BIT/curation/Annotated_experiments_cat.tab
+    shell:
+        
+        ls /Users/ofornes/GitHub/JASPAR-Motif-Discovery/motif_discovery_pipeline/GRECO-BIT/output/*/central_enrichment/selected_motif/*.501bp.fa.sites.centrimo.best.TF_associated | xargs cat > /Users/ofornes/GitHub/JASPAR-Motif-Discovery/motif_discovery_pipeline/GRECO-BIT/curation/Annotated_experiments_cat.tab
+        
+        (exited with non-zero exit code)
+
+Removing output files of failed job Concat_annotated_experiments since they might be corrupted:
+/Users/ofornes/GitHub/JASPAR-Motif-Discovery/motif_discovery_pipeline/GRECO-BIT/curation/Annotated_experiments_cat.tab
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /Users/ofornes/GitHub/JASPAR-Motif-Discovery/GRECO-BIT/pipeline/.snakemake/log/2020-09-10T214338.375380.snakemake.log

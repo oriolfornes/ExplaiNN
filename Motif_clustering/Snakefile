@@ -1,0 +1,114 @@
+################################################################
+## Import functions 
+import os
+import itertools
+from snakemake.utils import R
+
+################################################################
+## Environment variables
+RSAT = os.environ['RSAT']
+
+################################################################
+## Define data + output folders
+MAIN_DIR = ""
+DATA_DIR = os.path.join(MAIN_DIR, "data")
+MOTIFS_DIR = os.path.join(DATA_DIR, "motifs")
+TABLES_DIR = os.path.join(DATA_DIR, "annotation_tables")
+RESULTS_DIR = os.path.join(MAIN_DIR, "results")
+
+################################################################
+## Parameters Variables (used in different rules)
+
+## Taxa
+TAXA = "vertebrates insects plants nematodes fungi".split()
+#TAXA = "insects nematodes fungi".split()
+#TAXA = "nematodes".split()
+
+
+################################################################
+## One target to rule them all
+
+PARSE_MOTIF_IDS = expand(os.path.join(MOTIFS_DIR, "JASPAR2020_CORE_{taxon}.tf"), taxon = TAXA)
+CLUSTERING_INTERACTIVE = expand(os.path.join(RESULTS_DIR, "JASPAR_2020_matrix_clustering", "{taxon}", "interactive_trees", "JASPAR_2020_matrix_clustering_{taxon}_SUMMARY.html"), taxon = TAXA)
+#CONVERT_JASPAR_MATRICES = expand(os.path.join(MOTIFS_DIR, "JASPAR2018_CORE_{taxon}.tf"), taxon = TAXA)
+PARSE_ANNOTATION_TABLES = expand( os.path.join(TABLES_DIR, "jaspar2020_{taxon}_annotations_with_colours.tsv"), taxon = TAXA)
+HTML_TF_CLASS_COLOUR = expand(os.path.join(TABLES_DIR, "jaspar2020_{taxon}_TF_class_colours.html"), taxon = TAXA)
+CLUSTERING_RADIAL = expand(os.path.join(RESULTS_DIR, "JASPAR_2020_matrix_clustering", "{taxon}", "radial_trees", "JASPAR_2020_matrix_clustering_{taxon}_radial_tree.html"), taxon = TAXA)
+
+
+rule all:
+    input: PARSE_MOTIF_IDS, \
+	   PARSE_ANNOTATION_TABLES, \
+           HTML_TF_CLASS_COLOUR, \
+           CLUSTERING_INTERACTIVE, \
+	   CLUSTERING_RADIAL
+
+           
+rule parse_motif_IDs:
+	"""
+	"""
+	input:
+            os.path.join(MOTIFS_DIR, "JASPAR2020_CORE_{taxon}_non-redundant_pfms_transfac.txt")
+	output:
+            os.path.join(MOTIFS_DIR, "JASPAR2020_CORE_{taxon}.tf")
+	message:
+            "Parsing JASPAR 2018 {wildcards.taxon} motif IDs"
+	shell:
+            """
+            perl -lne '$_ =~ s/\(/_/gi; s/\)/_/gi; s/\./_/gi; print $_;' {input} > {output}
+            """
+
+
+rule CLUSTER_MATRICES_HTML_REPORT:
+    """  
+    """
+    input:
+        os.path.join(MOTIFS_DIR, "JASPAR2020_CORE_{taxon}.tf")
+    output:
+        os.path.join(RESULTS_DIR, "JASPAR_2020_matrix_clustering", "{taxon}", "interactive_trees", "JASPAR_2020_matrix_clustering_{taxon}_SUMMARY.html")
+    message:
+        "Clustering JASPAR 2020 {wildcards.taxon} - HTML report"
+    params: v = "2", \
+	    prefix = os.path.join(RESULTS_DIR, "JASPAR_2020_matrix_clustering", "{taxon}", "interactive_trees", "JASPAR_2020_matrix_clustering_{taxon}")
+    shell:
+        """
+        matrix-clustering -v {params.v} -matrix JASPAR_2020_{wildcards.taxon} {input} tf -hclust_method average -calc sum -title "JASPAR 2020 {wildcards.taxon}" -metric_build_tree Ncor -lth w 5 -lth cor 0.6 -lth Ncor 0.4 -label_in_tree name -return json,heatmap -quick -o {params.prefix}
+        """
+
+
+rule assign_TF_class_colours:
+	"""
+	"""
+	input:
+            os.path.join(TABLES_DIR, "jaspar2020_{taxon}_annotations.tsv")
+	output:
+            annotation = os.path.join(TABLES_DIR, "jaspar2020_{taxon}_annotations_with_colours.tsv"), \
+            html_table = os.path.join(TABLES_DIR, "jaspar2020_{taxon}_TF_class_colours.html")
+	message:
+            "Assigning TF class <-> colours for JASPAR 2020 {wildcards.taxon}"
+	shell:
+            """
+            Rscript bin/TF_Family_color_assignation.R -i {input} -o {output.annotation} -c {output.html_table}
+            """
+
+
+rule CLUSTER_MATRICES_RADIAL:
+    """  
+    """
+    input:
+        matrix = os.path.join(MOTIFS_DIR, "JASPAR2020_CORE_{taxon}.tf"),\
+	link_table = os.path.join(TABLES_DIR, "jaspar2020_{taxon}_annotations_with_colours.tsv")
+    output:
+        os.path.join(RESULTS_DIR, "JASPAR_2020_matrix_clustering", "{taxon}", "radial_trees", "JASPAR_2020_matrix_clustering_{taxon}_radial_tree.html")
+    message:
+        " Clustering JASPAR 2020 {wildcards.taxon} - HTML radial tree"
+    params:
+        v = "2", \
+	prefix = os.path.join(RESULTS_DIR, "JASPAR_2020_matrix_clustering", "{taxon}",  "radial_trees", "JASPAR_2020_matrix_clustering_{taxon}")
+    shell:
+        """
+        matrix-clustering -v {params.v} -matrix JASPAR_2020_{wildcards.taxon} {input.matrix} tf -hclust_method average -calc sum -title "JASPAR 2020 {wildcards.taxon}" -metric_build_tree Ncor -lth w 5 -lth cor 0.6 -lth Ncor 0.4 -label_in_tree name -return json -quick -radial_tree_only -o {params.prefix} -ID_link_color_table {input.link_table}
+        """
+
+
+

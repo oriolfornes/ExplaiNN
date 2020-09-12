@@ -1,0 +1,72 @@
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 4
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	217	Calculate_centrimo_pvalue
+	1	Concat_annotated_experiments
+	217	Generate_matrix_logo
+	217	JASPAR_PSSM_to_PWM
+	1	Motifs_to_curate_PDF
+	2	RSAT_PSSM_to_JASPAR_format
+	217	Scan_JASPAR_PWM
+	1	Select_motifs_to_curate
+	1	all
+	48	annotate_best_centrimo_experiment
+	48	best_centrimo_experiment_logo
+	48	choose_best_centrimo_experiment
+	217	convert_RSAT_matrix_sites_to_BED
+	217	find_RSAT_matrix_sites
+	217	generate_centrimo_plots
+	217	get_RSAT_matrix_sites_fasta
+	1886
+
+[Fri Sep 11 09:52:39 2020]
+Job 331: ; Converting RSAT motifs (tf format) to JASPAR format - TF : ZNF582.Hughes_SI_327_1in10_CGATGT_L004+L005.PEAKS990093 
+
+
+[Fri Sep 11 09:52:39 2020]
+Job 335: ; Converting RSAT motifs (tf format) to JASPAR format - TF : ZNF708.Hughes_SI0419_ZNF708_GCCAAT_L001+L002.PEAKS990060 
+
+
+[Fri Sep 11 09:52:39 2020]
+Job 1105: ; Generating PWM from JASPAR matrices - TF : ZNF384.Hughes_SI0524_ZNF384_ATCACG_L007+L008.PEAKS990087 
+
+
+[Fri Sep 11 09:52:39 2020]
+Job 1054: ; Generating PWM from JASPAR matrices - TF : ZNF250.Hughes_SI0321_ZNF250_GTTTCG_L005+L006.PEAKS990064 
+
+[Fri Sep 11 09:52:39 2020]
+[Fri Sep 11 09:52:39 2020]
+Error in rule JASPAR_PSSM_to_PWM:
+Error in rule JASPAR_PSSM_to_PWM:
+    jobid: 1105
+    jobid: 1054
+    output: /Users/ofornes/GitHub/JASPAR-Motif-Discovery/GRECO-BIT/output/ZNF384.Hughes_SI0524_ZNF384_ATCACG_L007+L008.PEAKS990087/motifs/jaspar/pwm/ZNF384.Hughes_SI0524_ZNF384_ATCACG_L007+L008.PEAKS990087_peak-motifs_m5dyads_m1.jaspar.pssm
+    output: /Users/ofornes/GitHub/JASPAR-Motif-Discovery/GRECO-BIT/output/ZNF250.Hughes_SI0321_ZNF250_GTTTCG_L005+L006.PEAKS990064/motifs/jaspar/pwm/ZNF250.Hughes_SI0321_ZNF250_GTTTCG_L005+L006.PEAKS990064_peak-motifs_m6dyads_m2.jaspar.pssm
+    shell:
+        
+        perl /Users/ofornes/GitHub/JASPAR-Motif-Discovery/bin/PCM_to_PWM.pl         -f /Users/ofornes/GitHub/JASPAR-Motif-Discovery/GRECO-BIT/output/ZNF384.Hughes_SI0524_ZNF384_ATCACG_L007+L008.PEAKS990087/motifs/jaspar/pfm/ZNF384.Hughes_SI0524_ZNF384_ATCACG_L007+L008.PEAKS990087_peak-motifs_m5dyads_m1.jaspar > /Users/ofornes/GitHub/JASPAR-Motif-Discovery/GRECO-BIT/output/ZNF384.Hughes_SI0524_ZNF384_ATCACG_L007+L008.PEAKS990087/motifs/jaspar/pwm/ZNF384.Hughes_SI0524_ZNF384_ATCACG_L007+L008.PEAKS990087_peak-motifs_m5dyads_m1.jaspar.pssm
+        
+        (exited with non-zero exit code)
+    shell:
+        
+        perl /Users/ofornes/GitHub/JASPAR-Motif-Discovery/bin/PCM_to_PWM.pl         -f /Users/ofornes/GitHub/JASPAR-Motif-Discovery/GRECO-BIT/output/ZNF250.Hughes_SI0321_ZNF250_GTTTCG_L005+L006.PEAKS990064/motifs/jaspar/pfm/ZNF250.Hughes_SI0321_ZNF250_GTTTCG_L005+L006.PEAKS990064_peak-motifs_m6dyads_m2.jaspar > /Users/ofornes/GitHub/JASPAR-Motif-Discovery/GRECO-BIT/output/ZNF250.Hughes_SI0321_ZNF250_GTTTCG_L005+L006.PEAKS990064/motifs/jaspar/pwm/ZNF250.Hughes_SI0321_ZNF250_GTTTCG_L005+L006.PEAKS990064_peak-motifs_m6dyads_m2.jaspar.pssm
+        
+        (exited with non-zero exit code)
+
+
+Removing output files of failed job JASPAR_PSSM_to_PWM since they might be corrupted:
+/Users/ofornes/GitHub/JASPAR-Motif-Discovery/GRECO-BIT/output/ZNF384.Hughes_SI0524_ZNF384_ATCACG_L007+L008.PEAKS990087/motifs/jaspar/pwm/ZNF384.Hughes_SI0524_ZNF384_ATCACG_L007+L008.PEAKS990087_peak-motifs_m5dyads_m1.jaspar.pssm
+Removing output files of failed job JASPAR_PSSM_to_PWM since they might be corrupted:
+/Users/ofornes/GitHub/JASPAR-Motif-Discovery/GRECO-BIT/output/ZNF250.Hughes_SI0321_ZNF250_GTTTCG_L005+L006.PEAKS990064/motifs/jaspar/pwm/ZNF250.Hughes_SI0321_ZNF250_GTTTCG_L005+L006.PEAKS990064_peak-motifs_m6dyads_m2.jaspar.pssm
+[Fri Sep 11 09:52:39 2020]
+Finished job 331.
+1 of 1886 steps (0.05%) done
+[Fri Sep 11 09:52:39 2020]
+Finished job 335.
+2 of 1886 steps (0.11%) done
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /Users/ofornes/GitHub/JASPAR-Motif-Discovery/GRECO-BIT/pipeline/.snakemake/log/2020-09-11T095236.237277.snakemake.log

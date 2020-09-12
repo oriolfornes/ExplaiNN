@@ -6,11 +6,11 @@ author: Oriol_Fornes
 ###############################
 ## The Snakefile will launch a motif analysis + calculate centrality for each
 ## discovered motifs for every set of peaks in Narrowpeak format found in the
-## "data_folder".
+## "data".
 ##
 ## Example:
 ##
-## cd data_folder
+## cd data
 ##
 ## ...
 ## ├── TIGD3.Plate_2_H4_S128.PEAKS990017
@@ -28,9 +28,9 @@ author: Oriol_Fornes
 ## Bin ##
 ## === ##
 bin : /Users/ofornes/GitHub/JASPAR-Motif-Discovery/bin
-python : /opt/anaconda3/envs/rsat/bin/python
-RSAT : /opt/anaconda3/envs/rsat/share/rsat
-TFBS : /opt/anaconda3/envs/rsat/share/tfbs
+python : /home_local/ofornes/Miniconda3/envs/rsat/bin/python
+RSAT : /home_local/ofornes/Miniconda3/envs/rsat/share/rsat
+TFBS : /home_local/ofornes/Miniconda3/envs/tfbs/bin
 
 ## ============================================= ##
 ## Motif discovery (RSAT peak-motifs) parameters ##
@@ -45,9 +45,9 @@ central_pvalue : -200
 ## ============================================= ##
 ## GRECO-BIT: folders and required input files   ##
 ## ============================================= ##
-genome_fasta : /Users/ofornes/Work/Genomes/hg38/hg38.fa
-genome_size : /Users/ofornes/Work/Genomes/hg38/hg38.chrom.sizes
-motif_databases : /Users/ofornes/Work/RSAT/motif_databases
-data_folder : /Users/ofornes/GitHub/JASPAR-Motif-Discovery/GRECO-BIT/data_folder
-out_dir : /Users/ofornes/GitHub/JASPAR-Motif-Discovery/GRECO-BIT/output
-curation_dir : /Users/ofornes/GitHub/JASPAR-Motif-Discovery/GRECO-BIT/curation
+genome_fasta : /home_local/ofornes/JASPAR-motif-discovery/databases/genomes/hg38.fa
+genome_size : /home_local/ofornes/JASPAR-motif-discovery/databases/genomes/hg38.chrom.sizes
+motif_databases : /home_local/ofornes/JASPAR-motif-discovery/databases/motifs
+data_dir : /home_local/ofornes/JASPAR-motif-discovery/GRECO-BIT/data
+out_dir : /home_local/ofornes/JASPAR-motif-discovery/GRECO-BIT/output
+curation_dir : /home_local/ofornes/JASPAR-motif-discovery/GRECO-BIT/curation

@@ -13,7 +13,7 @@ from snakemake.utils import R
 ##########################
 
 ## Transcription Factor names
-(FOLDERS, ENCODE_TFs) = glob_wildcards(os.path.join(config["data_folder"], "{Folders}", "{TF}.chipseq.train.interval"))
+(FOLDERS, ENCODE_TFs) = glob_wildcards(os.path.join(config["data_dir"], "{Folders}", "{TF}.chipseq.train.interval"))
 
 ## TF names with number of discovered motifs
 ## Use this to avoid the use of dynamic files
@@ -113,7 +113,7 @@ rule extract_peak_summits:
     In the awk code, the column 10 corresponds to the shift where the peak summit is located, relative to the peak start.
     """
     input:
-        os.path.join(config["data_folder"], "{TF}", "{TF}.chipseq.train.interval")
+        os.path.join(config["data_dir"], "{TF}", "{TF}.chipseq.train.interval")
     output:
         os.path.join(config["out_dir"], "{TF}", "peak_summits", "{TF}_peak_summits.bed")
     message:

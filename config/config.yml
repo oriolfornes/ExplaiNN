@@ -1,0 +1,16 @@
+author: Oriol_Fornes
+
+# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# Binaries
+# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+bin_dir : ./bin/
+rsat_dir : /home_local/ofornes/rsat/share/rsat/
+
+# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# GRECO-BIT: folders and required input files
+# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+data_dir : ../resources/GRECO-BIT/data/
+genome : hg38
+genomes_dir : ../resources/databases/genomes/
+motifs_dir : ../resources/databases/motifs/
+results_dir : ../results/

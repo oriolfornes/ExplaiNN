@@ -83,19 +83,19 @@ PEAKS_FASTA = expand(
     length=peak_lengths
 )
 
-# Discovered motifs (RSAT peak-motifs)
-MOTIFS_RSAT_TF = expand(
-    os.path.join(
-        config["base_dir"], 
-        config["results_dir"],
-        "{TF}",
-        "peak-motifs",
-        "results",
-        "discovered_motifs",
-        "{TF}_motifs_discovered.tf"
-    ),
-    TF=data_TFs
-)
+# # Discovered motifs (RSAT peak-motifs)
+# MOTIFS_RSAT_TF = expand(
+#     os.path.join(
+#         config["base_dir"], 
+#         config["results_dir"],
+#         "{TF}",
+#         "peak-motifs",
+#         "results",
+#         "discovered_motifs",
+#         "{TF}_motifs_discovered.tf"
+#     ),
+#     TF=data_TFs
+# )
 
 # Motif formatting
 MOTIFS_RSAT_JASPAR = expand(
@@ -111,51 +111,75 @@ MOTIFS_RSAT_JASPAR = expand(
     TF=data_TFs
 )
 
-# Matrix sites
-MOTIF_RSAT_SITES = expand(
+# PWMs
+JASPAR_PWM = expand(
     os.path.join(
-        config["base_dir"], 
+        config["base_dir"],
         config["results_dir"],
         "{TF}",
-        "matrix_sites",
-        "{TF}_peak-motifs_m{n}.tf.sites"
-    ),
-    zip,
-    TF=TFs,
-    n=NB
-)
-MOTIF_RSAT_SITES_BED = expand(
-    os.path.join(
-        config["base_dir"], 
-        config["results_dir"],
-        "{TF}",
-        "matrix_sites",
-        "{TF}_peak-motifs_m{n}.tf.sites.bed"
-    ),
-    zip,
-    TF=TFs,
-    n=NB
-)
-MOTIF_RSAT_SITES_FASTA = expand(
-    os.path.join(
-        config["base_dir"], 
-        config["results_dir"],
-        "{TF}",
-        "matrix_sites",
-        "{TF}_peak-motifs_m{n}.tf.sites.fasta"
+        "motifs",
+        "jaspar",
+        "pwm",
+        "{TF}_peak-motifs_m{n}.jaspar.pssm"
     ),
     zip,
     TF=TFs,
     n=NB
 )
 
-# # PWMs
-# PWM_JASPAR = expand(os.path.join(config["results_dir"], "{TF}", "motifs",
-#     "jaspar", "pwm", "{TF}_peak-motifs_m{n}.jaspar.pssm"), zip, TF=TFs, n=NB)
+# Logos
+JASPAR_LOGOS = expand(
+    os.path.join(
+        config["base_dir"],
+        config["results_dir"],
+        "{TF}",
+        "motifs",
+        "jaspar",
+        "logos",
+        "{TF}_peak-motifs_m{n}_logo.png"
+    ),
+    zip,
+    TF=TFs,
+    n=NB
+)
 
-# # Logos
-# JASPAR_LOGOS = expand(os.path.join(config["results_dir"], "{TF}", "motifs",
-#     "jaspar", "logos", "{TF}_peak-motifs_m{n}_logo.png"), zip, TF=TFs, n=NB)
+# # Matrix sites
+# MOTIF_RSAT_SITES = expand(
+#     os.path.join(
+#         config["base_dir"], 
+#         config["results_dir"],
+#         "{TF}",
+#         "matrix_sites",
+#         "{TF}_peak-motifs_m{n}.tf.sites"
+#     ),
+#     zip,
+#     TF=TFs,
+#     n=NB
+# )
+# MOTIF_RSAT_SITES_BED = expand(
+#     os.path.join(
+#         config["base_dir"], 
+#         config["results_dir"],
+#         "{TF}",
+#         "matrix_sites",
+#         "{TF}_peak-motifs_m{n}.tf.sites.bed"
+#     ),
+#     zip,
+#     TF=TFs,
+#     n=NB
+# )
+# MOTIF_RSAT_SITES_FASTA = expand(
+#     os.path.join(
+#         config["base_dir"], 
+#         config["results_dir"],
+#         "{TF}",
+#         "matrix_sites",
+#         "{TF}_peak-motifs_m{n}.tf.sites.fasta"
+#     ),
+#     zip,
+#     TF=TFs,
+#     n=NB
+# )
 
 # # PWM scanning
 # PWM_SCAN = expand(os.path.join(config["results_dir"], "{TF}", "scan", "501bp",
@@ -191,13 +215,13 @@ rule all:
     input:
         EXTENDED_PEAKS_BED,
         PEAKS_FASTA,
-        MOTIFS_RSAT_TF,
+        # MOTIFS_RSAT_TF,
         MOTIFS_RSAT_JASPAR,
-        MOTIF_RSAT_SITES,
-        MOTIF_RSAT_SITES_BED,
-        MOTIF_RSAT_SITES_FASTA,
-        # PWM_JASPAR,
-        # JASPAR_LOGOS,
+        # MOTIF_RSAT_SITES,
+        # MOTIF_RSAT_SITES_BED,
+        # MOTIF_RSAT_SITES_FASTA,
+        JASPAR_PWM,
+        JASPAR_LOGOS,
         # PWM_SCAN,
         # CENTRIMO_PVAL,
         # CENTRIMO_PLOT,
@@ -206,10 +230,6 @@ rule all:
         # MOST_ENRICHED_MOTIF_ASSOC_LOGO,
         # MOTIFS_TO_CURATE,
         # MOTIFS_TO_CURATE_PDF
-
-# ++++++++++++++++++++ #
-# RSAT analysis        #
-# ++++++++++++++++++++ #
 
 rule extend_peak_summits:
     """
@@ -283,82 +303,86 @@ rule get_fasta_sequences:
         {params.prog} getfasta -fi {params.fi} -bed {input} -fo {output}
         """
 
-rule RSAT_peak_motifs:
-    """
-    Run RSAT peak-motifs (motif discovery with different algorithms) on each
-    set of peaks.
+# ++++++++++++++++++++ #
+# RSAT analysis        #
+# ++++++++++++++++++++ #
 
-    The set of discovered motifs is stored in a single file in TRANSFAC format.
-    """
-    input:
-        os.path.join(
-            config["base_dir"],
-            config["results_dir"],
-            "{TF}",
-            "fasta",
-            "{TF}.101bp.fa"
-        )
-    message:
-        "; Run RSAT peak-motifs - TF : {wildcards.TF}"
-    output:
-        os.path.join(
-            config["base_dir"],
-            config["results_dir"],
-            "{TF}",
-            "peak-motifs",
-            "results",
-            "discovered_motifs",
-            "{TF}_motifs_discovered.tf"
-        )
-    params:
-        prog = "rsat peak-motifs",
-        disco = "oligos,dyads,positions,local_words",
-        nmotifs = "5",
-        minol = "6",
-        maxol = "7",
-        ci = "25",
-        jaspar2020 = os.path.join(
-            config["base_dir"],
-            config["motifs_dir"],
-            "JASPAR2020_CORE_vertebrates_non-redundant_pfms.tf"
-        ),
-        task = ",".join([
-            "purge", "seqlen", "composition", "disco", "merge_motifs",
-            "split_motifs", "motifs_vs_motifs", "timelog", "archive",
-            "synthesis", "small_summary", "motifs_vs_db", "scan"
-        ]),
-        prefix = "{TF}",
-        outdir = os.path.join(
-            config["base_dir"],
-            config["results_dir"],
-            "{TF}",
-            "peak-motifs"
-        )
-    priority:
-        98
-    shell:
-        """
-        {params.prog} -v 2 \
-        -r_plot \
-        -title {wildcards.TF} \
-        -i {input} \
-        -markov auto \
-        -disco {params.disco} \
-        -nmotifs {params.nmotifs} \
-        -minol {params.minol} \
-        -maxol {params.maxol} \
-        -no_merge_lengths \
-        -ci {params.ci} \
-        -noov \
-        -2str \
-        -origin center \
-        -motif_db jaspar_core_nonredundant_vertebrates tf {params.jaspar2020} \
-        -scan_markov 1 \
-        -task {params.task} \
-        -prefix {params.prefix} \
-        -img_format png \
-        -outdir {params.outdir}
-        """
+# rule RSAT_peak_motifs:
+#     """
+#     Run RSAT peak-motifs (motif discovery with different algorithms) on each
+#     set of peaks.
+
+#     The set of discovered motifs is stored in a single file in TRANSFAC format.
+#     """
+#     input:
+#         os.path.join(
+#             config["base_dir"],
+#             config["results_dir"],
+#             "{TF}",
+#             "fasta",
+#             "{TF}.101bp.fa"
+#         )
+#     message:
+#         "; Run RSAT peak-motifs - TF : {wildcards.TF}"
+#     output:
+#         os.path.join(
+#             config["base_dir"],
+#             config["results_dir"],
+#             "{TF}",
+#             "peak-motifs",
+#             "results",
+#             "discovered_motifs",
+#             "{TF}_motifs_discovered.tf"
+#         )
+#     params:
+#         prog = "rsat peak-motifs",
+#         disco = "oligos,dyads,positions,local_words",
+#         nmotifs = "5",
+#         minol = "6",
+#         maxol = "7",
+#         ci = "25",
+#         jaspar2020 = os.path.join(
+#             config["base_dir"],
+#             config["motifs_dir"],
+#             "JASPAR2020_CORE_vertebrates_non-redundant_pfms.tf"
+#         ),
+#         task = ",".join([
+#             "purge", "seqlen", "composition", "disco", "merge_motifs",
+#             "split_motifs", "motifs_vs_motifs", "timelog", "archive",
+#             "synthesis", "small_summary", "motifs_vs_db", "scan"
+#         ]),
+#         prefix = "{TF}",
+#         outdir = os.path.join(
+#             config["base_dir"],
+#             config["results_dir"],
+#             "{TF}",
+#             "peak-motifs"
+#         )
+#     priority:
+#         98
+#     shell:
+#         """
+#         {params.prog} -v 2 \
+#         -r_plot \
+#         -title {wildcards.TF} \
+#         -i {input} \
+#         -markov auto \
+#         -disco {params.disco} \
+#         -nmotifs {params.nmotifs} \
+#         -minol {params.minol} \
+#         -maxol {params.maxol} \
+#         -no_merge_lengths \
+#         -ci {params.ci} \
+#         -noov \
+#         -2str \
+#         -origin center \
+#         -motif_db jaspar_core_nonredundant_vertebrates tf {params.jaspar2020} \
+#         -scan_markov 1 \
+#         -task {params.task} \
+#         -prefix {params.prefix} \
+#         -img_format png \
+#         -outdir {params.outdir}
+#         """
 
 ##############################
 ## Matrix format conversion ##
@@ -426,14 +450,14 @@ rule RSAT_PSSM_to_JASPAR_format:
         -o {params.o}
         """
 
-# ## NOTE 2: The 'motif_tab' input file name is used to chain the rule
-# ## 'RSAT_PSSM_to_JASPAR_format' with 'JASPAR_PSSM_to_PWM'.
-# ##
-# ## NOTE 3: Use the zip parameter to have a correct correspondency between the
-# ## experiments (TF) and the number of the discovered motif (the number may vary
-# ## depending the experiment), if zip is not used, snakemake will try to create
-# ## all the combinations between TFs and number of motifs, since not all the TF
-# ## produce the same number of motifs, the workflow will crash.
+# # ## NOTE 2: The 'motif_tab' input file name is used to chain the rule
+# # ## 'RSAT_PSSM_to_JASPAR_format' with 'JASPAR_PSSM_to_PWM'.
+# # ##
+# # ## NOTE 3: Use the zip parameter to have a correct correspondency between the
+# # ## experiments (TF) and the number of the discovered motif (the number may vary
+# # ## depending the experiment), if zip is not used, snakemake will try to create
+# # ## all the combinations between TFs and number of motifs, since not all the TF
+# # ## produce the same number of motifs, the workflow will crash.
 rule JASPAR_PSSM_to_PWM:
     """
     Convert the JASPAR PSSMs in PWMs.
@@ -441,50 +465,91 @@ rule JASPAR_PSSM_to_PWM:
     This rule is executed for each discovered motif.
     """
     input:
-        motif_tab = os.path.join(config["out_dir"], "{TF}", "motifs", "jaspar", "pfm", "{TF}_matrix_list.tab"), \
-        motif = os.path.join(config["out_dir"], "{TF}", "motifs", "jaspar", "pfm", "{TF}_peak-motifs_m{n}.jaspar")
+        os.path.join(
+            config["base_dir"],
+            config["results_dir"],
+            "{TF}",
+            "motifs",
+            "jaspar",
+            "pfm",
+            "{TF}_peak-motifs_m{n}.jaspar"
+        )
     message:
-        "; Generating PWM from JASPAR matrices - TF : {wildcards.TF} "
+        "; Generating PWMs from JASPAR matrices - TF : {wildcards.TF}"
     output:
-        os.path.join(config["out_dir"], "{TF}", "motifs", "jaspar", "pwm", "{TF}_peak-motifs_m{n}.jaspar.pssm")
+        os.path.join(
+            config["base_dir"],
+            config["results_dir"],
+            "{TF}",
+            "motifs",
+            "jaspar",
+            "pwm",
+            "{TF}_peak-motifs_m{n}.jaspar.pssm"
+        )
     params:
-        scripts_bin = config["bin"]
+        prog = "%s" % os.path.join(
+            config["base_dir"],
+            config["scripts_dir"],
+            "PCM_to_PWM.pl"
+        )
+    priority:
+        96
+    shell:
+        """
+        perl {params.prog} -f {input} > {output}
+        """
+
+rule generate_matrix_logo:
+    """
+    Generate motif logos using RSAT convert-matrix
+
+    This rule is executed for each discovered motif.
+    """
+    input:
+        os.path.join(
+            config["base_dir"],
+            config["results_dir"],
+            "{TF}",
+            "motifs",
+            "jaspar",
+            "pfm",
+            "{TF}_peak-motifs_m{n}.jaspar"
+        )
+    output:
+        os.path.join(
+            config["base_dir"],
+            config["results_dir"],
+            "{TF}",
+            "motifs",
+            "jaspar",
+            "logos",
+            "{TF}_peak-motifs_m{n}_logo.png"
+        )
+    message:
+        "; Generating logos from JASPAR matrices - TF : {wildcards.TF} "
+    params:
+        prog = "rsat convert-matrix",
+        logo_dir = os.path.join(
+            config["base_dir"],
+            config["results_dir"],
+            "{TF}",
+            "motifs",
+            "jaspar",
+            "logos",
+        ),
+        prefix = "{TF}_peak-motifs_m{n}",
     priority:
         95
     shell:
         """
-        perl {params.scripts_bin}/PCM_to_PWM.pl \
-        -f {input.motif} > {output}
+        {params.prog} -v 2 \
+        -i {input} \
+        -from jaspar -to jaspar \
+        -return logo \
+        -logo_dir {params.logo_dir} \
+        -logo_no_title \
+        -prefix {params.prefix}
         """
-
-# rule Generate_matrix_logo:
-#     """
-#     Generate motif logos using RSAT convert-matrix
-
-#     This rule is executed for each discovered motif.
-#     """
-#     input:
-#         os.path.join(config["out_dir"], "{TF}", "motifs", "jaspar", "pfm", "{TF}_peak-motifs_m{n}.jaspar")
-#     output:
-#         os.path.join(config["out_dir"], "{TF}", "motifs", "jaspar", "logos", "{TF}_peak-motifs_m{n}_logo.png")
-#     message:
-#         "; Generating PWM from JASPAR matrices - TF : {wildcards.TF} "
-#     params:
-#         logo_dir = os.path.join(config["out_dir"], "{TF}", "motifs", "jaspar", "logos"),
-#         logo_name = "{TF}_peak-motifs_m{n}",
-#         RSAT = config["RSAT"]
-#     priority:
-#         94
-#     shell:
-#         """
-#         {params.RSAT}/perl-scripts/convert-matrix -v 2 \
-#         -i {input} \
-#         -from jaspar -to jaspar \
-#         -return logo \
-#         -logo_dir {params.logo_dir} \
-#         -logo_no_title \
-#         -prefix {params.logo_name}
-#         """
 
 # #########################################
 # ## Matrix scan: find RSAT matrix sites ##

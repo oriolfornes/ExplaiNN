@@ -3,9 +3,10 @@ author: Oriol_Fornes
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # Folders and required input files
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-base_dir : /Users/ofornes/GitHub/JASPAR-motif-disco
+base_dir : /home_local/ofornes/JASPAR-MoDisco
 data_dir : ./resources/GRECO-BIT/data/
 genome : hg38
 genomes_dir : ./resources/databases/genomes/
 motifs_dir : ./resources/databases/motifs/
 results_dir : ./results/
+scripts_dir : ./workflow/scripts/

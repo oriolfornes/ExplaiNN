@@ -3,7 +3,7 @@
 if [ "$#" -ne 1 ];
 then
     echo
-    echo "Usage: ./get_genome.sh genome"
+    echo "Usage: ./get-genome.sh genome"
     echo
 else
     URL="https://hgdownload.soe.ucsc.edu/goldenPath/${1}/bigZips"

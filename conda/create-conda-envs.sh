@@ -3,18 +3,13 @@
 # i.e. enable conda (de)activate
 eval "$(conda shell.bash hook)"
 
-# Snakemake
-conda create -n snakemake -c bioconda snakemake
-conda activate snakemake
+# Create conda environment
+conda create -n JASPAR-MoDisco -c bioconda -c conda-forge -c Eumetsat \
+    perl=5.26.2=h470a237_0 perl-pdl=2.019 python=3.6.11 rsat-core=2020.02.29 \
+    snakemake=4.0.0
 
-# RSAT-core
-conda create -n rsat -c bioconda -c conda-forge rsat-core=2020.02.29 \
-    python=3.6.11
-
-# Perl TFBS module
-conda create -n tfbs -c bioconda -c conda-forge -c eumetsat \
-    perl=5.26.2=h470a237_0 perl-bioperl-core perl-pdl
-conda activate tfbs
+# Install TFBS module
+conda activate JASPAR-MoDisco
 git clone https://github.com/ComputationalRegulatoryGenomicsICL/TFBS.git
 cd TFBS/
 perl Makefile.PL && make && make install

@@ -1,16 +1,11 @@
 author: Oriol_Fornes
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-# Binaries
+# Folders and required input files
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-bin_dir : ./bin/
-rsat_dir : /home_local/ofornes/rsat/share/rsat/
-
-# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-# GRECO-BIT: folders and required input files
-# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-data_dir : ../resources/GRECO-BIT/data/
+base_dir : /Users/ofornes/GitHub/JASPAR-motif-disco
+data_dir : ./resources/GRECO-BIT/data/
 genome : hg38
-genomes_dir : ../resources/databases/genomes/
-motifs_dir : ../resources/databases/motifs/
-results_dir : ../results/
+genomes_dir : ./resources/databases/genomes/
+motifs_dir : ./resources/databases/motifs/
+results_dir : ./results/

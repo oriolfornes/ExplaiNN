@@ -385,10 +385,12 @@ rule RSAT_peak_motifs:
 # ++++++++++++++++++++ #
 rule RSAT_PSSM_to_JASPAR_format:
     """
-    Convert the RSAT discovered matrices from TRANSFAC to JASPAR format.
+    Run RSAT convert-matrix on each set of discovered motifs from the previous
+    step.
 
     The TRANSFAC file is split into several files (one per motif) adding as
-    suffix the motif number (e.g. 1, 2, 3, etc.).
+    suffix the motif number (e.g. 1, 2, 3, etc.) and motifs are stored as
+    position count matrices (PCMs) in JASPAR format.
     """
     input:
         os.path.join(
@@ -454,6 +456,7 @@ rule RSAT_PSSM_to_JASPAR_format:
 # # ## depending the experiment), if zip is not used, snakemake will try to create
 # # ## all the combinations between TFs and number of motifs, since not all the TF
 # # ## produce the same number of motifs, the workflow will crash.
+<<<<<<< HEAD
 # rule JASPAR_PSSM_to_PWM:
 #     """
 #     Convert the JASPAR PSSMs in PWMs.
@@ -494,6 +497,48 @@ rule RSAT_PSSM_to_JASPAR_format:
 #         """
 #         perl {params.prog} -f {input} > {output}
 #         """
+=======
+rule PCM_to_PWM:
+    """
+    Convert the JASPAR PCMs to PWMs.
+
+    This rule is executed for each discovered motif.
+    """
+    input:
+        os.path.join(
+            config["base_dir"],
+            config["results_dir"],
+            "{TF}",
+            "motifs",
+            "jaspar",
+            "pfm",
+            "{TF}_peak-motifs_m{n}.jaspar"
+        )
+    message:
+        "; Generating PWMs from JASPAR matrices - TF : {wildcards.TF}"
+    output:
+        os.path.join(
+            config["base_dir"],
+            config["results_dir"],
+            "{TF}",
+            "motifs",
+            "jaspar",
+            "pwm",
+            "{TF}_peak-motifs_m{n}.jaspar.pssm"
+        )
+    params:
+        prog = "%s" % os.path.join(
+            config["base_dir"],
+            config["scripts_dir"],
+            "PCM_to_PWM.py"
+        )
+    priority:
+        96
+    shell:
+        """
+        python {params.prog} {input} > {output}
+        """
+>>>>>>> e62e62c9de7b9a8afb3aded7573ddcb1e71b5325
 
 # rule generate_matrix_logo:
 #     """

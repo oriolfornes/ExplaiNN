@@ -13,4 +13,6 @@ conda activate JASPAR-MoDisco
 # From https://stackoverflow.com/questions/59895/
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 cd $DIR/../workflow/scripts/pwmscan
+mkdir -p bin
+make clean && make cleanbin
 make && make install

@@ -27,7 +27,7 @@
 #  is set to:
 #  chrNC_dir=<genome-root-dir>
 #
-#  The variable bin_dir is set to /Users/ofornes/Work/Programs/pwmscan-v1.1.9/bin
+#  The variable bin_dir is set to /Users/ofornes/GitHub/JASPAR-MoDisco/workflow/scripts/pwmscan/bin
 #
 #  05.12.2017  Giovanna Ambrosini
 #              Optimize Bowtie pipeline
@@ -150,7 +150,7 @@ then
   exit 1
 fi
 
-bin_dir=$(echo /Users/ofornes/Work/Programs/pwmscan-v1.1.9/bin)
+bin_dir=$(echo /Users/ofornes/GitHub/JASPAR-MoDisco/workflow/scripts/pwmscan/bin)
 
 bowtie_dir=$genome_root_dir"/bowtie"
 

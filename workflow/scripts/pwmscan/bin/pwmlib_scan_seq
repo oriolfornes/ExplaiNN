@@ -18,7 +18,7 @@
 #  Three PWM library formats are accepted: meme, integer log-odds (default),
 #  and letter-probability matrix (lpm).
 # 
-#  The variable bin_dir is set to /Users/ofornes/Work/Programs/pwmscan-v1.1.9/bin
+#  The variable bin_dir is set to /Users/ofornes/GitHub/JASPAR-MoDisco/workflow/scripts/pwmscan/bin
 #
 #  The program writes the output to STDOUT.
 #
@@ -145,7 +145,7 @@ then
   exit 1
 fi
 
-bin_dir=$(echo /Users/ofornes/Work/Programs/pwmscan-v1.1.9/bin)
+bin_dir=$(echo /Users/ofornes/GitHub/JASPAR-MoDisco/workflow/scripts/pwmscan/bin)
 
 if [ -n "$bg_freq" ] # String is not NULL
 then

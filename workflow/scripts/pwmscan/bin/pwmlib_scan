@@ -35,7 +35,7 @@
 #  is set to:
 #  chrNC_dir=<genome-root-dir>
 #
-#  The variable bin_dir is set to /Users/ofornes/Work/Programs/pwmscan-v1.1.9/bin
+#  The variable bin_dir is set to /Users/ofornes/GitHub/JASPAR-MoDisco/workflow/scripts/pwmscan/bin
 #
 #  The program writes the output to STDOUT, unless the -w option is specified, in which
 #  case results are written to file. BED filenames include the matrix name, the cut-off, 
@@ -189,7 +189,7 @@ then
   bg_comp="-b $bg_freq"
 fi
 
-bin_dir=$(echo /Users/ofornes/Work/Programs/pwmscan-v1.1.9/bin)
+bin_dir=$(echo /Users/ofornes/GitHub/JASPAR-MoDisco/workflow/scripts/pwmscan/bin)
 pwm_scan_cmd_flags=""
 
 if [ $non_overlapping == 0 ] 

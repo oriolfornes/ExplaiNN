@@ -95,7 +95,7 @@ while [ "$3" != "" ]; do
   shift
 done
 
-bin_dir=$(echo /Users/ofornes/Work/Programs/pwmscan-v1.1.9/bin)
+bin_dir=$(echo /Users/ofornes/GitHub/JASPAR-MoDisco/workflow/scripts/pwmscan/bin)
 
 echo "BG base composition file: $bg_freq" >&2;
 cat $bg_freq >&2;

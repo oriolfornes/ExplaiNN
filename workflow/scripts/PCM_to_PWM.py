@@ -31,7 +31,7 @@ def main():
     m.pseudocounts = motifs.jaspar.calculate_pseudocounts(m)
 
     # Print PWM
-    for row in np.transpose(np.array(m.pssm.values())):
+    for row in np.transpose(np.array(list(m.pssm.values()))):
         print(" ".join([str(round(r, 8)).rjust(11) for r in row]))
 
 #-------------#

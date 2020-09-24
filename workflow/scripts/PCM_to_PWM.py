@@ -32,7 +32,7 @@ def main():
 
     # Print PWM
     for row in np.transpose(np.array(m.pssm.values())):
-        print(" ".join([str(round(e, 8)).rjust(11) for e in row]))
+        print(" ".join([str(round(r, 8)).rjust(11) for r in row]))
 
 #-------------#
 # Main        #

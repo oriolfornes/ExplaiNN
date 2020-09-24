@@ -1,0 +1,259 @@
+#!/bin/bash
+
+#  pwmlib_scan: Scan a genome with a collection of PWMs (using either bowtie or matrix_scan)
+#  arguments:
+#              pwm-collection 
+#              pwm-format
+#              p-value
+#              assembly
+#              genome-root-dir
+#
+#              forward scanning [-f]
+#              non-overlapping matches [DEFAULT]
+#              parallelize matrix_scan [-p]
+#              write output to file [-w]
+#
+#  11.01.2018  Giovanna Ambrosini
+#
+#  The program first extracts the matrices from the PWM collection.
+#  For each matrix, it calls the pwm_scan script to scan the genome.
+#
+#  Three PWM library formats are accepted: meme, integer log-odds (default),
+#  and letter-probability matrix (lpm).
+# 
+#  If specified (via the -p option), matrix_scan can be run in parallel.
+#  This is only possible if the machine has enough CPU power (multi-core processor).
+#
+#  The <assembly> argument corresponds to the UCSC assembly name (e.g. hg19, mm9).
+#
+#  The <genome-root-dir> is the root directory of the genome files (the bowtie index
+#  files, and the FASTA chromosome files used by matrix_scan, and the genome tables).
+#  The <genome-root-dir> is supposed to have sub-directories for bowtie index files 
+#  (/bowtie) and assembly-specific chromosome FASTA files (/assembly).
+#
+#  The variable chrNC_dir (used to define the location of the chr_NC_gi/chr_hdr files)
+#  is set to:
+#  chrNC_dir=<genome-root-dir>
+#
+#  The variable bin_dir is set to /home/local/bin
+#
+#  The program writes the output to STDOUT, unless the -w option is specified, in which
+#  case results are written to file. BED filenames include the matrix name, the cut-off, 
+#  and, should it be case, the forward scanning flag (fwd).
+#
+#  16.02.2018  Giovanna Ambrosini
+#              Add optional parameter to set the background base composition
+
+E_BADARGS=85   # Wrong number of arguments passed to the script.
+
+verbose=0
+fwd_flag=""
+fwd_str=""
+forward=0
+w_flag=0
+non_overlapping=1
+parallel=0
+
+pwmlib_file=""
+pwm_format="logodds"
+p_value=""
+genome_root_dir=""
+assembly=""
+bg_freq=""
+
+display_usage() {
+      echo "Usage:"
+      echo    "    pwmlib_scan -l <pwmlib> -e <p-value> -d <genome-root-dir> -s <assembly[hg19|mm9|..]> [options]"
+      echo    "    - version 1.1.9"
+      echo    "    where options are:"
+      echo    "         -b <bg_comp>   Background model (residue priors), e.g. : 0.29,0.21,0.21,0.29"
+      echo    "                        [def=predefined for some common genome assemblies, else set to uniform]"
+      echo    "         -g             PWM format [def=logodds]. Accepted formats are : meme, logodds, and lpm"
+      echo    "         -f             Scan sequences in forward direction [def=bidirectional]"
+      echo    "         -o             Allow for overlapping matches [def=non-overlapping matches]"
+      echo    "         -w             Write output to file [def=STDOUT]"
+      echo -e "         -p             Distribute matrix_scan on multiple CPU-cores [def=non-parallel processing]"
+      echo -e "         -v             Verbose mode and keep PWM tmp files\n"
+      echo -e "    Scan a genome assembly with a PWM collection. Accepeted PWM library formats are the MEME format"  
+      echo -e "    (<meme>), and the MEME-like log-odds and letter-probability formats (<logodds> and <lpm>)."  
+      echo -e "    Description of these formats is provided at http://ccg.vital-it.ch/pwmtools/pwmlib.html.\n"  
+      echo    "Please report bugs to Giovanna.Ambrosini@epfl.ch"
+}
+# Parse options
+while getopts ":hfopwvb:l:e:g:d:s:" opt; do
+  case ${opt} in
+    h )
+      display_usage
+      exit 0
+      ;;
+    b )
+      bg_freq=$OPTARG
+      ;;
+    f )
+      forward=1
+      ;;
+    g )
+      pwm_format=$OPTARG
+      ;;
+    o )
+      non_overlapping=0
+      ;;
+    p )
+      parallel=1
+      ;;
+    l )
+      pwmlib_file=$OPTARG
+      ;;
+    e )
+      p_value=$OPTARG
+      ;;
+    d )
+      genome_root_dir=$OPTARG
+      ;;
+    s )
+      assembly=$OPTARG
+      ;;
+    w )
+      w_flag=1
+      ;;
+    v )
+      verbose=1
+      ;;
+    :)
+      echo "Option -$OPTARG requires an argument." >&2
+      exit 1
+      ;;
+    \? )
+     echo "Invalid OPTION: -$OPTARG" 1>&2
+     exit 1
+     ;;
+  esac
+done
+shift $((OPTIND -1))
+
+parsed_args=$((OPTIND -1))
+
+if [ $parsed_args -le 1 ] 
+then 
+  display_usage
+  exit 1
+fi 
+
+if [ $verbose == 1 ]
+then
+  echo "PWM lib file   : $pwmlib_file" >&2
+  echo "PWM format     : $pwm_format" >&2
+  echo "P-value        : $p_value" >&2
+  echo "genome-root-dir: $genome_root_dir" >&2
+  echo "assembly       : $assembly" >&2
+  echo "Write flag     : $w_flag" >&2
+fi
+
+if [ -z "$pwmlib_file" ]
+then
+  echo "Please specify the PWM file (-m)" >&2
+  exit 1
+fi
+if [ -z "$p_value" ]
+then
+  echo "Please specify the p-value (-e)" >&2
+  exit 1
+fi
+if [ -z "$genome_root_dir" ]
+then
+  echo "Please specify the genome root directory (-d)" >&2
+  exit 1
+fi
+if [ -z "$assembly" ]
+then
+  echo "Please specify the species assembly (-s)" >&2
+  exit 1
+fi
+
+if [ ! -f "$pwmlib_file" ]
+then
+  echo "PWM Collection File \"$1\" does not exist." >&2
+  exit $E_BADARGS
+fi
+
+if [[ "$pwm_format" != "meme" && "$pwm_format" != "logodds" && "$pwm_format" != "lpm" ]]
+then
+  echo "Please specify the correct PWM library format [meme|logodds(def)|lpm]" >&2
+  exit $E_BADARGS
+  exit 1
+fi
+
+bg_comp=""
+if [ -n "$bg_freq" ]
+then
+  bg_comp="-b $bg_freq"
+fi
+
+bin_dir=$(echo /home/local/bin)
+pwm_scan_cmd_flags=""
+
+if [ $non_overlapping == 0 ] 
+then
+  pwm_scan_cmd_flags=" -o";
+fi
+
+if [ $w_flag == 1 ]
+then
+  pwm_scan_cmd_flags+=" -w";
+fi
+
+if [ $parallel == 1 ]
+then
+  pwm_scan_cmd_flags+=" -p";
+fi
+
+# Extract the matrices from the PWM library file (MEME-like format)
+#
+if [ "$pwm_format" = "meme" ]
+then
+  less $pwmlib_file | perl -ane 'chomp; if (/^MOTIF (\S+)\s(\S+)/) {$id=$1; $name=$2; $name=~s/[()]//g; $name=~s/\//_/g; $MNAME=$id." ".$name; $FNAME=$id."_".$name;}; if (/^letter-probability matrix: alength= (\d+) w= (\d+)\s(.*)/) {$NUCL=$1; $LEN=$2; $STATS=$3} if (/\s*(\d+\.?\d+)\s+(\d+\.?\d+)\s+(\d+\.?\d+)\s+(\d+\.?\d+)/) {$matrix.="$_\n";} if (/^URL\s/) {open (MAT, ">$FNAME.mat.tmp"); print MAT ">letter-probability matrix $MNAME: alength= $NUCL w= $LEN $STATS\n"; print MAT $matrix; close(MAT); $matrix="";}'
+fi
+
+if [ "$pwm_format" = "logodds" ]
+then
+  less $pwmlib_file | perl -ane 'chomp; if (/^>log-odds matrix (.*):/) {$header=$_; $id=$1; $id=~s/\s/_/g; $FNAME=$id; close(MAT); open (MAT, ">$FNAME.mat.tmp"); print MAT "$header\n";} else { print MAT "$_\n";}'
+fi
+
+if [ "$pwm_format" = "lpm" ]
+then
+  less $pwmlib_file | perl -ane 'chomp; if (/^>letter-probability matrix (.*):/) {$header=$_; $id=$1; $id=~s/\s/_/g; $FNAME=$id; close(MAT); open (MAT, ">$FNAME.mat.tmp"); print MAT "$header\n";} else { print MAT "$_\n";}'
+fi
+
+# Loop on PWM files
+#
+for f in *mat.tmp; do
+  if [ $verbose == 1 ]
+  then
+    echo "Processing PWM $f file.." >&2
+  fi
+  if [[ "$pwm_format" = "meme" || "$pwm_format" = "lpm" ]]
+    then
+      $bin_dir/lpmconvert.pl -o $f"2" $f 1>/dev/null 2>/dev/null
+      if [ $verbose == 1 ]; then
+        echo "New PWM file: $f""2" >&2
+        echo "Scanning the $assembly genome with $f""2" >&2
+        echo "Command: bash $bin_dir/pwm_scan $bg_comp -m $f""2 -e $p_value -d $genome_root_dir -s $assembly$pwm_scan_cmd_flags" >&2
+      fi
+      bash $bin_dir/pwm_scan $bg_comp -m $f"2" -e $p_value -d $genome_root_dir -s $assembly$pwm_scan_cmd_flags 
+      if [ $verbose == 0 ]
+      then
+        rm $f"2"
+      fi
+    else
+      if [ $verbose == 1 ]
+      then
+        echo "Scanning the $assembly genome with $f" >&2
+        echo "Command: bash $bin_dir/pwm_scan $bg_comp -m $f -e $p_value -d $genome_root_dir -s $assembly$pwm_scan_cmd_flags" >&2
+      fi
+      bash $bin_dir/pwm_scan $bg_comp -m $f -e $p_value -d $genome_root_dir -s $assembly$pwm_scan_cmd_flags
+  fi
+  if [ $verbose == 0 ]
+  then
+    rm $f
+  fi
+done

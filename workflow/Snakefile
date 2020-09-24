@@ -1,5 +1,6 @@
 import os
 import itertools
+import platform
 import re
 from snakemake.utils import R
 import subprocess as sp
@@ -111,79 +112,90 @@ MOTIFS_RSAT_JASPAR = expand(
     TF=data_TFs
 )
 
-# # PWMs
-# JASPAR_PWM = expand(
-#     os.path.join(
-#         config["base_dir"],
-#         config["results_dir"],
-#         "{TF}",
-#         "motifs",
-#         "jaspar",
-#         "pwm",
-#         "{TF}_peak-motifs_m{n}.jaspar.pssm"
-#     ),
-#     zip,
-#     TF=TFs,
-#     n=NB
-# )
+# PWMs
+JASPAR_PWM = expand(
+    os.path.join(
+        config["base_dir"],
+        config["results_dir"],
+        "{TF}",
+        "motifs",
+        "jaspar",
+        "pwm",
+        "{TF}_peak-motifs_m{n}.jaspar.pssm"
+    ),
+    zip,
+    TF=TFs,
+    n=NB
+)
 
-# # Logos
-# JASPAR_LOGOS = expand(
-#     os.path.join(
-#         config["base_dir"],
-#         config["results_dir"],
-#         "{TF}",
-#         "motifs",
-#         "jaspar",
-#         "logos",
-#         "{TF}_peak-motifs_m{n}_logo.png"
-#     ),
-#     zip,
-#     TF=TFs,
-#     n=NB
-# )
+# Logos
+JASPAR_LOGO = expand(
+    os.path.join(
+        config["base_dir"],
+        config["results_dir"],
+        "{TF}",
+        "motifs",
+        "jaspar",
+        "logos",
+        "{TF}_peak-motifs_m{n}_logo.png"
+    ),
+    zip,
+    TF=TFs,
+    n=NB
+)
 
-# # Matrix sites
-# MOTIF_RSAT_SITES = expand(
-#     os.path.join(
-#         config["base_dir"], 
-#         config["results_dir"],
-#         "{TF}",
-#         "matrix_sites",
-#         "{TF}_peak-motifs_m{n}.tf.sites"
-#     ),
-#     zip,
-#     TF=TFs,
-#     n=NB
-# )
-# MOTIF_RSAT_SITES_BED = expand(
-#     os.path.join(
-#         config["base_dir"], 
-#         config["results_dir"],
-#         "{TF}",
-#         "matrix_sites",
-#         "{TF}_peak-motifs_m{n}.tf.sites.bed"
-#     ),
-#     zip,
-#     TF=TFs,
-#     n=NB
-# )
-# MOTIF_RSAT_SITES_FASTA = expand(
-#     os.path.join(
-#         config["base_dir"], 
-#         config["results_dir"],
-#         "{TF}",
-#         "matrix_sites",
-#         "{TF}_peak-motifs_m{n}.tf.sites.fasta"
-#     ),
-#     zip,
-#     TF=TFs,
-#     n=NB
-# )
+# Matrix sites
+MOTIF_RSAT_SITES = expand(
+    os.path.join(
+        config["base_dir"], 
+        config["results_dir"],
+        "{TF}",
+        "matrix_sites",
+        "{TF}_peak-motifs_m{n}.tf.sites"
+    ),
+    zip,
+    TF=TFs,
+    n=NB
+)
+MOTIF_RSAT_SITES_BED = expand(
+    os.path.join(
+        config["base_dir"], 
+        config["results_dir"],
+        "{TF}",
+        "matrix_sites",
+        "{TF}_peak-motifs_m{n}.tf.sites.bed"
+    ),
+    zip,
+    TF=TFs,
+    n=NB
+)
+MOTIF_RSAT_SITES_FASTA = expand(
+    os.path.join(
+        config["base_dir"], 
+        config["results_dir"],
+        "{TF}",
+        "matrix_sites",
+        "{TF}_peak-motifs_m{n}.tf.sites.fa"
+    ),
+    zip,
+    TF=TFs,
+    n=NB
+)
 
-# # PWM scanning
-# PWM_SCAN = expand(os.path.join(config["results_dir"], "{TF}", "scan", "501bp",
-#     "{TF}_m{n}.501bp.fa"), zip, TF=TFs, n=NB)
+# PWM scanning
+PWM_SCAN = expand(
+    os.path.join(
+        config["base_dir"], 
+        config["results_dir"],
+        "{TF}",
+        "scan",
+        "501bp",
+        "{TF}_m{n}.501bp.fa"
+    ),
+    zip,
+    TF=TFs,
+    n=NB
+)
 
 # # Central erichment
 # CENTRIMO_PVAL = expand(os.path.join(config["results_dir"], "{TF}",
@@ -214,12 +226,12 @@ rule all:
         PEAKS_FASTA,
         MOTIFS_RSAT_TF,
         MOTIFS_RSAT_JASPAR,
-        # MOTIF_RSAT_SITES,
-        # MOTIF_RSAT_SITES_BED,
-        # MOTIF_RSAT_SITES_FASTA,
-        # JASPAR_PWM,
-        # JASPAR_LOGOS,
-        # PWM_SCAN,
+        JASPAR_PWM,
+        JASPAR_LOGO,
+        MOTIF_RSAT_SITES,
+        MOTIF_RSAT_SITES_BED,
+        MOTIF_RSAT_SITES_FASTA,
+        PWM_SCAN,
         # CENTRIMO_PVAL,
         # CENTRIMO_PLOT,
         # CENTRIMO_BEST,
@@ -228,9 +240,12 @@ rule all:
         # MOTIFS_TO_CURATE,
         # MOTIFS_TO_CURATE_PDF
 
-rule extend_peak_summits:
+# +++++++++++++++++++ #
+# Extend peak summits #
+# +++++++++++++++++++ #
+rule Extend_peak_summits:
     """
-    Extend the peak summits to both sides.
+    Extend peak summits to both sides.
     """
     input:
         os.path.join(
@@ -240,7 +255,7 @@ rule extend_peak_summits:
             "{TF}_peak_summits.bed"
         )
     message:
-        "; Extend peak summits - TF : {wildcards.TF} - LEN: {wildcards.length}"
+        "; Extend peak summits - TF: {wildcards.TF} - LEN: {wildcards.length}"
     output:
         os.path.join(
             config["base_dir"],
@@ -250,7 +265,7 @@ rule extend_peak_summits:
             "{TF}.{length}bp.bed"
         )
     params:
-        prog = "bedtools",
+        prog = "bedtools slop",
         b = lambda wildcards: (int(wildcards.length) - 1 / 2),
         g = os.path.join(
             config["base_dir"],
@@ -261,12 +276,15 @@ rule extend_peak_summits:
         100
     shell:
         """
-        {params.prog} slop -b {params.b} -i {input} -g {params.g} > {output}
+        {params.prog} -b {params.b} -i {input} -g {params.g} > {output}
         """
 
-rule get_fasta_sequences:
+# +++++++++++++++++++ #
+# Get FASTA sequences #
+# +++++++++++++++++++ #
+rule Get_FASTA_sequences:
     """
-    Get the fasta sequences for the extended peaks
+    Get the FASTA sequences of the extended peaks.
     """
     input:
         os.path.join(
@@ -277,7 +295,7 @@ rule get_fasta_sequences:
             "{TF}.{length}bp.bed"
         )
     message:
-        "; Get FASTA sequences - TF : {wildcards.TF} - LEN: {wildcards.length}"
+        "; Get FASTA sequences - TF: {wildcards.TF} - LEN: {wildcards.length}"
     output:
         os.path.join(
             config["base_dir"],
@@ -287,7 +305,7 @@ rule get_fasta_sequences:
             "{TF}.{length}bp.fa"
         )
     params:
-        prog = "bedtools",
+        prog = "bedtools getfasta",
         fi = os.path.join(
             config["base_dir"],
             config["genomes_dir"],
@@ -297,13 +315,13 @@ rule get_fasta_sequences:
         99
     shell:
         """
-        {params.prog} getfasta -fi {params.fi} -bed {input} -fo {output}
+        {params.prog} -fi {params.fi} -bed {input} -fo {output}
         """
 
 # ++++++++++++++++++++ #
-# RSAT peak-motifs     #
+# Run RSAT peak-motifs #
 # ++++++++++++++++++++ #
-rule RSAT_peak_motifs:
+rule Run_RSAT_peak_motifs:
     """
     Run RSAT peak-motifs (motif discovery with different algorithms) on each
     set of peaks.
@@ -319,7 +337,7 @@ rule RSAT_peak_motifs:
             "{TF}.101bp.fa"
         )
     message:
-        "; Run RSAT peak-motifs - TF : {wildcards.TF}"
+        "; Run RSAT peak-motifs - TF: {wildcards.TF}"
     output:
         os.path.join(
             config["base_dir"],
@@ -380,17 +398,16 @@ rule RSAT_peak_motifs:
         -outdir {params.outdir}
         """
 
-# ++++++++++++++++++++ #
-# RSAT convert-matrix  #
-# ++++++++++++++++++++ #
-rule RSAT_PSSM_to_JASPAR_format:
+# +++++++++++++++++++++++ #
+# Run RSAT convert-matrix #
+# +++++++++++++++++++++++ #
+rule Run_RSAT_convert_matrix:
     """
-    Run RSAT convert-matrix on each set of discovered motifs from the previous
-    step.
+    Run RSAT convert-matrix on each set of discovered motifs.
 
     The TRANSFAC file is split into several files (one per motif) adding as
-    suffix the motif number (e.g. 1, 2, 3, etc.) and motifs are stored as
-    position count matrices (PCMs) in JASPAR format.
+    suffix the motif number (e.g. 1, 2, 3, etc.). The resulting motifs are
+    stored as position count matrices (PCMs) in JASPAR format.
     """
     input:
         os.path.join(
@@ -403,7 +420,7 @@ rule RSAT_PSSM_to_JASPAR_format:
             "{TF}_motifs_discovered.tf"
         )
     message:
-        "; Convert motifs from TRANSFAC to JASPAR format - TF : {wildcards.TF}"
+        "; Convert motifs from TRANSFAC to JASPAR format - TF: {wildcards.TF}"
     output:
         os.path.join(
             config["base_dir"],
@@ -448,59 +465,12 @@ rule RSAT_PSSM_to_JASPAR_format:
         -o {params.o}
         """
 
-# # ## NOTE 2: The 'motif_tab' input file name is used to chain the rule
-# # ## 'RSAT_PSSM_to_JASPAR_format' with 'JASPAR_PSSM_to_PWM'.
-# # ##
-# # ## NOTE 3: Use the zip parameter to have a correct correspondency between the
-# # ## experiments (TF) and the number of the discovered motif (the number may vary
-# # ## depending the experiment), if zip is not used, snakemake will try to create
-# # ## all the combinations between TFs and number of motifs, since not all the TF
-# # ## produce the same number of motifs, the workflow will crash.
-<<<<<<< HEAD
-# rule JASPAR_PSSM_to_PWM:
-#     """
-#     Convert the JASPAR PSSMs in PWMs.
-
-#     This rule is executed for each discovered motif.
-#     """
-#     input:
-#         os.path.join(
-#             config["base_dir"],
-#             config["results_dir"],
-#             "{TF}",
-#             "motifs",
-#             "jaspar",
-#             "pfm",
-#             "{TF}_peak-motifs_m{n}.jaspar"
-#         )
-#     message:
-#         "; Generating PWMs from JASPAR matrices - TF : {wildcards.TF}"
-#     output:
-#         os.path.join(
-#             config["base_dir"],
-#             config["results_dir"],
-#             "{TF}",
-#             "motifs",
-#             "jaspar",
-#             "pwm",
-#             "{TF}_peak-motifs_m{n}.jaspar.pssm"
-#         )
-#     params:
-#         prog = "%s" % os.path.join(
-#             config["base_dir"],
-#             config["scripts_dir"],
-#             "PCM_to_PWM.pl"
-#         )
-#     priority:
-#         96
-#     shell:
-#         """
-#         perl {params.prog} -f {input} > {output}
-#         """
-=======
-rule PCM_to_PWM:
+# ++++++++++++++++++++ #
+# Convert PCMs to PWMs #
+# ++++++++++++++++++++ #
+rule Convert_PCMs_to_PWMs:
     """
-    Convert the JASPAR PCMs to PWMs.
+    Convert the PCMs in JASPAR format to PWMs.
 
     This rule is executed for each discovered motif.
     """
@@ -515,7 +485,7 @@ rule PCM_to_PWM:
             "{TF}_peak-motifs_m{n}.jaspar"
         )
     message:
-        "; Generating PWMs from JASPAR matrices - TF : {wildcards.TF}"
+        "; Convert JASPAR PCMs to PWMs - TF: {wildcards.TF} - MAT: {wildcards.n}"
     output:
         os.path.join(
             config["base_dir"],
@@ -527,169 +497,294 @@ rule PCM_to_PWM:
             "{TF}_peak-motifs_m{n}.jaspar.pssm"
         )
     params:
-        prog = "%s" % os.path.join(
+        prog = os.path.join(
             config["base_dir"],
             config["scripts_dir"],
             "PCM_to_PWM.py"
+        ),
+        outdir = os.path.join(
+            config["base_dir"],
+            config["results_dir"],
+            "{TF}",
+            "motifs",
+            "jaspar",
+            "pwm"
         )
     priority:
         96
     shell:
         """
+        mkdir -p {params.outdir}
         python {params.prog} {input} > {output}
         """
->>>>>>> e62e62c9de7b9a8afb3aded7573ddcb1e71b5325
 
-# rule generate_matrix_logo:
-#     """
-#     Generate motif logos using RSAT convert-matrix
+# ++++++++++++++++++++ #
+# Generate motif logos #
+# ++++++++++++++++++++ #
+rule Generate_motif_logos:
+    """
+    Generate a logo for each JASPAR PCM.
 
-#     This rule is executed for each discovered motif.
-#     """
-#     input:
-#         os.path.join(
-#             config["base_dir"],
-#             config["results_dir"],
-#             "{TF}",
-#             "motifs",
-#             "jaspar",
-#             "pfm",
-#             "{TF}_peak-motifs_m{n}.jaspar"
-#         )
-#     output:
-#         os.path.join(
-#             config["base_dir"],
-#             config["results_dir"],
-#             "{TF}",
-#             "motifs",
-#             "jaspar",
-#             "logos",
-#             "{TF}_peak-motifs_m{n}_logo.png"
-#         )
-#     message:
-#         "; Generating logos from JASPAR matrices - TF : {wildcards.TF} "
-#     params:
-#         prog = "rsat convert-matrix",
-#         logo_dir = os.path.join(
-#             config["base_dir"],
-#             config["results_dir"],
-#             "{TF}",
-#             "motifs",
-#             "jaspar",
-#             "logos",
-#         ),
-#         prefix = "{TF}_peak-motifs_m{n}",
-#     priority:
-#         95
-#     shell:
-#         """
-#         {params.prog} -v 2 \
-#         -i {input} \
-#         -from jaspar -to jaspar \
-#         -return logo \
-#         -logo_dir {params.logo_dir} \
-#         -logo_no_title \
-#         -prefix {params.prefix}
-#         """
+    This rule is executed for each discovered motif.
+    """
+    input:
+        os.path.join(
+            config["base_dir"],
+            config["results_dir"],
+            "{TF}",
+            "motifs",
+            "jaspar",
+            "pfm",
+            "{TF}_peak-motifs_m{n}.jaspar"
+        )
+    message:
+        "; Generate motif logos - TF: {wildcards.TF} - MAT: {wildcards.n}"
+    output:
+        os.path.join(
+            config["base_dir"],
+            config["results_dir"],
+            "{TF}",
+            "motifs",
+            "jaspar",
+            "logos",
+            "{TF}_peak-motifs_m{n}_logo.png"
+        )
 
-# #########################################
-# ## Matrix scan: find RSAT matrix sites ##
-# #########################################
-# rule find_RSAT_matrix_sites:
-#     """
-#     Find the TFBSs used to built the matrices.
+    params:
+        prog = os.path.join(
+            config["base_dir"],
+            config["scripts_dir"],
+            "PCM_to_logo.py"
+        ),
+        outdir = os.path.join(
+            config["base_dir"],
+            config["results_dir"],
+            "{TF}",
+            "motifs",
+            "jaspar",
+            "logos"
+        )
+    priority:
+        95
+    shell:
+        """
+        mkdir -p {params.outdir}
+        python {params.prog} {input} {output}
+        """
 
-#     This rule is executed for each discovered motif.
-#     """
-#     input:
-#         motif_tab = os.path.join(config["out_dir"], "{TF}", "motifs", "jaspar", "pfm", "{TF}_matrix_list.tab"), \
-#         sequences = os.path.join(config["out_dir"], "{TF}", "peak-motifs", "data", "sequences", "{TF}_test.fasta"), \
-#         matrix = os.path.join(config["out_dir"], "{TF}", "motifs", "jaspar", "pfm", "{TF}_peak-motifs_m{n}.tab"), \
-#         bg_file = os.path.join(config["out_dir"], "{TF}", "peak-motifs", "results", "composition", "{TF}_test_inclusive-1str-ovlp_2nt.txt")
-#     output:
-#         os.path.join(config["out_dir"], "{TF}", "matrix_sites", "{TF}_peak-motifs_m{n}.tf.sites")
-#     message:
-#         "; Scanning PSSM on 101bp peaks - TF : {wildcards.TF} - Matrix number: {wildcards.n}"
-#     params:
-#         RSAT = config["RSAT"]
-#     priority:
-#         93
-#     shell:
-#         """
-#         {params.RSAT}/bin/matrix-scan-quick \
-#         -i {input.sequences} \
-#         -m {input.matrix} \
-#         -bgfile {input.bg_file} \
-#         -t 5 \
-#         -return sites > {output}
-#         """
+# ++++++++++++++++++++++++++ #
+# Run RSAT matrix-scan-quick #
+# ++++++++++++++++++++++++++ #
+rule Run_RSAT_matrix_scan_quick:
+    """
+    Find the binding sites used to built the matrices.
 
-# rule convert_RSAT_matrix_sites_to_BED:
-#     """
-#     Get the genomic coordinates (BED file) of the matrix sites.
+    This rule is executed for each discovered motif.
+    """
+    input:
+        i = os.path.join(
+            config["base_dir"],
+            config["results_dir"],
+            "{TF}",
+            "peak-motifs",
+            "data",
+            "sequences",
+            "{TF}_test.fasta"
+        ),
+        m = os.path.join(
+            config["base_dir"],
+            config["results_dir"],
+            "{TF}",
+            "motifs",
+            "jaspar",
+            "pfm",
+            "{TF}_peak-motifs_m{n}.tab"
+        ),
+        bgfile = os.path.join(
+            config["base_dir"],
+            config["results_dir"],
+            "{TF}",
+            "peak-motifs",
+            "results",
+            "composition",
+            "{TF}_test_inclusive-1str-ovlp_2nt.txt"
+        )
+    message:
+        "; Run RSAT matrix-scan-quick - TF: {wildcards.TF} - MAT: {wildcards.n}"
+    output:
+        os.path.join(
+            config["base_dir"],
+            config["results_dir"],
+            "{TF}",
+            "matrix_sites",
+            "{TF}_peak-motifs_m{n}.tf.sites"
+        )
+    params:
+        prog = "RSAT matrix-scan-quick",
+        outdir = os.path.join(
+            config["base_dir"],
+            config["results_dir"],
+            "{TF}",
+            "matrix_sites",
+        )
+    priority:
+        94
+    shell:
+        """
+        mkdir -p {params.outdir}
+        {params.prog}  \
+        -i {input.i} \
+        -m {input.m} \
+        -bgfile {input.bgfile} \
+        -t 5 \
+        -return sites > {output}
+        """
 
-#     This rule is executed for each discovered motif.
-#     """
-#     input:
-#         os.path.join(config["out_dir"], "{TF}", "matrix_sites", "{TF}_peak-motifs_m{n}.tf.sites")
-#     output:
-#         os.path.join(config["out_dir"], "{TF}", "matrix_sites", "{TF}_peak-motifs_m{n}.tf.sites.bed")
-#     message:
-#         "; Obtaining genomic coordinates for sites - TF : {wildcards.TF} - Matrix number: {wildcards.n}"
-#     params:
-#         scripts_bin = config["bin"]
-#     priority:
-#         92
-#     shell:
-#         """
-#         awk -f {params.scripts_bin}/sites-to-bed.awk {input} > {output}
-#         """
+# ++++++++++++++++++++ #
+# Get site coordinates #
+# ++++++++++++++++++++ #
+rule Get_site_coordinates:
+    """
+    Get the genomic coordinates (BED file) of the matrix sites.
 
-# rule get_RSAT_matrix_sites_fasta:
-#     """
-#     Get the fasta sequences from genomic coordinates (BED file) of the matrix sites.
+    This rule is executed for each discovered motif.
+    """
+    input:
+        os.path.join(
+            config["base_dir"],
+            config["results_dir"],
+            "{TF}",
+            "matrix_sites",
+            "{TF}_peak-motifs_m{n}.tf.sites"
+        )
+    message:
+        "; Get coordinates of sites - TF: {wildcards.TF} - MAT: {wildcards.n}"
+    output:
+        os.path.join(
+            config["base_dir"],
+            config["results_dir"],
+            "{TF}",
+            "matrix_sites",
+            "{TF}_peak-motifs_m{n}.tf.sites.bed"
+        )
+    params:
+        prog = os.path.join(
+            config["base_dir"],
+            config["scripts_dir"],
+            "sites-to-bed.awk"
+        ),
+        genome = config["genome"]
+    priority:
+        93
+    shell:
+        """
+        awk -f {params.prog} -v genome="{params.genome}" {input} > {output}
+        """
 
-#     This rule is executed for each discovered motif.
-#     """
-#     input:
-#         os.path.join(config["out_dir"], "{TF}", "matrix_sites", "{TF}_peak-motifs_m{n}.tf.sites.bed")
-#     output:
-#         os.path.join(config["out_dir"], "{TF}", "matrix_sites", "{TF}_peak-motifs_m{n}.tf.sites.fasta")
-#     message:
-#         "; Obtaining fasta sequences from genomic coordinates for TFBS sites - TF : {wildcards.TF} - Matrix number: {wildcards.n}"
-#     params:
-#         genome_fasta = config["genome_fasta"]
-#     priority:
-#         91
-#     shell:
-#         """
-#         bedtools getfasta -name -s -fi {params.genome_fasta} -bed {input} -fo {output}
-#         """
+# ++++++++++++++++++ #
+# Get site sequences #
+# ++++++++++++++++++ #
+rule Get_site_FASTA_sequences:
+    """
+    Get the FASTA sequences of the of the matrix sites.
 
-# #########################################
-# ## Matrix scan: extended peaks (501bp) ##
-# #########################################
-# rule Scan_JASPAR_PWM:
-#     """
-#     Scan the PWM in the extended peaks (501bp).
+    This rule is executed for each discovered motif.
+    """
+    input:
+        os.path.join(
+            config["base_dir"],
+            config["results_dir"],
+            "{TF}",
+            "matrix_sites",
+            "{TF}_peak-motifs_m{n}.tf.sites.bed"
+        )
+    message:
+        "; Get sequences of sites - TF: {wildcards.TF} - MAT: {wildcards.n}"
+    output:
+        os.path.join(
+            config["base_dir"],
+            config["results_dir"],
+            "{TF}",
+            "matrix_sites",
+            "{TF}_peak-motifs_m{n}.tf.sites.fa"
+        )
+    params:
+        prog = "bedtools getfasta",
+        fi = os.path.join(
+            config["base_dir"],
+            config["genomes_dir"],
+            "%s.fa" % config["genome"]
+        )
+    priority:
+        92
+    shell:
+        """
+        {params.prog} -name -s -fi {params.fi} -bed {input} -fo {output}
+        """
 
-#     This rule is executed for each discovered motif.
-#     """
-#     input:
-#         pwm = os.path.join(config["out_dir"], "{TF}", "motifs", "jaspar", "pwm", "{TF}_peak-motifs_m{n}.jaspar.pssm"), \
-#         peaks = os.path.join(config["out_dir"], "{TF}", "fasta", "{TF}.501bp.fa")
-#     output:
-#         os.path.join(config["out_dir"], "{TF}", "scan", "501bp", "{TF}_m{n}.501bp.fa")
-#     message:
-#         "; Scanning PSSM - TF : {wildcards.TF} - Matrix number: {wildcards.n}"
-#     params:
-#         scripts_bin = config["bin"]
-#     priority:
-#         90
-#     shell:
-#         """
-#         {params.scripts_bin}/pwm_searchPFF {input.pwm} {input.peaks} 0.85 -b > {output}
-#         """
+# +++++++++++++++++++ #
+# Scan extended peaks #
+# +++++++++++++++++++ #
+rule Scan_extended_peaks:
+    """
+    Scan the PWM against the extended peaks (501bp).
+    Ex. output:
+    chr1:1097570-1098571	TFBS			+	-54.169	  23.4	16	37	seq...
+    chr1:1097570-1098571	TFBS			-	24.309	  89.5	16	37	seq...
+    chr1:1097570-1098571	TFBS			+	-53.356	  24.1	17	38	seq...
+    chr1:1097570-1098571	TFBS			-	24.386	  89.6	17	38	seq...
+    ...
+
+    This rule is executed for each discovered motif.
+    """
+    input:
+        pwm = os.path.join(
+            config["base_dir"],
+            config["results_dir"],
+            "{TF}",
+            "motifs",
+            "jaspar",
+            "pwm",
+            "{TF}_peak-motifs_m{n}.jaspar.pssm"
+        ),
+        peaks = os.path.join(
+            config["base_dir"], 
+            config["results_dir"],
+            "{TF}",
+            "fasta",
+            "{TF}.501bp.fa"
+        )
+    message:
+        "; Scan extended peaks - TF: {wildcards.TF} - MAT: {wildcards.n}"
+    output:
+        os.path.join(
+            config["base_dir"], 
+            config["results_dir"],
+            "{TF}",
+            "scan",
+            "501bp",
+            "{TF}_m{n}.501bp.fa"
+        )
+    params:
+        prog = os.path.join(
+            config["base_dir"],
+            config["scripts_dir"],
+            "pwm_searchPFF"
+        ),
+        outdir = os.path.join(
+            config["base_dir"],
+            config["results_dir"],
+            "{TF}",
+            "scan",
+            "501bp"
+        )
+    priority:
+        91
+    shell:
+        """
+        mkdir -p {params.outdir}
+        {params.prog} {input.pwm} {input.peaks} 0.85 -b > {output}
+        """
 
 # ###############################
 # ## Centrality test and plots ##

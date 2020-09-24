@@ -1,0 +1,10 @@
+Matrix (File) format conversion utilities
+------------------------------------------
+
+- jasparconvert.pl         Convert a JASPAR matrix file to MEME format (integer log-odds)
+- transfacconvert.pl       Convert a TRANSFAC matrix file to MEME format (integer log-odds)
+- pwmconvert.pl            Convert a real or SSA-formatted Position Weight Matrix (PWM) to integer plain-text format
+- lpmconvert.pl            Convert a Letter Probability Matrix (LPM) file to a PWM with integer log-odds weights
+- pfmconvert.pl            Convert a Position Frequency Matrix (PFM) file to a PWM with either integer log-odds weights
+                           or letter probabilities
+- pwm2lpmconvert.pl        Convert a Position Weight Matrix (PWM) to letter probability format (LPM)

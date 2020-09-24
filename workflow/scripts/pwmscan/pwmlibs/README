@@ -1,0 +1,51 @@
+PWM Collections
+============================================================================
+This directory contains the JASPAR CORE 2018 vertebrates, HOCOMOCO v11, and
+Isakova 2017 PWM collections.
+
+Except for the Isakova libraires, each library is provided in three formats: 
+the original MEME library that has been downloaded from the MEME Suite Web site
+(http://meme-suite.org/doc/download.html?man_type=web), and the two formats, 
+integer log-odds and letter-probability respectively, provided by the PWMScan
+Web site (http://ccg.vital-it.ch/pwmtools/pwmscan.php).
+
+The PWMScan libraries are available at FTP Site: ftp://ccg.vital-it.ch/pwmlib.
+
+As an example, to scan the human genome hg19 with the JASPAR CORE 2018 (meme format) and a 
+p-value of 10-4 you can execute the following command:
+
+  pwmlib_scan -l JASPAR_CORE_2018_vertebrates.meme -g meme -e 0.0001 -d /home/local/db/genome -s hg19 -w -p 2>pwmlib_scan_log.txt & 
+
+On a linux multi-core platform with 48 CPU cores, the whole process takes less than an hour
+for scanning the entire human genome with a total of 579 matrices.
+
+pwmlib_scan
+----------------------------------------------------------------------------
+Usage:
+    pwmlib_scan -l <pwmlib> -e <p-value> -d <genome-root-dir> -s <assembly[hg19|mm9|..]> [options]
+    - version 1.1.4
+    where options are:
+         -g  PWM format [def=logodds]. Accepted formats are : meme, logodds, and lpm
+         -f  Scan sequences in forward direction [def=bidirectional]
+         -o  Allow for overlapping matches [def=non-overlapping matches]
+         -w  Write output to file [def=STDOUT]
+         -p  Distribute matrix_scan on multiple CPU-cores [def=non-parallel processing]
+         -v  Verbose mode and keep PWM tmp files
+
+    Scan a genome assembly with a PWM collection. Accepeted PWM library formats are the MEME format
+    (<meme>), and the MEME-like log-odds and letter-probability formats (<logodds> and <lpm>).
+    Description of these formats is provided at http://ccg.vital-it.ch/pwmtools/pwmlib.html.
+
+Please report bugs to Giovanna.Ambrosini@epfl.ch
+
+----------------------------------------------------------------------------
+Please note that with the -w option (write ouput to file) set, a BEDdetail file is created for each
+PWM including the sites identified by PWMScan. BED filenames include the matrix name, the cut-off,
+and, should it be the case, the forward scanning flag (fwd).
+
+By default, the results of the PWMScan pipeline go to STDOUT. As an example, please try to scan the
+human genome hg19 with the Isakova 2017 PWM library using the following command:
+
+  pwmlib_scan -l isakova2017_human_matrix_probs.mat -g lpm -e 0.00001 -d /home/local/db/genome -s hg19 -p 2>pwmlib_scan_log.txt |sort -s -k1,1 -k2,2n > isakova2017_human_pwmscan.bed
+
+On the same linux platform as before, the execution of this command takes about 4 minutes for scanning 86 matrices. 

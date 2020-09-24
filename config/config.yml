@@ -3,7 +3,7 @@ author: Oriol_Fornes
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # Folders and required input files
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-base_dir : /home_local/ofornes/JASPAR-MoDisco
+base_dir : /Users/ofornes/GitHub/JASPAR-MoDisco/
 data_dir : ./resources/GRECO-BIT/data/
 genome : hg38
 genomes_dir : ./resources/databases/genomes/

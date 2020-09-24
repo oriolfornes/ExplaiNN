@@ -1,0 +1,313 @@
+#!/bin/bash
+
+# pwm_bowtie_wrapper: scan a genome with a PWM (using Bowtie)
+#  arguments:
+#              matrix-file
+#              p-value
+#              genome-root-dir
+#              assembly
+#
+#              forward scanning [-f]
+#              non-overlapping matches [DEFAULT]
+#              write output to file [-w]
+#
+#  25.11.2015  Giovanna Ambrosini
+#
+#  The <assembly> argument corresponds to the UCSC assembly name (e.g. hg19, mm9).
+#  The <genome-root-dir> is the root directory of the genome files.
+#
+#  The program writes the output to STDOUT, unless the -w option is specified, in which
+#  case results are written to file. BED filenames include the matrix name, the cut-off, 
+#  and, should it be case, the forward scanning flag (fwd).
+#
+#  The <genome-root-dir> is the root directory of the genome files.
+#  The Bowtie index files are lacated in <genome-root-dir>/bowtie.
+#
+#  The variable chrNC_dir (used to define the location of the chr_NC_gi/chr_hdr files)
+#  is set to:
+#  chrNC_dir=<genome-root-dir>
+#
+#  The variable bin_dir is set to /home/local/bin
+#
+#  05.12.2017  Giovanna Ambrosini
+#              Optimize Bowtie pipeline
+#              Use new version of the mba program
+#  12.12.2017  Giovanna Ambrosini
+#              Use getopts to parse script options
+#              Add forward scanning option
+#              Add write to file option
+#              Remove <genome-idx-file> argument
+#              (the variable is defined via the assoctaive array BOWTIEIDX)
+#  11.01.2018  Giovanna Ambrosini
+#              Simplify the definition of the path to the genome files:
+#              - the path to the assembly-specific data is defined by the
+#                <genome-root-dir> input argument
+#  16.02.2018  Giovanna Ambrosini
+#              Add optional parameter to set the background base composition
+
+E_BADARGS=85   # Wrong number of arguments passed to script.
+
+fwd_flag=""
+fwd_str=""
+forward=0
+w_flag=0
+non_overlapping=1
+
+matrix_file=""
+p_value=""
+genome_root_dir=""
+genome_idx_file=""
+assembly=""
+bg_freq=""
+
+display_usage() {
+      echo "Usage:"
+      echo "    pwm_bowtie_wrapper -m <matrix-file> -e <p-value> -d <genome-root-dir> -s <assembly[hg19|mm9|..]> [options]"
+      echo    "    - version 1.1.9"
+      echo    "    where options are:"
+      echo    "         -b <bg_comp>   Background model (residue priors), e.g. : 0.29,0.21,0.21,0.29"
+      echo    "                        [def=predefined for some common genome assemblies, else set to uniform]"
+      echo    "         -f             Scan sequences in forward direction [def=bidirectional]"
+      echo    "         -o             Allow for overlapping matches [def=non-overlapping matches]"
+      echo -e "         -w             Write output to file [def=STDOUT]\n"
+      echo -e "    Scan a genome (chromosome files from NCBI) with a PWM using Bowtie\n"
+      echo    "Please report bugs to Giovanna.Ambrosini@epfl.ch"
+}
+# Parse options
+while getopts ":hfowb:m:e:d:s:" opt; do
+  case ${opt} in
+    h )
+      display_usage
+      exit 0
+      ;;
+    f )
+      forward=1
+      ;;
+    o )
+      non_overlapping=0
+      ;;
+    b )
+      bg_freq=$OPTARG
+      ;;
+    m )
+      matrix_file=$OPTARG
+      ;;
+    e )
+      p_value=$OPTARG
+      ;;
+    d )
+      genome_root_dir=$OPTARG
+      ;;
+    s )
+      assembly=$OPTARG
+      ;;
+    w )
+      w_flag=1
+      ;;
+    :)
+      echo "Option -$OPTARG requires an argument." >&2
+      exit 1
+      ;;
+    \? )
+     echo "Invalid Option: -$OPTARG" 1>&2
+     exit 1
+     ;;
+  esac
+done
+shift $((OPTIND -1))
+
+parsed_args=$((OPTIND -1))
+
+if [ $parsed_args -le 1 ]
+then
+  display_usage
+  exit 1
+fi
+
+#echo "Matrix file    : $matrix_file" >&2
+#echo "P-value        : $p_value" >&2
+#echo "genome_root_dir: $genome_root_dir" >&2
+#echo "assembly       : $assembly" >&2
+
+if [ -z "$matrix_file" ]
+then
+  echo "Please specify the PWM file (-m)" >&2
+  exit 1
+fi
+if [ -z "$p_value" ]
+then
+  echo "Please specify the p-value (-e)" >&2
+  exit 1
+fi
+if [ -z "$genome_root_dir" ]
+then
+  echo "Please specify the genome root directory (-d)" >&2
+  exit 1
+fi
+if [ -z "$assembly" ]
+then
+  echo "Please specify the species assembly (-s)" >&2
+  exit 1
+fi
+
+bin_dir=$(echo /home/local/bin)
+
+bowtie_dir=$genome_root_dir"/bowtie"
+
+# Define the path to the assembly tables chr_NC_gi/chr_hdr (needed for BED-format conversion)
+chrNC_dir=$genome_root_dir
+
+# Declare associative array for bowtie index files
+declare -A BOWTIEIDX
+BOWTIEIDX[hg19]=h_sapiens_hg19
+BOWTIEIDX[hg18]=h_sapiens_hg18
+BOWTIEIDX[hg38]=h_sapiens_hg38
+BOWTIEIDX[mm9]=m_musculus_mm9
+BOWTIEIDX[mm10]=m_musculus_mm10
+BOWTIEIDX[bosTau3]=b_taurus_bosTau3
+BOWTIEIDX[bosTau8]=b_taurus_bosTau8
+BOWTIEIDX[canFam2]=c_familiaris_canFam2
+BOWTIEIDX[canFam3]=c_familiaris_canFam3
+BOWTIEIDX[panTro2]=p_troglodytes_panTro2
+BOWTIEIDX[panTro5]=p_troglodytes_panTro5
+BOWTIEIDX[rn5]=r_norvegicus_rn5
+BOWTIEIDX[rn6]=r_norvegicus_rn6
+BOWTIEIDX[dm3]=d_melanogaster_dm3
+BOWTIEIDX[dm6]=d_melanogaster_dm6
+BOWTIEIDX[ce6]=c_elegans_ce6
+BOWTIEIDX[ce10]=c_elegans_ce10
+BOWTIEIDX[ce11]=c_elegans_ce11
+BOWTIEIDX[danRer5]=d_rerio_danRer5
+BOWTIEIDX[danRer7]=d_rerio_danRer7
+BOWTIEIDX[danRer10]=d_rerio_danRer10
+BOWTIEIDX[sacCer2]=s_cerevisiae_sacCer2
+BOWTIEIDX[sacCer3]=s_cerevisiae_sacCer3
+
+#echo ${BOWTIEIDX[$assembly]} 
+genome_idx_file=${BOWTIEIDX[$assembly]}
+
+# Declare associative array for background base composition
+declare -A BGFREQ
+BGFREQ[hg19]=0.29,0.21,0.21,0.29
+BGFREQ[hg18]=0.29,0.21,0.21,0.29
+BGFREQ[hg38]=0.29,0.21,0.21,0.29
+BGFREQ[mm9]=0.29,0.21,0.21,0.29
+BGFREQ[mm10]=0.29,0.21,0.21,0.29
+BGFREQ[bosTau3]=0.29,0.21,0.21,0.29
+BGFREQ[bosTau8]=0.29,0.21,0.21,0.29
+BGFREQ[canFam2]=0.29,0.21,0.21,0.29
+BGFREQ[canFam3]=0.29,0.21,0.21,0.29
+BGFREQ[panTro2]=0.29,0.21,0.21,0.29
+BGFREQ[panTro5]=0.29,0.21,0.21,0.29
+BGFREQ[rn5]=0.28,0.22,0.22,0.28
+BGFREQ[rn6]=0.28,0.22,0.22,0.28
+BGFREQ[dm3]=0.29,0.21,0.21,0.29
+BGFREQ[dm6]=0.29,0.21,0.21,0.29
+BGFREQ[ce6]=0.32,0.18,0.18,0.32
+BGFREQ[ce10]=0.32,0.18,0.18,0.32
+BGFREQ[ce11]=0.32,0.18,0.18,0.32
+BGFREQ[danRer5]=0.32,0.18,0.18,0.32
+BGFREQ[danRer7]=0.32,0.18,0.18,0.32
+BGFREQ[danRer10]=0.32,0.18,0.18,0.32
+BGFREQ[sacCer2]=0.31,0.19,0.19,0.31
+BGFREQ[sacCer3]=0.31,0.19,0.19,0.31
+
+if [ -z "$bg_freq" ]
+then
+  bg_freq=${BGFREQ[$assembly]}
+fi
+
+if [ -z "$bg_freq" ]
+then
+  echo "WARNING : Setting the background composition to uniform [0.25,0.25,0.25,0.25]" >&2
+  bg_freq="0.25,0.25,0.25,0.25"
+fi
+echo "BG nucleotide composition: $bg_freq" >&2
+
+if [ ! -f "$matrix_file" ]
+then
+  echo "Matrix File \"$1\" does not exist." >&2
+  exit $E_BADARGS
+fi
+
+if [ ! -f "$bowtie_dir/$genome_idx_file.1.ebwt" ]
+then
+  echo "Genome File \"$1\" does not exist." >&2
+  exit $E_BADARGS
+fi
+
+# Extract basename from matrix file (without path)
+matrix_name=$(basename "$matrix_file")
+extension="${matrix_name##*.}"
+matrix_name="${matrix_name%.*}"
+matrix_name=${matrix_name%.mat}
+
+echo "PWM name: $matrix_name" >&2
+
+echo "========               Computing PWM length                ========" >&2
+matrix_len=$(cat $matrix_file | perl -ane 'next if (/^#/ or /^>/); print;' | wc -l)
+
+file_len=$(cat $matrix_file | wc -l)
+
+echo "PWM file: $matrix_file" >&2
+echo "PWM length: $matrix_len" >&2
+echo "PWM file length : $file_len lines" >&2
+
+echo "========               Calculating PWM score               ========" >&2
+matrix_score=$($bin_dir/matrix_prob -e $p_value --bg "$bg_freq" $matrix_file \
+	| grep SCORE | sed 's/:/\ /'\
+	| awk -F " " '{print $2}')
+
+echo "PWM score: $matrix_score" >&2
+
+if [ $forward == 1 ]
+then
+  echo "Scanning in forward direction..." >&2
+  fwd_str="fwd_"
+  fwd_flag="--norc"
+fi
+
+if [ $non_overlapping == 1 ]
+then
+  echo "Output non-overlapping matches..." >&2
+fi
+
+echo "========               Generating PWM score distribution   ========" >&2
+# Generate the Matrix Score Cumulative Table
+pwmScore_tab=${matrix_name}_co${matrix_score}_scoretab.txt
+$bin_dir/matrix_prob --bg "$bg_freq" $matrix_file 2>/dev/null > $pwmScore_tab
+
+echo "PWM distribution score: $pwmScore_tab" >&2
+
+# Run the Bowtie pipeline
+if [ $w_flag == 1 ]
+then
+  pwmout_bed=${matrix_name}_co${matrix_score}_${fwd_str}bowtie.bed
+else
+  pwmout_bed="/dev/stdout"
+fi
+
+echo "========               Bowtie-based pipeline               ========" >&2
+if [ $non_overlapping == 0 ]
+then
+  echo "$bin_dir/mba -c $matrix_score $matrix_file | awk '{print \">\"\$2\"\n\"\$1}' | bowtie --threads 4 $fwd_flag -l $matrix_len -n0 -a $bowtie_dir/$genome_idx_file -f - --un unmapped.dat | sort -s -k3,3 -k4,4n | $bin_dir/bowtie2bed -s $assembly -l $matrix_len -i $chrNC_dir | awk 'BEGIN { while((getline line < \"$pwmScore_tab\") > 0 ) {split(line,f,\" \"); pvalue[f[1]]=f[2]} close(\"$pwmScore_tab\")} {print \$1\"\t\"\$2\"\t\"\$3\"\t\"\$4\"\t\"\$5\"\t\"\$6\"\t\"\"$matrix_name\"\"\t\"\"P-value=\"pvalue[\$5]}' >$pwmout_bed" >&2
+  echo "..." >&2
+  $bin_dir/mba -c $matrix_score $matrix_file | awk '{print ">"$2"\n"$1}' | bowtie --threads 4 $fwd_flag -l $matrix_len -n0 -a $bowtie_dir/$genome_idx_file -f - --un unmapped.dat | sort -s -k3,3 -k4,4n | $bin_dir/bowtie2bed -s $assembly -l $matrix_len -i $chrNC_dir | awk -v scoretab="$pwmScore_tab" -v pwmname="$matrix_name" 'BEGIN { while((getline line < scoretab) > 0 ) {split(line,f," "); pvalue[f[1]]=f[2]} close(scoretab)} {print $1"\t"$2"\t"$3"\t"$4"\t"$5"\t"$6"\t"pwmname"\t""P-value="pvalue[$5]}' >$pwmout_bed
+else
+  echo "$bin_dir/mba -c $matrix_score $matrix_file | awk '{print \">\"\$2\"\n\"\$1}' | bowtie --threads 4 $fwd_flag -l $matrix_len -n0 -a $bowtie_dir/$genome_idx_file -f - --un unmapped.dat | sort -s -k3,3 -k4,4n | $bin_dir/bowtie2bed -s $assembly -l $matrix_len -i $chrNC_dir | $bin_dir/filterOverlaps -l$matrix_len  | awk 'BEGIN { while((getline line < \"$pwmScore_tab\") > 0 ) {split(line,f,\" \"); pvalue[f[1]]=f[2]} close(\"$pwmScore_tab\")} {print \$1\"\t\"\$2\"\t\"\$3\"\t\"\$4\"\t\"\$5\"\t\"\$6\"\t\"\"$matrix_name\"\"\t\"\"P-value=\"pvalue[\$5]}' >$pwmout_bed" >&2
+  echo "..." >&2
+  $bin_dir/mba -c $matrix_score $matrix_file | awk '{print ">"$2"\n"$1}' | bowtie --threads 4 $fwd_flag -l $matrix_len -n0 -a $bowtie_dir/$genome_idx_file -f - --un unmapped.dat | sort -s -k3,3 -k4,4n | $bin_dir/bowtie2bed -s $assembly -l $matrix_len -i $chrNC_dir | $bin_dir/filterOverlaps -l$matrix_len | awk -v scoretab="$pwmScore_tab" -v pwmname="$matrix_name" 'BEGIN { while((getline line < scoretab) > 0 ) {split(line,f," "); pvalue[f[1]]=f[2]} close(scoretab)} {print $1"\t"$2"\t"$3"\t"$4"\t"$5"\t"$6"\t"pwmname"\t""P-value="pvalue[$5]}' >$pwmout_bed
+fi
+
+if [ $w_flag == 1 ]
+then
+  echo "List of matches (BED format) : $pwmout_bed" >&2
+  nb_hits=`cat $pwmout_bed|wc -l`
+  echo "Total number of PWM matches  : $nb_hits" >&2
+fi
+
+if [ -e unmapped.dat ]
+then
+  rm unmapped.dat
+fi
+rm $pwmScore_tab

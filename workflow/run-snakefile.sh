@@ -7,4 +7,4 @@ eval "$(conda shell.bash hook)"
 conda activate JASPAR-MoDisco
 
 # Run workflow
-snakemake --snakefile Snakefile --cores 16 --configfile ../config/config.yml
+snakemake --snakefile Snakefile --cores 4 --configfile ../config/config.yml

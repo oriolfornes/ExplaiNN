@@ -2,6 +2,7 @@
 
 import argparse
 from Bio import motifs
+import numpy as np
 
 #-------------#
 # Functions   #
@@ -30,8 +31,8 @@ def main():
     m.pseudocounts = motifs.jaspar.calculate_pseudocounts(m)
 
     # Print PWM
-    for value in m.pssm.values():
-        print(" ".join([str(round(v, 8)).rjust(11) for v in value]))
+    for row in np.transpose(np.array(m.pssm.values())):
+        print(" ".join([str(round(e, 8)).rjust(11) for e in row]))
 
 #-------------#
 # Main        #

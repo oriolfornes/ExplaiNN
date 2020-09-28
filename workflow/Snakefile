@@ -231,7 +231,7 @@ rule all:
         MOTIF_RSAT_SITES,
         MOTIF_RSAT_SITES_BED,
         MOTIF_RSAT_SITES_FASTA,
-        PWM_SCAN,
+        # PWM_SCAN,
         # CENTRIMO_PVAL,
         # CENTRIMO_PLOT,
         # CENTRIMO_BEST,
@@ -500,7 +500,7 @@ rule Convert_PCMs_to_PWMs:
         prog = os.path.join(
             config["base_dir"],
             config["scripts_dir"],
-            "PCM_to_PWM.py"
+            "pcm2pwm.py"
         ),
         outdir = os.path.join(
             config["base_dir"],
@@ -554,7 +554,7 @@ rule Generate_motif_logos:
         prog = os.path.join(
             config["base_dir"],
             config["scripts_dir"],
-            "PCM_to_logo.py"
+            "pcm2logo.py"
         ),
         outdir = os.path.join(
             config["base_dir"],
@@ -722,69 +722,69 @@ rule Get_site_FASTA_sequences:
         {params.prog} -name -s -fi {params.fi} -bed {input} -fo {output}
         """
 
-# +++++++++++++++++++ #
-# Scan extended peaks #
-# +++++++++++++++++++ #
-rule Scan_extended_peaks:
-    """
-    Scan the PWM against the extended peaks (501bp).
-    Ex. output:
-    chr1:1097570-1098571	TFBS			+	-54.169	  23.4	16	37	seq...
-    chr1:1097570-1098571	TFBS			-	24.309	  89.5	16	37	seq...
-    chr1:1097570-1098571	TFBS			+	-53.356	  24.1	17	38	seq...
-    chr1:1097570-1098571	TFBS			-	24.386	  89.6	17	38	seq...
-    ...
+# # +++++++++++++++++++ #
+# # Scan extended peaks #
+# # +++++++++++++++++++ #
+# rule Scan_extended_peaks:
+#     """
+#     Scan the PWM against the extended peaks (501bp).
+#     Ex. output:
+#     chr1:1097570-1098571	TFBS			+	-54.169	  23.4	16	37	seq...
+#     chr1:1097570-1098571	TFBS			-	24.309	  89.5	16	37	seq...
+#     chr1:1097570-1098571	TFBS			+	-53.356	  24.1	17	38	seq...
+#     chr1:1097570-1098571	TFBS			-	24.386	  89.6	17	38	seq...
+#     ...
 
-    This rule is executed for each discovered motif.
-    """
-    input:
-        pwm = os.path.join(
-            config["base_dir"],
-            config["results_dir"],
-            "{TF}",
-            "motifs",
-            "jaspar",
-            "pwm",
-            "{TF}_peak-motifs_m{n}.jaspar.pssm"
-        ),
-        peaks = os.path.join(
-            config["base_dir"], 
-            config["results_dir"],
-            "{TF}",
-            "fasta",
-            "{TF}.501bp.fa"
-        )
-    message:
-        "; Scan extended peaks - TF: {wildcards.TF} - MAT: {wildcards.n}"
-    output:
-        os.path.join(
-            config["base_dir"], 
-            config["results_dir"],
-            "{TF}",
-            "scan",
-            "501bp",
-            "{TF}_m{n}.501bp.fa"
-        )
-    params:
-        prog = os.path.join(
-            config["base_dir"],
-            config["scripts_dir"],
-            "pwm_searchPFF"
-        ),
-        outdir = os.path.join(
-            config["base_dir"],
-            config["results_dir"],
-            "{TF}",
-            "scan",
-            "501bp"
-        )
-    priority:
-        91
-    shell:
-        """
-        mkdir -p {params.outdir}
-        {params.prog} {input.pwm} {input.peaks} 0.85 -b > {output}
-        """
+#     This rule is executed for each discovered motif.
+#     """
+#     input:
+#         pwm = os.path.join(
+#             config["base_dir"],
+#             config["results_dir"],
+#             "{TF}",
+#             "motifs",
+#             "jaspar",
+#             "pwm",
+#             "{TF}_peak-motifs_m{n}.jaspar.pssm"
+#         ),
+#         fasta = os.path.join(
+#             config["base_dir"], 
+#             config["results_dir"],
+#             "{TF}",
+#             "fasta",
+#             "{TF}.501bp.fa"
+#         )
+#     message:
+#         "; Scan extended peaks - TF: {wildcards.TF} - MAT: {wildcards.n}"
+#     output:
+#         os.path.join(
+#             config["base_dir"], 
+#             config["results_dir"],
+#             "{TF}",
+#             "scan",
+#             "501bp",
+#             "{TF}_m{n}.501bp.fa"
+#         )
+#     params:
+#         prog = os.path.join(
+#             config["base_dir"],
+#             config["scripts_dir"],
+#             "scan-sequences.sh"
+#         ),
+#         outdir = os.path.join(
+#             config["base_dir"],
+#             config["results_dir"],
+#             "{TF}",
+#             "scan",
+#             "501bp"
+#         )
+#     priority:
+#         91
+#     shell:
+#         """
+#         mkdir -p {params.outdir}
+#         {params.prog} {input.pwm} {input.fasta} {output}
+#         """
 
 # ###############################
 # ## Centrality test and plots ##

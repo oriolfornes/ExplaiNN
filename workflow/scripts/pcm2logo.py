@@ -3,9 +3,15 @@
 import argparse
 from Bio import motifs
 import logomaker
+from matplotlib import font_manager as fm
 import matplotlib.pyplot as plt
 import numpy as np
+import os
 import pandas as pd
+
+# Specify font
+scripts_dir = os.path.dirname(os.path.realpath(__file__))
+prop = fm.FontProperties(fname=os.path.join(scripts_dir, "fonts", "arial.ttf"))
 
 #-------------#
 # Functions   #
@@ -48,13 +54,15 @@ def main():
 
     # From https://logomaker.readthedocs.io/en/latest/examples.html
     fig, ax = plt.subplots(1, 1, figsize=(len(df)/2.0, 2))
-    logo = logomaker.Logo(df, ax=ax, show_spines=False, font_name="Arial")
+    logo = logomaker.Logo(df, ax=ax, show_spines=False)
     logo.style_spines(spines=["left", "bottom"], visible=True)
     logo.ax.set_aspect(1.5)
     logo.ax.xaxis.set_ticks(list(df.index))
-    logo.ax.set_ylabel("Bits")
+    logo.ax.set_xticklabels(labels=list(df.index), fontproperties=prop)
+    logo.ax.set_ylabel("Bits", fontproperties=prop)
     logo.ax.set_ylim(0, 2)
     logo.ax.yaxis.set_ticks([0, 1, 2])
+    logo.ax.set_yticklabels(labels=[0, 1, 2], fontproperties=prop)
 
     # Save logo
     fig.savefig(args.logo_file, bbox_inches="tight", pad_inches=0)

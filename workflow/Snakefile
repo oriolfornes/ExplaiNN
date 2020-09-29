@@ -59,7 +59,7 @@ import subprocess as sp
 
 # Extended peaks
 peak_lengths = ["101", "501"]
-EXTENDED_PEAKS_BED = expand(
+EXTENDED_PEAKS = expand(
     os.path.join(
         config["base_dir"], 
         config["results_dir"],
@@ -85,7 +85,7 @@ PEAKS_FASTA = expand(
 )
 
 # Discovered motifs (RSAT peak-motifs)
-MOTIFS_RSAT_TF = expand(
+MOTIFS_RSAT = expand(
     os.path.join(
         config["base_dir"], 
         config["results_dir"],
@@ -98,8 +98,8 @@ MOTIFS_RSAT_TF = expand(
     TF=data_TFs
 )
 
-# Motif formatting
-MOTIFS_RSAT_JASPAR = expand(
+# Formatted motifs
+MOTIFS_JASPAR = expand(
     os.path.join(
         config["base_dir"], 
         config["results_dir"],
@@ -111,30 +111,13 @@ MOTIFS_RSAT_JASPAR = expand(
     ),
     TF=data_TFs
 )
-
-# PWMs
-JASPAR_PWM = expand(
+MOTIFS_MEME = expand(
     os.path.join(
         config["base_dir"],
         config["results_dir"],
         "{TF}",
         "motifs",
-        "jaspar",
-        "pwm",
-        "{TF}_peak-motifs_m{n}.jaspar.pssm"
-    ),
-    zip,
-    TF=TFs,
-    n=NB
-)
-JASPAR_MEME = expand(
-    os.path.join(
-        config["base_dir"],
-        config["results_dir"],
-        "{TF}",
-        "motifs",
-        "jaspar",
-        "pwm",
+        "meme",
         "{TF}_peak-motifs_m{n}.jaspar.meme"
     ),
     zip,
@@ -143,13 +126,12 @@ JASPAR_MEME = expand(
 )
 
 # Logos
-JASPAR_LOGO = expand(
+MOTIFS_LOGO = expand(
     os.path.join(
         config["base_dir"],
         config["results_dir"],
         "{TF}",
         "motifs",
-        "jaspar",
         "logos",
         "{TF}_peak-motifs_m{n}_logo.png"
     ),
@@ -158,106 +140,59 @@ JASPAR_LOGO = expand(
     n=NB
 )
 
-# Matrix sites
-MOTIF_RSAT_SITES = expand(
+# Central erichment analysis
+CENTRIMO_PVAL = expand(
     os.path.join(
         config["base_dir"], 
         config["results_dir"],
         "{TF}",
-        "matrix_sites",
-        "{TF}_peak-motifs_m{n}.tf.sites"
+        "centrimo",
+        "{TF}_m{n}.501bp",
+        "centrimo.tsv"
     ),
     zip,
     TF=TFs,
     n=NB
 )
-MOTIF_RSAT_SITES_BED = expand(
+CENTRIMO_PLOT = expand(
     os.path.join(
         config["base_dir"], 
         config["results_dir"],
         "{TF}",
-        "matrix_sites",
-        "{TF}_peak-motifs_m{n}.tf.sites.bed"
-    ),
-    zip,
-    TF=TFs,
-    n=NB
-)
-MOTIF_RSAT_SITES_FASTA = expand(
-    os.path.join(
-        config["base_dir"], 
-        config["results_dir"],
-        "{TF}",
-        "matrix_sites",
-        "{TF}_peak-motifs_m{n}.tf.sites.fa"
+        "centrimo",
+        "{TF}_m{n}.501bp",
+        "plot.png"
     ),
     zip,
     TF=TFs,
     n=NB
 )
 
-# PWM scanning
-PWM_SCAN = expand(
-    os.path.join(
-        config["base_dir"], 
-        config["results_dir"],
-        "{TF}",
-        "scan",
-        "501bp",
-        "{TF}_m{n}.501bp.fa"
-    ),
-    zip,
-    TF=TFs,
-    n=NB
+# Dashboard
+DASHBOARD_HTML = os.path.join(
+    config["base_dir"], 
+    config["results_dir"],
+    "dashboard.html"
 )
 
-# # Central erichment
-# CENTRIMO_PVAL = expand(os.path.join(config["results_dir"], "{TF}",
-#     "central_enrichment", "{TF}_m{n}.501bp.fa.sites.centrimo"), zip, TF=TFs,
-#     n=NB)
-# CENTRIMO_PLOT = expand(os.path.join(config["results_dir"], "{TF}",
-#     "central_enrichment", "{TF}_m{n}.501bp.fa.sites.centrimo.pdf"), zip, TF=TFs,
-#     n=NB)
-# CENTRIMO_BEST = expand(os.path.join(config["results_dir"], "{TF}",
-#     "central_enrichment", "selected_motif",
-#     "{TF}.501bp.fa.sites.centrimo.best"), TF=TFs)
-# MOST_ENRICHED_MOTIF_ASSOC = expand(os.path.join(config["results_dir"], "{TF}",
-#     "central_enrichment", "selected_motif",
-#     "{TF}.501bp.fa.sites.centrimo.best.TF_associated"), TF=TFs)
-# MOST_ENRICHED_MOTIF_ASSOC_LOGO = expand(os.path.join(config["results_dir"],
-#     "{TF}", "central_enrichment", "selected_motif",
-#     "{TF}.501bp.fa.sites.centrimo.best.TF_associated.tex"), TF=TFs, n=NB)
-
-# # Selected motifs to curate
-# MOTIFS_TO_CURATE = os.path.join(config["results_dir"],
-#     "Selected_motifs_to_curate_log10_pval_-200.tab")
-# MOTIFS_TO_CURATE_PDF = os.path.join(config["results_dir"],
-#     "Selected_motifs_to_curate_log10_pval_-200.pdf")
-
+# ++++++++++++++++++++ #
+# Target rule          #
+# ++++++++++++++++++++ #
 rule all:
     input:
-        EXTENDED_PEAKS_BED,
+        EXTENDED_PEAKS,
         PEAKS_FASTA,
-        MOTIFS_RSAT_TF,
-        MOTIFS_RSAT_JASPAR,
-        JASPAR_PWM,
-        JASPAR_MEME,
-        JASPAR_LOGO,
-        MOTIF_RSAT_SITES,
-        MOTIF_RSAT_SITES_BED,
-        MOTIF_RSAT_SITES_FASTA,
-        PWM_SCAN,
-        # CENTRIMO_PVAL,
-        # CENTRIMO_PLOT,
-        # CENTRIMO_BEST,
-        # MOST_ENRICHED_MOTIF_ASSOC,
-        # MOST_ENRICHED_MOTIF_ASSOC_LOGO,
-        # MOTIFS_TO_CURATE,
-        # MOTIFS_TO_CURATE_PDF
+        MOTIFS_RSAT,
+        MOTIFS_JASPAR,
+        MOTIFS_LOGO,
+        MOTIFS_MEME,
+        CENTRIMO_PVAL,
+        CENTRIMO_PLOT,
+        # DASHBOARD_HTML
 
-# +++++++++++++++++++ #
-# Extend peak summits #
-# +++++++++++++++++++ #
+# ++++++++++++++++++++ #
+# Prepare data         #
+# ++++++++++++++++++++ #
 rule Extend_peak_summits:
     """
     Extend peak summits to both sides.
@@ -294,9 +229,6 @@ rule Extend_peak_summits:
         {params.prog} -b {params.b} -i {input} -g {params.g} > {output}
         """
 
-# +++++++++++++++++++ #
-# Get FASTA sequences #
-# +++++++++++++++++++ #
 rule Get_FASTA_sequences:
     """
     Get the FASTA sequences of the extended peaks.
@@ -334,14 +266,14 @@ rule Get_FASTA_sequences:
         """
 
 # ++++++++++++++++++++ #
-# Run RSAT peak-motifs #
+# Run RSAT analysis    #
 # ++++++++++++++++++++ #
 rule Run_RSAT_peak_motifs:
     """
     Run RSAT peak-motifs (motif discovery with different algorithms) on each
     set of peaks.
 
-    The set of discovered motifs is stored in a single file in TRANSFAC format.
+    Discovered motifs is stored in a single file in TRANSFAC format.
     """
     input:
         os.path.join(
@@ -413,9 +345,6 @@ rule Run_RSAT_peak_motifs:
         -outdir {params.outdir}
         """
 
-# +++++++++++++++++++++++ #
-# Run RSAT convert-matrix #
-# +++++++++++++++++++++++ #
 rule Run_RSAT_convert_matrix:
     """
     Run RSAT convert-matrix on each set of discovered motifs.
@@ -455,7 +384,6 @@ rule Run_RSAT_convert_matrix:
             "{TF}",
             "motifs",
             "jaspar",
-            "pfm",
             "{TF}"
         ),
         r = "counts"
@@ -480,65 +408,9 @@ rule Run_RSAT_convert_matrix:
         -o {params.o}
         """
 
-# ++++++++++++++++++++ #
-# Convert PCMs to PWMs #
-# ++++++++++++++++++++ #
-rule Convert_PCMs_to_PWMs:
-    """
-    Convert the PCMs in JASPAR format to PWMs.
-
-    This rule is executed for each discovered motif.
-    """
-    input:
-        os.path.join(
-            config["base_dir"],
-            config["results_dir"],
-            "{TF}",
-            "motifs",
-            "jaspar",
-            "pfm",
-            "{TF}_peak-motifs_m{n}.jaspar"
-        )
-    message:
-        "; Convert JASPAR PCMs to PWMs - TF: {wildcards.TF} - MAT: {wildcards.n}"
-    output:
-        os.path.join(
-            config["base_dir"],
-            config["results_dir"],
-            "{TF}",
-            "motifs",
-            "jaspar",
-            "pwm",
-            "{TF}_peak-motifs_m{n}.jaspar.pssm"
-        )
-    params:
-        prog = os.path.join(
-            config["base_dir"],
-            config["scripts_dir"],
-            "pcm2pwm.py"
-        ),
-        outdir = os.path.join(
-            config["base_dir"],
-            config["results_dir"],
-            "{TF}",
-            "motifs",
-            "jaspar",
-            "pwm"
-        )
-    priority:
-        96
-    shell:
-        """
-        mkdir -p {params.outdir}
-        python {params.prog} {input} > {output}
-        """
-
-# ++++++++++++++++++++ #
-# Generate motif logos #
-# ++++++++++++++++++++ #
 rule Generate_motif_logos:
     """
-    Generate a logo for each JASPAR PCM.
+    Generate a logo for each motif.
 
     This rule is executed for each discovered motif.
     """
@@ -560,7 +432,6 @@ rule Generate_motif_logos:
             config["results_dir"],
             "{TF}",
             "motifs",
-            "jaspar",
             "logos",
             "{TF}_peak-motifs_m{n}_logo.png"
         )
@@ -576,7 +447,6 @@ rule Generate_motif_logos:
             config["results_dir"],
             "{TF}",
             "motifs",
-            "jaspar",
             "logos"
         )
     priority:
@@ -587,168 +457,60 @@ rule Generate_motif_logos:
         python {params.prog} {input} {output}
         """
 
-# ++++++++++++++++++++++++++ #
-# Run RSAT matrix-scan-quick #
-# ++++++++++++++++++++++++++ #
-rule Run_RSAT_matrix_scan_quick:
+# ++++++++++++++++++++ #
+# Run CentriMo         #
+# ++++++++++++++++++++ #
+rule Reformat_motifs_to_MEME:
     """
-    Find the binding sites used to built the matrices.
+    Reformat motifs from JASPAR to MEME format.
 
     This rule is executed for each discovered motif.
     """
     input:
-        i = os.path.join(
-            config["base_dir"],
-            config["results_dir"],
-            "{TF}",
-            "peak-motifs",
-            "data",
-            "sequences",
-            "{TF}_test.fasta"
-        ),
-        m = os.path.join(
+        os.path.join(
             config["base_dir"],
             config["results_dir"],
             "{TF}",
             "motifs",
             "jaspar",
             "pfm",
-            "{TF}_peak-motifs_m{n}.tab"
-        ),
-        bgfile = os.path.join(
-            config["base_dir"],
-            config["results_dir"],
-            "{TF}",
-            "peak-motifs",
-            "results",
-            "composition",
-            "{TF}_test_inclusive-1str-ovlp_2nt.txt"
+            "{TF}_peak-motifs_m{n}.jaspar"
         )
     message:
-        "; Run RSAT matrix-scan-quick - TF: {wildcards.TF} - MAT: {wildcards.n}"
+        "; Reformat motifs - TF: {wildcards.TF} - MAT: {wildcards.n}"
     output:
         os.path.join(
             config["base_dir"],
             config["results_dir"],
             "{TF}",
-            "matrix_sites",
-            "{TF}_peak-motifs_m{n}.tf.sites"
-        )
-    params:
-        prog = "RSAT matrix-scan-quick",
-        outdir = os.path.join(
-            config["base_dir"],
-            config["results_dir"],
-            "{TF}",
-            "matrix_sites",
-        )
-    priority:
-        94
-    shell:
-        """
-        mkdir -p {params.outdir}
-        {params.prog}  \
-        -i {input.i} \
-        -m {input.m} \
-        -bgfile {input.bgfile} \
-        -t 5 \
-        -return sites > {output}
-        """
-
-# ++++++++++++++++++++ #
-# Get site coordinates #
-# ++++++++++++++++++++ #
-rule Get_site_coordinates:
-    """
-    Get the genomic coordinates (BED file) of the matrix sites.
-
-    This rule is executed for each discovered motif.
-    """
-    input:
-        os.path.join(
-            config["base_dir"],
-            config["results_dir"],
-            "{TF}",
-            "matrix_sites",
-            "{TF}_peak-motifs_m{n}.tf.sites"
-        )
-    message:
-        "; Get coordinates of sites - TF: {wildcards.TF} - MAT: {wildcards.n}"
-    output:
-        os.path.join(
-            config["base_dir"],
-            config["results_dir"],
-            "{TF}",
-            "matrix_sites",
-            "{TF}_peak-motifs_m{n}.tf.sites.bed"
+            "motifs",
+            "meme",
+            "{TF}_peak-motifs_m{n}.jaspar.meme"
         )
     params:
         prog = os.path.join(
             config["base_dir"],
             config["scripts_dir"],
-            "sites-to-bed.awk"
+            "pcm2pwm.py"
         ),
-        genome = config["genome"]
-    priority:
-        93
-    shell:
-        """
-        awk -f {params.prog} -v genome="{params.genome}" {input} > {output}
-        """
-
-# ++++++++++++++++++ #
-# Get site sequences #
-# ++++++++++++++++++ #
-rule Get_site_FASTA_sequences:
-    """
-    Get the FASTA sequences of the of the matrix sites.
-
-    This rule is executed for each discovered motif.
-    """
-    input:
-        os.path.join(
+        outdir = os.path.join(
             config["base_dir"],
             config["results_dir"],
             "{TF}",
-            "matrix_sites",
-            "{TF}_peak-motifs_m{n}.tf.sites.bed"
-        )
-    message:
-        "; Get sequences of sites - TF: {wildcards.TF} - MAT: {wildcards.n}"
-    output:
-        os.path.join(
-            config["base_dir"],
-            config["results_dir"],
-            "{TF}",
-            "matrix_sites",
-            "{TF}_peak-motifs_m{n}.tf.sites.fa"
-        )
-    params:
-        prog = "bedtools getfasta",
-        fi = os.path.join(
-            config["base_dir"],
-            config["genomes_dir"],
-            "%s.fa" % config["genome"]
+            "motifs",
+            "meme"
         )
     priority:
-        92
+        96
     shell:
         """
-        {params.prog} -name -s -fi {params.fi} -bed {input} -fo {output}
+        mkdir -p {params.outdir}
+        python {params.prog} {input} --format meme > {output}
         """
 
-# +++++++++++++++++++ #
-# Scan extended peaks #
-# +++++++++++++++++++ #
-rule Scan_extended_peaks:
+rule Run_centrimo:
     """
-    Scan the PWM against the extended peaks (501bp).
-    Ex. output:
-    chr1:1097570-1098571	TFBS			+	-54.169	  23.4	16	37	seq...
-    chr1:1097570-1098571	TFBS			-	24.309	  89.5	16	37	seq...
-    chr1:1097570-1098571	TFBS			+	-53.356	  24.1	17	38	seq...
-    chr1:1097570-1098571	TFBS			-	24.386	  89.6	17	38	seq...
-    ...
+    Calculate p-value for central enrichment.
 
     This rule is executed for each discovered motif.
     """
@@ -759,8 +521,8 @@ rule Scan_extended_peaks:
             "{TF}",
             "motifs",
             "jaspar",
-            "pwm",
-            "{TF}_peak-motifs_m{n}.jaspar.pssm"
+            "meme",
+            "{TF}_peak-motifs_m{n}.jaspar.meme"
         ),
         fasta = os.path.join(
             config["base_dir"], 
@@ -770,45 +532,469 @@ rule Scan_extended_peaks:
             "{TF}.501bp.fa"
         )
     message:
-        "; Scan extended peaks - TF: {wildcards.TF} - MAT: {wildcards.n}"
+        "; Run centrimo - TF: {wildcards.TF} - MAT: {wildcards.n}"
     output:
         os.path.join(
             config["base_dir"], 
             config["results_dir"],
             "{TF}",
-            "scan",
-            "501bp",
-            "{TF}_m{n}.501bp.fa"
+            "centrimo",
+            "{TF}_m{n}.501bp",
+            "centrimo.tsv"
         )
     params:
-        # prog = os.path.join(
-        #     config["base_dir"],
-        #     config["scripts_dir"],
-        #     "scan-sequences.sh"
-        # ),
         prog = os.path.join(
             config["base_dir"],
             config["scripts_dir"],
-            "pwm_searchPFF"
+            "centrimo"
         ),
-        outdir = os.path.join(
-            config["base_dir"],
+        oc = os.path.join(
+            config["base_dir"], 
             config["results_dir"],
             "{TF}",
-            "scan",
-            "501bp"
+            "centrimo",
+            "{TF}_m{n}.501bp"
         )
     priority:
         91
     shell:
         """
-        mkdir -p {params.outdir}
-        {params.prog} {input.pwm} {input.fasta} 0.85 -b > {output}
+        {params.prog} --use-lo-fraction --oc {params.oc} --score 0.85 \
+        {input.fasta} {input.pwm}
         """
 
-# ###############################
-# ## Centrality test and plots ##
-# ###############################
+# ++++++++++++++++++++ #
+# Generate dashboard   #
+# ++++++++++++++++++++ #
+# rule Generate_dashboard:
+#     """
+#     Summarize results in a dashboard.
+
+#     This rule is executed once.
+#     """
+#     input:
+#         os.path.join(
+#             config["base_dir"],
+#             config["results_dir"]
+#         )
+#     message:
+#         "; Generate dashboard"
+#     output:
+#         os.path.join(
+#             config["base_dir"], 
+#             config["results_dir"],
+#             "dashboard.html"
+#         )
+#     params:
+#         prog = os.path.join(
+#             config["base_dir"],
+#             config["scripts_dir"],
+#             "dashboard.py"
+#         )
+#     priority:
+#         1
+#     shell:
+#         """
+#         python {params.prog} {input} {output}
+#         """
+
+# # +++++++++++++++++++++++ #
+# # Extra unnecessary stuff #
+# # +++++++++++++++++++++++ #
+# JASPAR_PWM = expand(
+#     os.path.join(
+#         config["base_dir"],
+#         config["results_dir"],
+#         "{TF}",
+#         "motifs",
+#         "jaspar",
+#         "pwm",
+#         "{TF}_peak-motifs_m{n}.jaspar.pssm"
+#     ),
+#     zip,
+#     TF=TFs,
+#     n=NB
+# )
+
+# # Matrix sites
+# MOTIF_RSAT_SITES = expand(
+#     os.path.join(
+#         config["base_dir"], 
+#         config["results_dir"],
+#         "{TF}",
+#         "matrix_sites",
+#         "{TF}_peak-motifs_m{n}.tf.sites"
+#     ),
+#     zip,
+#     TF=TFs,
+#     n=NB
+# )
+# MOTIF_RSAT_SITES_BED = expand(
+#     os.path.join(
+#         config["base_dir"], 
+#         config["results_dir"],
+#         "{TF}",
+#         "matrix_sites",
+#         "{TF}_peak-motifs_m{n}.tf.sites.bed"
+#     ),
+#     zip,
+#     TF=TFs,
+#     n=NB
+# )
+# MOTIF_RSAT_SITES_FASTA = expand(
+#     os.path.join(
+#         config["base_dir"], 
+#         config["results_dir"],
+#         "{TF}",
+#         "matrix_sites",
+#         "{TF}_peak-motifs_m{n}.tf.sites.fa"
+#     ),
+#     zip,
+#     TF=TFs,
+#     n=NB
+# )
+
+# # Logos
+# JASPAR_LOGO = expand(
+#     os.path.join(
+#         config["base_dir"],
+#         config["results_dir"],
+#         "{TF}",
+#         "motifs",
+#         "jaspar",
+#         "logos",
+#         "{TF}_peak-motifs_m{n}_logo.png"
+#     ),
+#     zip,
+#     TF=TFs,
+#     n=NB
+# )
+
+# CENTRIMO_PLOT = expand(
+#     os.path.join(
+#         config["base_dir"], 
+#         config["results_dir"],
+#         "{TF}",
+#         "centrimo",
+#         "{TF}_m{n}.501bp",
+#         "plot.png"
+#     ),
+#     zip,
+#     TF=TFs,
+#     n=NB
+# )
+# CENTRIMO_BEST =  expand(
+#     os.path.join(
+#         config["base_dir"], 
+#         config["results_dir"],
+#         "{TF}",
+#         "centrimo",
+#         "{TF}.501bp.fa.sites.centrimo.best"
+#     ),
+#     TF=TFs
+# )
+# MOST_ENRICHED_MOTIF_ASSOC = expand(os.path.join(config["results_dir"], "{TF}",
+#     "central_enrichment", "selected_motif",
+#     "{TF}.501bp.fa.sites.centrimo.best.TF_associated"), TF=TFs)
+# MOST_ENRICHED_MOTIF_ASSOC_LOGO = expand(os.path.join(config["results_dir"],
+#     "{TF}", "central_enrichment", "selected_motif",
+#     "{TF}.501bp.fa.sites.centrimo.best.TF_associated.tex"), TF=TFs, n=NB)
+
+# # Selected motifs to curate
+# MOTIFS_TO_CURATE = os.path.join(config["results_dir"],
+#     "Selected_motifs_to_curate_log10_pval_-200.tab")
+# MOTIFS_TO_CURATE_PDF = os.path.join(config["results_dir"],
+#     "Selected_motifs_to_curate_log10_pval_-200.pdf")
+
+# # PWM scanning
+# PWM_SCAN = expand(
+#     os.path.join(
+#         config["base_dir"], 
+#         config["results_dir"],
+#         "{TF}",
+#         "scan",
+#         "501bp",
+#         "{TF}_m{n}.501bp.fa"
+#     ),
+#     zip,
+#     TF=TFs,
+#     n=NB
+# )
+
+# rule Run_JASPAR_to_MEME:
+#     """
+#     Convert motifs from JASPAR to MEME format.
+
+#     This rule is executed for each discovered motif.
+#     """
+#     input:
+#         os.path.join(
+#             config["base_dir"],
+#             config["results_dir"],
+#             "{TF}",
+#             "motifs",
+#             "jaspar",
+#             "pfm",
+#             "{TF}_peak-motifs_m{n}.jaspar"
+#         )
+#     message:
+#         "; Run JASPAR to MEME - TF: {wildcards.TF} - MAT: {wildcards.n}"
+#     output:
+#         os.path.join(
+#             config["base_dir"],
+#             config["results_dir"],
+#             "{TF}",
+#             "motifs",
+#             "jaspar",
+#             "meme",
+#             "{TF}_peak-motifs_m{n}.jaspar.meme"
+#         )
+#     params:
+#         prog = os.path.join(
+#             config["base_dir"],
+#             config["scripts_dir"],
+#             "jaspar2meme"
+#         ),
+#         outdir = os.path.join(
+#             config["base_dir"],
+#             config["results_dir"],
+#             "{TF}",
+#             "motifs",
+#             "jaspar",
+#             "meme"
+#         )
+#     priority:
+#         96
+#     shell:
+#         """
+#         mkdir -p {params.outdir}
+#         {params.prog} -bundle -pfm {input} > {output}
+#         """
+
+# # ++++++++++++++++++++ #
+# # Generate motif logos #
+# # ++++++++++++++++++++ #
+
+
+# # ++++++++++++++++++++++++++ #
+# # Run RSAT matrix-scan-quick #
+# # ++++++++++++++++++++++++++ #
+# rule Run_RSAT_matrix_scan_quick:
+#     """
+#     Find the binding sites used to built the matrices.
+
+#     This rule is executed for each discovered motif.
+#     """
+#     input:
+#         i = os.path.join(
+#             config["base_dir"],
+#             config["results_dir"],
+#             "{TF}",
+#             "peak-motifs",
+#             "data",
+#             "sequences",
+#             "{TF}_test.fasta"
+#         ),
+#         m = os.path.join(
+#             config["base_dir"],
+#             config["results_dir"],
+#             "{TF}",
+#             "motifs",
+#             "jaspar",
+#             "pfm",
+#             "{TF}_peak-motifs_m{n}.tab"
+#         ),
+#         bgfile = os.path.join(
+#             config["base_dir"],
+#             config["results_dir"],
+#             "{TF}",
+#             "peak-motifs",
+#             "results",
+#             "composition",
+#             "{TF}_test_inclusive-1str-ovlp_2nt.txt"
+#         )
+#     message:
+#         "; Run RSAT matrix-scan-quick - TF: {wildcards.TF} - MAT: {wildcards.n}"
+#     output:
+#         os.path.join(
+#             config["base_dir"],
+#             config["results_dir"],
+#             "{TF}",
+#             "matrix_sites",
+#             "{TF}_peak-motifs_m{n}.tf.sites"
+#         )
+#     params:
+#         prog = "RSAT matrix-scan-quick",
+#         outdir = os.path.join(
+#             config["base_dir"],
+#             config["results_dir"],
+#             "{TF}",
+#             "matrix_sites",
+#         )
+#     priority:
+#         94
+#     shell:
+#         """
+#         mkdir -p {params.outdir}
+#         {params.prog}  \
+#         -i {input.i} \
+#         -m {input.m} \
+#         -bgfile {input.bgfile} \
+#         -t 5 \
+#         -return sites > {output}
+#         """
+
+# # ++++++++++++++++++++ #
+# # Get site coordinates #
+# # ++++++++++++++++++++ #
+# rule Get_site_coordinates:
+#     """
+#     Get the genomic coordinates (BED file) of the matrix sites.
+
+#     This rule is executed for each discovered motif.
+#     """
+#     input:
+#         os.path.join(
+#             config["base_dir"],
+#             config["results_dir"],
+#             "{TF}",
+#             "matrix_sites",
+#             "{TF}_peak-motifs_m{n}.tf.sites"
+#         )
+#     message:
+#         "; Get coordinates of sites - TF: {wildcards.TF} - MAT: {wildcards.n}"
+#     output:
+#         os.path.join(
+#             config["base_dir"],
+#             config["results_dir"],
+#             "{TF}",
+#             "matrix_sites",
+#             "{TF}_peak-motifs_m{n}.tf.sites.bed"
+#         )
+#     params:
+#         prog = os.path.join(
+#             config["base_dir"],
+#             config["scripts_dir"],
+#             "sites-to-bed.awk"
+#         ),
+#         genome = config["genome"]
+#     priority:
+#         93
+#     shell:
+#         """
+#         awk -f {params.prog} -v genome="{params.genome}" {input} > {output}
+#         """
+
+# # ++++++++++++++++++ #
+# # Get site sequences #
+# # ++++++++++++++++++ #
+# rule Get_site_FASTA_sequences:
+#     """
+#     Get the FASTA sequences of the of the matrix sites.
+
+#     This rule is executed for each discovered motif.
+#     """
+#     input:
+#         os.path.join(
+#             config["base_dir"],
+#             config["results_dir"],
+#             "{TF}",
+#             "matrix_sites",
+#             "{TF}_peak-motifs_m{n}.tf.sites.bed"
+#         )
+#     message:
+#         "; Get sequences of sites - TF: {wildcards.TF} - MAT: {wildcards.n}"
+#     output:
+#         os.path.join(
+#             config["base_dir"],
+#             config["results_dir"],
+#             "{TF}",
+#             "matrix_sites",
+#             "{TF}_peak-motifs_m{n}.tf.sites.fa"
+#         )
+#     params:
+#         prog = "bedtools getfasta",
+#         fi = os.path.join(
+#             config["base_dir"],
+#             config["genomes_dir"],
+#             "%s.fa" % config["genome"]
+#         )
+#     priority:
+#         92
+#     shell:
+#         """
+#         {params.prog} -name -s -fi {params.fi} -bed {input} -fo {output}
+#         """
+
+# +++++++++++++++++++ #
+# Scan extended peaks #
+# +++++++++++++++++++ #
+# rule Scan_extended_peaks:
+#     """
+#     Scan the PWM against the extended peaks (501bp).
+#     Ex. output:
+#     chr1:1097570-1098571	TFBS			+	-54.169	  23.4	16	37	seq...
+#     chr1:1097570-1098571	TFBS			-	24.309	  89.5	16	37	seq...
+#     chr1:1097570-1098571	TFBS			+	-53.356	  24.1	17	38	seq...
+#     chr1:1097570-1098571	TFBS			-	24.386	  89.6	17	38	seq...
+#     ...
+
+#     This rule is executed for each discovered motif.
+#     """
+#     input:
+#         pwm = os.path.join(
+#             config["base_dir"],
+#             config["results_dir"],
+#             "{TF}",
+#             "motifs",
+#             "jaspar",
+#             "pwm",
+#             "{TF}_peak-motifs_m{n}.jaspar.pssm"
+#         ),
+#         fasta = os.path.join(
+#             config["base_dir"], 
+#             config["results_dir"],
+#             "{TF}",
+#             "fasta",
+#             "{TF}.501bp.fa"
+#         )
+#     message:
+#         "; Scan extended peaks - TF: {wildcards.TF} - MAT: {wildcards.n}"
+#     output:
+#         os.path.join(
+#             config["base_dir"], 
+#             config["results_dir"],
+#             "{TF}",
+#             "scan",
+#             "501bp",
+#             "{TF}_m{n}.501bp.fa"
+#         )
+#     params:
+#         # prog = os.path.join(
+#         #     config["base_dir"],
+#         #     config["scripts_dir"],
+#         #     "scan-sequences.sh"
+#         # ),
+#         prog = os.path.join(
+#             config["base_dir"],
+#             config["scripts_dir"],
+#             "pwm_searchPFF"
+#         ),
+#         outdir = os.path.join(
+#             config["base_dir"],
+#             config["results_dir"],
+#             "{TF}",
+#             "scan",
+#             "501bp"
+#         )
+#     priority:
+#         91
+#     shell:
+#         """
+#         mkdir -p {params.outdir}
+#         {params.prog} {input.pwm} {input.fasta} 0.85 -b > {output}
+#         """
+
 # rule Calculate_centrimo_pvalue:
 #     """
 #     Calculate p-value for central enrichment.
@@ -836,49 +1022,6 @@ rule Scan_extended_peaks:
 #         nb_peaks="$(wc -l {input.peaks} | cut -d " " -f 1)" ;
 
 #         {params.scripts_bin}/centrimo_pval {input.sites} ${{nb_TFBS}} ${{nb_peaks}} 250 > {output}
-#         """
-
-# rule generate_centrimo_plots:
-#     """
-#     Generate centrimo plots (local enrichment) around the peak summits.
-
-#     This rule is executed for each discovered motif.
-#     """
-#     input:
-#         os.path.join(config["out_dir"], "{TF}", "scan", "501bp", "{TF}_m{n}.501bp.fa")
-#     output:
-#         os.path.join(config["out_dir"], "{TF}", "central_enrichment", "{TF}_m{n}.501bp.fa.sites.centrimo.pdf")
-#     message:
-#         "; Scanning PSSM - TF : {wildcards.TF} - Matrix number: {wildcards.n}"
-#     params:
-#         scripts_bin = config["bin"]
-#     priority:
-#         88
-#     shell:
-#         """
-#         R --vanilla --slave --silent -f {params.scripts_bin}/centrimo_plot.R --args {input} {output}
-#         """
-
-# rule choose_best_centrimo_experiment:
-#     """
-#     Select the motif with the best (lowest) centrimo p-value.
-
-#     This rule is executed for each dataset (experiment).
-#     """
-#     input:
-#         os.path.join(config["out_dir"], "{TF}", "motifs", "jaspar", "pfm", "{TF}_matrix_list.tab")
-#     output:
-#         os.path.join(config["out_dir"], "{TF}", "central_enrichment", "selected_motif", "{TF}.501bp.fa.sites.centrimo.best")
-#     message:
-#         "; Selecting the most centrally enriched motif - TF : {wildcards.TF} "
-#     params:
-#         scripts_bin = config["bin"],
-#         centrimo_dir = os.path.join(config["out_dir"], "{TF}", "central_enrichment")
-#     priority:
-#         87
-#     shell:
-#         """
-#         bash {params.scripts_bin}/best_centrimo.sh -i {params.centrimo_dir} > {output}
 #         """
 
 # ## NOTE 4: the awk variables are relative to the experiment table.
@@ -924,6 +1067,107 @@ rule Scan_extended_peaks:
 #     shell:
 #         """
 #         bash {params.scripts_bin}/create_latex_logos.sh -l {params.scripts_bin}/latex_header.txt -i {input} -o {output}
+#         """
+
+# rule Generate_centrimo_plots:
+#     """
+#     Generate centrimo plots (local enrichment) around the peak summits.
+
+#     This rule is executed for each discovered motif.
+#     """
+#     input:
+#         os.path.join(
+#             config["base_dir"], 
+#             config["results_dir"],
+#             "{TF}",
+#             "motifs",
+#             "jaspar",
+#             "pfm",
+#             "{TF}_matrix_list.tab"
+#         )
+#     message:
+#         "; Generate centrimo plots - TF: {wildcards.TF} - MAT: {wildcards.n}"
+#     output:
+#         os.path.join(
+#             config["base_dir"], 
+#             config["results_dir"],
+#             "{TF}",
+#             "centrimo",
+#             "{TF}_m{n}.501bp",
+#             "plot.png"
+#         )
+#     params:
+#         prog = os.path.join(
+#             config["base_dir"],
+#             config["scripts_dir"],
+#             "centrimo-plot.py"
+#         ),
+#         tsv = os.path.join(
+#             config["base_dir"], 
+#             config["results_dir"],
+#             "{TF}",
+#             "centrimo",
+#             "{TF}_m{n}.501bp",
+#             "centrimo.tsv"
+#         ),
+#         sites = os.path.join(
+#             config["base_dir"], 
+#             config["results_dir"],
+#             "{TF}",
+#             "centrimo",
+#             "{TF}_m{n}.501bp",
+#             "site_counts.txt"
+#         )
+#     priority:
+#         90
+#     shell:
+#         """
+#         python {params.prog} {params.tsv} {params.sites} {output}
+#         """
+
+# rule Select_best_centrimo_experiment:
+#     """
+#     Select the motif with the best (lowest) centrimo p-value.
+
+#     This rule is executed for each dataset (experiment).
+#     """
+#     input:
+#         os.path.join(
+#             config["base_dir"], 
+#             config["results_dir"],
+#             "{TF}",
+#             "motifs",
+#             "jaspar",
+#             "pfm",
+#             "{TF}_matrix_list.tab"
+#         )
+#     message:
+#         "; Selecting the most centrally enriched motif - TF : {wildcards.TF}"
+#     output:
+#         os.path.join(
+#             config["base_dir"], 
+#             config["results_dir"],
+#             "{TF}",
+#             "centrimo",
+#             "{TF}.501bp.fa.sites.centrimo.best"
+#         )
+#     params:
+#         prog = os.path.join(
+#             config["base_dir"],
+#             config["scripts_dir"],
+#             "best-centrimo.py"
+#         ),
+#         centrimo_dir = os.path.join(
+#             config["base_dir"],
+#             config["results_dir"],
+#             "{TF}",
+#             "centrimo"
+#         )
+#     priority:
+#         89
+#     shell:
+#         """
+#         python {params.prog} {params.centrimo_dir} > {output}
 #         """
 
 # rule Concat_annotated_experiments:

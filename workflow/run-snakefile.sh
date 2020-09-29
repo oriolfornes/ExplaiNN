@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # i.e. enable conda (de)activate
 eval "$(conda shell.bash hook)"

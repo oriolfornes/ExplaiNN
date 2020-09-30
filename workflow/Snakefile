@@ -118,7 +118,7 @@ MOTIFS_MEME = expand(
         "{TF}",
         "motifs",
         "meme",
-        "{TF}_peak-motifs_m{n}.jaspar.meme"
+        "{TF}_peak-motifs_m{n}.meme"
     ),
     zip,
     TF=TFs,
@@ -133,7 +133,7 @@ MOTIFS_LOGO = expand(
         "{TF}",
         "motifs",
         "logos",
-        "{TF}_peak-motifs_m{n}_logo.png"
+        "{TF}_peak-motifs_m{n}.png"
     ),
     zip,
     TF=TFs,
@@ -433,7 +433,7 @@ rule Generate_motif_logos:
             "{TF}",
             "motifs",
             "logos",
-            "{TF}_peak-motifs_m{n}_logo.png"
+            "{TF}_peak-motifs_m{n}.png"
         )
 
     params:
@@ -485,7 +485,7 @@ rule Reformat_motifs_to_MEME:
             "{TF}",
             "motifs",
             "meme",
-            "{TF}_peak-motifs_m{n}.jaspar.meme"
+            "{TF}_peak-motifs_m{n}.meme"
         )
     params:
         prog = os.path.join(
@@ -520,9 +520,8 @@ rule Run_centrimo:
             config["results_dir"],
             "{TF}",
             "motifs",
-            "jaspar",
             "meme",
-            "{TF}_peak-motifs_m{n}.jaspar.meme"
+            "{TF}_peak-motifs_m{n}.meme"
         ),
         fasta = os.path.join(
             config["base_dir"], 
@@ -561,6 +560,62 @@ rule Run_centrimo:
         """
         {params.prog} --use-lo-fraction --oc {params.oc} --score 0.85 \
         {input.fasta} {input.pwm}
+        """
+
+rule Generate_centrimo_plots:
+    """
+    Generate centrimo plots (local enrichment) around the peak summits.
+
+    This rule is executed for each discovered motif.
+    """
+    input:
+        os.path.join(
+            config["base_dir"], 
+            config["results_dir"],
+            "{TF}",
+            "motifs",
+            "jaspar",
+            "pfm",
+            "{TF}_matrix_list.tab"
+        )
+    message:
+        "; Generate centrimo plots - TF: {wildcards.TF} - MAT: {wildcards.n}"
+    output:
+        os.path.join(
+            config["base_dir"], 
+            config["results_dir"],
+            "{TF}",
+            "centrimo",
+            "{TF}_m{n}.501bp",
+            "plot.png"
+        )
+    params:
+        prog = os.path.join(
+            config["base_dir"],
+            config["scripts_dir"],
+            "centrimo-plot.py"
+        ),
+        tsv = os.path.join(
+            config["base_dir"], 
+            config["results_dir"],
+            "{TF}",
+            "centrimo",
+            "{TF}_m{n}.501bp",
+            "centrimo.tsv"
+        ),
+        sites = os.path.join(
+            config["base_dir"], 
+            config["results_dir"],
+            "{TF}",
+            "centrimo",
+            "{TF}_m{n}.501bp",
+            "site_counts.txt"
+        )
+    priority:
+        90
+    shell:
+        """
+        python {params.prog} {params.tsv} {params.sites} {output}
         """
 
 # ++++++++++++++++++++ #
@@ -1067,62 +1122,6 @@ rule Run_centrimo:
 #     shell:
 #         """
 #         bash {params.scripts_bin}/create_latex_logos.sh -l {params.scripts_bin}/latex_header.txt -i {input} -o {output}
-#         """
-
-# rule Generate_centrimo_plots:
-#     """
-#     Generate centrimo plots (local enrichment) around the peak summits.
-
-#     This rule is executed for each discovered motif.
-#     """
-#     input:
-#         os.path.join(
-#             config["base_dir"], 
-#             config["results_dir"],
-#             "{TF}",
-#             "motifs",
-#             "jaspar",
-#             "pfm",
-#             "{TF}_matrix_list.tab"
-#         )
-#     message:
-#         "; Generate centrimo plots - TF: {wildcards.TF} - MAT: {wildcards.n}"
-#     output:
-#         os.path.join(
-#             config["base_dir"], 
-#             config["results_dir"],
-#             "{TF}",
-#             "centrimo",
-#             "{TF}_m{n}.501bp",
-#             "plot.png"
-#         )
-#     params:
-#         prog = os.path.join(
-#             config["base_dir"],
-#             config["scripts_dir"],
-#             "centrimo-plot.py"
-#         ),
-#         tsv = os.path.join(
-#             config["base_dir"], 
-#             config["results_dir"],
-#             "{TF}",
-#             "centrimo",
-#             "{TF}_m{n}.501bp",
-#             "centrimo.tsv"
-#         ),
-#         sites = os.path.join(
-#             config["base_dir"], 
-#             config["results_dir"],
-#             "{TF}",
-#             "centrimo",
-#             "{TF}_m{n}.501bp",
-#             "site_counts.txt"
-#         )
-#     priority:
-#         90
-#     shell:
-#         """
-#         python {params.prog} {params.tsv} {params.sites} {output}
 #         """
 
 # rule Select_best_centrimo_experiment:

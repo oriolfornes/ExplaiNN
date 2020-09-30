@@ -38,6 +38,7 @@ def main():
 
     # Print PWM
     if args.format == "meme":
+        name = m.name
         consensus = m.pssm.consensus
         w = len(consensus)
         nsites = int(sum([m.counts[n][0] for n in "ACGT"]))
@@ -50,7 +51,7 @@ def main():
         print("Background letter frequencies (from uniform background):")
         print("A 0.25000 C 0.25000 G 0.25000 T 0.25000")
         print()
-        print("MOTIF 1 %s" % consensus)
+        print("MOTIF %s %s" % (name, consensus))
         print()
         print(
             "letter-probability matrix: alength= 4 w= %s nsites= %s E= 0" \

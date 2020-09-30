@@ -27,17 +27,14 @@ def parse_args():
     # Mandatory args
     parser.add_argument("centrimo_file", metavar="centrimo.tsv")
     parser.add_argument("counts_file", metavar="site_counts.txt")
-    parser.add_argument("pdf_file", metavar="plot.pdf")
+    parser.add_argument("plot_file", metavar="plot.png")
 
     return(parser.parse_args())
 
-def main():
-
-    # Parse arguments
-    args = parse_args()
+def get_figure(centrimo_file, counts_file):
 
     # Read p-value
-    with open(args.centrimo_file, "r") as f:
+    with open(centrimo_file, "r") as f:
         for line in f:
             if line.startswith("   1"):
                 line = line.split("\t")
@@ -46,7 +43,7 @@ def main():
 
     # Read counts
     df = pd.read_csv(
-        args.counts_file,
+        counts_file,
         # names=["Distance to peak centre", "Number of motif occurrences"],
         names=["x", "y"],
         sep="\t",
@@ -66,8 +63,18 @@ def main():
     ax.set_xticklabels(labels=[0.0, 0.25, 0.5, 0.75, 1.0], fontproperties=prop)
     ax.text(-450, .9, str(p))
 
+    return(fig)
+
+def main():
+
+    # Parse arguments
+    args = parse_args()
+
+    # Get figure
+    fig = get_figure(args.centrimo_file, args.counts_file)
+
     # Save logo
-    fig.savefig(args.pdf_file)
+    fig.savefig(args.plot_file)
 
 #-------------#
 # Main        #

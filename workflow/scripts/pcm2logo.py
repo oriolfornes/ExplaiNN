@@ -31,13 +31,10 @@ def parse_args():
 
     return(parser.parse_args())
 
-def main():
-
-    # Parse arguments
-    args = parse_args()
+def get_figure(motif_file):
 
     # From https://biopython.readthedocs.io/en/latest/chapter_motifs.html
-    m = motifs.read(open(args.motif_file), "jaspar")
+    m = motifs.read(open(motif_file), "jaspar")
     m.pseudocounts = {"A": 0.5, "C": 0.5, "G": 0.5, "T": 0.5}
 
     # From https://www.bioconductor.org/packages/release/bioc/html/seqLogo.html
@@ -64,7 +61,17 @@ def main():
     logo.ax.yaxis.set_ticks([0, 1, 2])
     logo.ax.set_yticklabels(labels=[0, 1, 2], fontproperties=prop)
 
-    # Save logo
+    return(fig)
+
+def main():
+
+    # Parse arguments
+    args = parse_args()
+
+    # Get figure
+    fig = get_figure(args.motif_file)
+
+    # Save
     fig.savefig(args.logo_file, bbox_inches="tight", pad_inches=0)
 
 #-------------#

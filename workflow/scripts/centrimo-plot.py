@@ -60,7 +60,7 @@ def get_figure(centrimo_file, counts_file):
     ax.set_ylabel("Relative number of motif occurrences", fontproperties=prop)
     ax.set_ylim(0, 1)
     ax.yaxis.set_ticks([0.0, 0.25, 0.5, 0.75, 1.0])
-    ax.set_xticklabels(labels=[0.0, 0.25, 0.5, 0.75, 1.0], fontproperties=prop)
+    ax.set_yticklabels(labels=[0.0, 0.25, 0.5, 0.75, 1.0], fontproperties=prop)
     ax.text(-450, .9, str(p))
 
     return(fig)

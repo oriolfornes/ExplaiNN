@@ -1,8 +1,7 @@
-import os
 import itertools
+import os
 import platform
 import re
-from snakemake.utils import R
 import subprocess as sp
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -124,6 +123,18 @@ MOTIFS_MEME = expand(
     TF=TFs,
     n=NB
 )
+MOTIFS_PCM = expand(
+    os.path.join(
+        config["base_dir"],
+        config["results_dir"],
+        "pcms",
+        "chipseq",
+        "{TF}.chipseq.train.JASPAR-MoDisco.m{n}.pcm"
+    ),
+    zip,
+    TF=TFs,
+    n=NB
+)
 
 # Logos
 MOTIFS_LOGO = expand(
@@ -188,6 +199,7 @@ rule all:
         MOTIFS_MEME,
         CENTRIMO_PVAL,
         CENTRIMO_PLOT,
+        MOTIFS_PCM,
         # DASHBOARD_HTML
 
 # ++++++++++++++++++++ #
@@ -440,7 +452,7 @@ rule Generate_motif_logos:
         prog = os.path.join(
             config["base_dir"],
             config["scripts_dir"],
-            "pcm2logo.py"
+            "jaspar2logo.py"
         ),
         outdir = os.path.join(
             config["base_dir"],
@@ -491,7 +503,7 @@ rule Reformat_motifs_to_MEME:
         prog = os.path.join(
             config["base_dir"],
             config["scripts_dir"],
-            "pcm2pwm.py"
+            "jaspar2others.py"
         ),
         outdir = os.path.join(
             config["base_dir"],
@@ -616,6 +628,55 @@ rule Generate_centrimo_plots:
     shell:
         """
         python {params.prog} {params.tsv} {params.sites} {output}
+        """
+
+# ++++++++++++++++++++ #
+# GRECO-BIT format     #
+# ++++++++++++++++++++ #
+rule Reformat_motifs_to_PCM:
+    """
+    Reformat motifs from JASPAR to GRECO-BIT format.
+
+    This rule is executed for each discovered motif.
+    """
+    input:
+        os.path.join(
+            config["base_dir"],
+            config["results_dir"],
+            "{TF}",
+            "motifs",
+            "jaspar",
+            "pfm",
+            "{TF}_peak-motifs_m{n}.jaspar"
+        )
+    message:
+        "; Reformat motifs - TF: {wildcards.TF} - MAT: {wildcards.n}"
+    output:
+        os.path.join(
+            config["base_dir"],
+            config["results_dir"],
+            "pcms",
+            "chipseq",
+            "{TF}.chipseq.train.JASPAR-MoDisco.m{n}.pcm"
+        )
+    params:
+        prog = os.path.join(
+            config["base_dir"],
+            config["scripts_dir"],
+            "jaspar2others.py"
+        ),
+        outdir = os.path.join(
+            config["base_dir"],
+            config["results_dir"],
+            "pcms",
+            "chipseq"
+        )
+    priority:
+        10
+    shell:
+        """
+        mkdir -p {params.outdir}
+        python {params.prog} {input} --format pcm > {output}
         """
 
 # ++++++++++++++++++++ #

@@ -201,3 +201,5 @@ snakemake [--cores X]
 ## Memory requirements
 
 If you launch the *Snakefile* using multiple cores (See *Launching the *snakemake* workflow* section), each core will use ~1GB of memory in your computer.
+
+

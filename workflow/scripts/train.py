@@ -14,7 +14,7 @@ from ignite.metrics import Accuracy, Loss
 import json
 # import math
 # import matplotlib.pyplot as plt
-# import numpy as np
+import numpy as np
 import os
 # import pandas as pd
 # import seaborn as sns
@@ -31,7 +31,7 @@ import torch
 from torch.utils.data import DataLoader, TensorDataset
 
 # Models
-from models import one_hot_encode, reverse_complement
+from models import one_hot_encode, reverse_complement_one_hot_encoding
 from models.danq import DanQ, get_criterion, get_optimizer
 
 # Globals
@@ -93,7 +93,7 @@ CONTEXT_SETTINGS = {
     "--log-interval",
     help="Number of batches to wait before logging training status.",
     type=int,
-    default=100,
+    default=10,
     show_default=True
 )
 @optgroup.option(
@@ -122,23 +122,23 @@ CONTEXT_SETTINGS = {
     "--lr",
     help="Learning rate.",
     type=float,
-    default=0.01,
+    default=1e-4,
     show_default=True
 )
-@optgroup.option(
-    "--momentum",
-    help="Momentum factor.",
-    type=float,
-    default=0.9,
-    show_default=True
-)
-@optgroup.option(
-    "--weight-decay",
-    help="Weight decay.",
-    type=float,
-    default=1e-6,
-    show_default=True
-)
+# @optgroup.option(
+#     "--momentum",
+#     help="Momentum factor.",
+#     type=float,
+#     default=0.9,
+#     show_default=True
+# )
+# @optgroup.option(
+#     "--weight-decay",
+#     help="Weight decay.",
+#     type=float,
+#     default=1e-6,
+#     show_default=True
+# )
 
 def main(**params):
 
@@ -149,8 +149,9 @@ def main(**params):
         device = "cuda"
     model = DanQ(params["length"]).to(device)
     criterion = get_criterion()
-    optimizer = get_optimizer(model.parameters(), params["lr"],
-        params["momentum"], params["weight_decay"])
+    # optimizer = get_optimizer(model.parameters(), params["lr"],
+    #     params["momentum"], params["weight_decay"])
+    optimizer = get_optimizer(model.parameters(), params["lr"])
 
     # Create output dir
     if not os.path.exists(params["output_dir"]):
@@ -159,7 +160,8 @@ def main(**params):
     # Get DataLoaders
     train_loader, val_loader = __get_data_loaders(params["training_file"],
         params["validation_file"], params["train_batch_size"],
-        params["val_batch_size"], params["threads"])
+        params["val_batch_size"], params["reverse_complement"],
+        params["threads"])
 
     # Trainer
     trainer = create_supervised_trainer(model, optimizer, criterion,
@@ -220,7 +222,7 @@ def main(**params):
     print(statistics)
 
 def __get_data_loaders(training_file, val_file, train_batch_size=100, 
-    val_batch_size=1000, threads=1):
+    val_batch_size=1000, reverse_complement=False, threads=1):
 
     # Initialize
     train_Xs = []
@@ -232,13 +234,21 @@ def __get_data_loaders(training_file, val_file, train_batch_size=100,
     with gzip.open(training_file, "rt") as handle:
         for record in SeqIO.parse(handle, "fasta"):
             _, y = record.description.split()
-            train_Xs.append(one_hot_encode(str(record.seq)))
+            train_Xs.append(one_hot_encode(str(record.seq).upper()))
             train_ys.append([float(y)])
     with gzip.open(val_file, "rt") as handle:
         for record in SeqIO.parse(handle, "fasta"):
             _, y = record.description.split()
-            val_Xs.append(one_hot_encode(str(record.seq)))
+            val_Xs.append(one_hot_encode(str(record.seq).upper()))
             val_ys.append([float(y)])
+
+    # Reverse complement
+    if reverse_complement:
+        n = len(train_Xs)
+        for i in range(n):
+            encoded_seq = reverse_complement_one_hot_encoding(train_Xs[i])
+            train_Xs.append(encoded_seq)
+            train_ys.append(train_ys[i])
 
     # TensorDatasets
     train_set = TensorDataset(torch.Tensor(train_Xs),

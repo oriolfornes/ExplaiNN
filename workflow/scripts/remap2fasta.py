@@ -78,11 +78,6 @@ def main(**params):
     remap_files = [os.path.join(d, f) for f in sorted(os.listdir(d)) \
         if f.startswith("remap2020")]
 
-    __get_FASTA_sequences(remap_files[1], genome_file=params["genome_file"],
-        chrom_sizes=chrom_sizes, dummy_dir=params["dummy_dir"],
-        kmer=params["kmer"], output_dir=params["output_dir"])
-    exit(0)
-
     # Get FASTA sequences
     bar_format = "{percentage:3.0f}%|{bar:20}{r_bar}"
     kwargs = {"total": len(remap_files), "bar_format": bar_format}
@@ -114,28 +109,29 @@ def __get_FASTA_sequences(remap_file, genome_file, chrom_sizes,
     dummy_file = os.path.join(dummy_dir, "%s.fa" % prefix)
 
     # Intervals as pandas DataFrame
-    df = pd.read_csv(remap_file, sep="\t", usecols=[0, 4, 6, 7],
-        names=["chrom", "count", "start", "end"])
-    df = df[df["chrom"].isin(chrom_sizes.keys())].sort_values("count",
-        ascending=False)
-    df = df[["chrom", "start", "end", "name"]]
-    print(df)
-    exit(0)
+    # df = pd.read_csv(remap_file, sep="\t", usecols=[0, 4, 6, 7],
+    #     names=["chrom", "count", "start", "end"])
+    df = pd.read_csv(remap_file, sep="\t", usecols=[0, 6, 7],
+        names=["chrom", "start", "end"])
+    # df = df[df["chrom"].isin(chrom_sizes.keys())].sort_values("count",
+    #     ascending=False)
+    df = df[df["chrom"].isin(chrom_sizes.keys())]
+    # df = df[["chrom", "start", "end", "count"]]
 
-    # Get BedTool object
+    # Get non-redundant BedTool object
     b = BedTool("\n".join(["\t".join(map(str, row.tolist())) \
-        for _, row in df.iterrows()]), from_string=True)
+            for _, row in df.iterrows()]), from_string=True).sort()
     b.set_chromsizes(chrom_sizes)
     b = b.slop(b=100)
-    m = b.sort().merge()
-    print(len(b), len(m))
-    exit(0)
-    b.sequence(fi=genome_file, name=True)
+    m = b.merge()
+    nr = BedTool("\n".join(["\t".join(map(str, i.fields[-3:])) \
+            for i in m.closest(b, t="first")]), from_string=True)
+    nr.sequence(fi=genome_file, name=True)
 
     # Positive sequences
     sequences = []
     # with open(dummy_file, "wt") as handle:
-    for count, s in enumerate(SeqIO.parse(b.seqfn, "fasta")):
+    for count, s in enumerate(SeqIO.parse(nr.seqfn, "fasta")):
         # Filter non-ACGTs
         if re.search("[^acgtACGT]", str(s.seq)):
             continue

@@ -3,32 +3,16 @@
 # i.e. enable conda (de)activate
 eval "$(conda shell.bash hook)"
 
-# Create conda environments
-conda create -n JASPAR-MoDisco -c bioconda -c conda-forge biopython=1.78  \
-    dash=1.16.2 logomaker=0.8 plotly=4.10.0 python=3.6.11 rsat-core=2020.02.29 \
-    snakemake=4.0.0
-conda create -n meme -c bioconda/label/cf201901 -c conda-forge meme=5.0.2 \
-    icu=58.2 libiconv=1.16
+# Create conda environment
+conda create -n deep-motif-discovery-pipeline \
+    -c bioconda -c conda-forge -c pytorch \
+    biasaway=3.3.0 biopython=1.78 click=7.1.2 click-option-group=0.5.1 \
+    dash=1.19.0 ignite=0.4.4 jupyterlab=3.0.11 logomaker=0.8 matplotlib=3.3.4 \
+    meme=4.11.2 pandas=1.2.3 plotly=4.14.3 pybedtools=0.8.2 pynvml=8.0.4 \
+    python=3.8.5 pytorch=1.8.0 seaborn=0.11.1 scikit-learn=0.24.1 \
+    tensorboard=2.4.1 torchvision=0.9.0 tqdm=4.59.0
 
-# Copy centrimo binaries to scripts folder
-conda activate meme
-BIN="$( dirname $( which centrimo ) )"
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-# for FILE in "centrimo" "jaspar2meme"
-for FILE in "centrimo"
-do
-    if [ -L $DIR/../workflow/scripts/centrimo ]; then
-        rm $DIR/../workflow/scripts/centrimo
-    fi
-    ln -s $BIN/centrimo $DIR/../workflow/scripts/centrimo
-done
-
-# # Install PWMScan binaries
-# # https://ccg.epfl.ch/pwmtools/pwmscan.php
-# conda activate JASPAR-MoDisco
-# # From https://stackoverflow.com/questions/59895/
-# DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-# cd $DIR/../workflow/scripts/pwmscan
-# mkdir -p bin
-# make clean && make cleanbin
-# make && make install
+# Pip install
+conda activate deep-motif-discovery-pipeline
+pip install genomepy
+pip install snakemake

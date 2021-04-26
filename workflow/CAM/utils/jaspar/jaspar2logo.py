@@ -11,7 +11,7 @@ import pandas as pd
 
 # Specify font
 scripts_dir = os.path.dirname(os.path.realpath(__file__))
-prop = fm.FontProperties(fname=os.path.join(scripts_dir, "fonts", "arial.ttf"))
+prop = fm.FontProperties(fname=os.path.join(scripts_dir, "fonts", "Arial.ttf"))
 
 #-------------#
 # Functions   #

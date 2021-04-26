@@ -16,7 +16,7 @@ def one_hot_encode(seq):
             encoded_seq[int(seq[i]), i] = 1
         else:
             # i.e. Ns
-            encoded_seq[:, i] = 0.25
+            encoded_seq[:, i] = .0
 
     return(encoded_seq)
 
@@ -35,6 +35,6 @@ def one_hot_decode(encoded_seq):
 
     return("".join(seq))
 
-def reverse_complement_one_hot_encoding(encoded_seq):
+def rev_comp_one_hot_encoding(encoded_seq):
     """Reverse complements one hot encoding for one sequence."""
     return(encoded_seq[::-1, ::-1])

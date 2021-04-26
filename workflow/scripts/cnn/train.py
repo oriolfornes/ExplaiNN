@@ -15,7 +15,6 @@ from ignite.metrics import Loss
 import json
 # import math
 # import matplotlib.pyplot as plt
-import numpy as np
 import os
 # import pandas as pd
 # import seaborn as sns
@@ -25,7 +24,6 @@ import os
 #     matthews_corrcoef
 # )
 # from sklearn.model_selection import train_test_split
-import sys
 # from time import time
 import torch
 # import torch.nn as nn
@@ -33,8 +31,8 @@ import torch
 from torch.utils.data import DataLoader, TensorDataset
 
 # Local imports
+from utils.architectures.cam import Model, get_criterion, get_optimizer
 from utils.metrics import PearsonR
-from utils.models.danq import DanQ, get_criterion, get_optimizer
 from utils.sequence import one_hot_encode, reverse_complement_one_hot_encoding
 
 # Globals
@@ -73,17 +71,24 @@ CONTEXT_SETTINGS = {
 )
 @click.option(
     "-t", "--threads",
-    help="Threads to use.",
+    help="Number of threads to use.",
     type=int,
     default=1,
     show_default=True
 )
-@optgroup.group("DanQ")
+@optgroup.group("CAM")
 @optgroup.option(
-    "--length",
+    "--seq-length",
     help="Sequence length (in bp).",
     type=int,
     required=True
+)
+@optgroup.option(
+    "--n-cnn-units",
+    help="Number of individual CNN units.",
+    type=int,
+    default=10,
+    show_default=True
 )
 @optgroup.option(
     "--output",
@@ -126,7 +131,7 @@ CONTEXT_SETTINGS = {
     "--lr",
     help="Learning rate.",
     type=float,
-    default=1e-3,
+    default=1e-03,
     show_default=True
 )
 
@@ -137,7 +142,7 @@ def main(**params):
     device = "cpu"
     if torch.cuda.is_available():
         device = "cuda"
-    model = DanQ(params["length"], output=params["output"]).to(device)
+    model = Model(params["seq_length"], params["n_cnn_units"]).to(device)
     criterion = get_criterion(params["output"])
     optimizer = get_optimizer(model.parameters(), params["lr"])
 
@@ -183,10 +188,10 @@ def main(**params):
     metrics = {"loss": Loss(criterion)}
     if params["output"] == "binary":
         metrics.setdefault("aucROC", ROC_AUC(output_transform))
-        score_function = score_function_binary
+        # score_function = score_function_binary
     else:
         metrics.setdefault("R", PearsonR())
-        score_function = score_function_linear
+        # score_function = score_function_linear
     train_evaluator = create_supervised_evaluator(model, metrics=metrics,
         device=device)
     val_evaluator = create_supervised_evaluator(model, metrics=metrics,
@@ -275,6 +280,9 @@ def output_transform(output):
     y_pred, y = output
     y_pred = y_pred.greater_equal(0.5)
     return(y_pred, y)
+
+def score_function(engine):
+    return(engine.state.metrics["loss"]*-1)
 
 def score_function_binary(engine):
     return(engine.state.metrics["aucROC"])

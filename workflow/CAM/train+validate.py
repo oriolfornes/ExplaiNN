@@ -3,10 +3,7 @@
 from Bio import SeqIO
 import click
 from click_option_group import optgroup
-import copy
 import gzip
-from ignite.metrics import Loss
-import json
 import numpy as np
 import os
 import random
@@ -14,8 +11,7 @@ import torch
 from torch.utils.data import DataLoader, TensorDataset
 
 # Local imports
-
-from utils.architectures import CAM as Model, NonStrandSpecific, \
+from utils.architecture import CAM as Model, NonStrandSpecific, \
                                 get_loss_criterion, get_metrics, \
                                 get_optimizer
 from utils.selene import Trainer

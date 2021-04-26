@@ -1,33 +1,20 @@
 #!/usr/bin/env python
 
-from re import X
 from Bio import SeqIO
 from Bio import motifs
 import click
 from click_option_group import optgroup
-import copy
 import gc
 import gzip
-from ignite.contrib.handlers.tqdm_logger import ProgressBar
-from ignite.contrib.metrics import AveragePrecision, GpuInfo, ROC_AUC
-from ignite.engine import (Events, create_supervised_trainer,
-    create_supervised_evaluator)
-from ignite.metrics import Loss
 from io import StringIO
-from itertools import cycle, islice
-import json
-import logging
 import numpy as np
 import os
-from scipy.stats import pearsonr, spearmanr
-from sklearn.model_selection import PredefinedSplit
-import sys
 import torch
 from torch.utils.data import DataLoader, TensorDataset
 from tqdm import tqdm
 
 # Local imports
-from utils.architectures import CAM as Model, NonStrandSpecific
+from utils.architecture import CAM as Model, NonStrandSpecific
 from utils.jaspar import get_figure, reformat_jaspar_motif
 from utils.selene import load_model_from_state_dict
 from utils.sequence import one_hot_encode, one_hot_decode, \

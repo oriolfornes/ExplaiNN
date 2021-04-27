@@ -142,8 +142,6 @@ class Trainer(object):
         The maximum number of mini-batches to iterate over.
     nth_step_report_stats : int
         The frequency with which to report summary statistics.
-    nth_step_save_checkpoint : int
-        The frequency with which to save a model checkpoint.
     use_cuda : bool
         If `True`, use a CUDA-enabled GPU. If `False`, use the CPU.
     # data_parallel : bool
@@ -159,15 +157,13 @@ class Trainer(object):
                  metrics,
                  optimizer,
                  max_steps=128000,
-                 patience=16000,
+                 patience=32000,
                  report_stats_every_n_steps=1000,
                  output_dir="./",
-                 save_checkpoint_every_n_steps=1000,
-                 save_new_checkpoints_after_n_steps=None,
                  cpu_n_threads=1,
                  use_cuda=False,
-                 logging_verbosity=2,
                  checkpoint_resume=None,
+                 logging_verbosity=2,
                 ):
         """
         Constructs a new `Trainer` object.
@@ -180,8 +176,6 @@ class Trainer(object):
         self.max_steps = max_steps
         self.patience = patience
         self.nth_step_report_stats = report_stats_every_n_steps
-        self.nth_step_save_checkpoint = save_checkpoint_every_n_steps
-        self._save_new_checkpoints = save_new_checkpoints_after_n_steps
 
         torch.set_num_threads(cpu_n_threads)
 
@@ -207,38 +201,6 @@ class Trainer(object):
         if checkpoint_resume is not None:
             self._load_checkpoint(checkpoint_resume)
 
-    def _load_checkpoint(self, checkpoint_resume):
-        checkpoint = torch.load(
-            checkpoint_resume,
-            map_location=lambda storage, location: storage)
-        if "state_dict" not in checkpoint:
-            raise ValueError(
-                ("'state_dict' not found in file {0} "
-                 "loaded with method `torch.load`. Selene does not support "
-                 "continued training of models that were not originally "
-                 "trained using Selene.").format(checkpoint_resume))
-
-        self.model = load_model_from_state_dict(
-            checkpoint["state_dict"], self.model)
-
-        self._start_step = checkpoint["step"]
-        if self._start_step >= self.max_steps:
-            self.max_steps += self._start_step
-
-        self._min_loss = checkpoint["min_loss"]
-        self._best_step = checkpoint["step"]
-        self.optimizer.load_state_dict(
-            checkpoint["optimizer"])
-        if self.use_cuda:
-            for state in self.optimizer.state.values():
-                for k, v in state.items():
-                    if isinstance(v, torch.Tensor):
-                        state[k] = v.cuda()
-
-        logger.info(
-            ("Resuming from checkpoint: step {0}, min loss {1}").format(
-                self._start_step, self._min_loss))
-
     def _init_train(self):
         self._start_step = 0
         self._train_logger = _metrics_logger("{0}.train".format(__name__),
@@ -258,6 +220,32 @@ class Trainer(object):
         metrics_str = "\t".join(["loss"] + [x for x in self.metrics.keys()])
         self._validation_logger.log(10, metrics_str)
 
+    def _load_checkpoint(self, checkpoint_resume):
+        checkpoint = torch.load(checkpoint_resume)
+
+        if self.model.__class__.__name__ == "CAM":
+            self.model.load_state_dict(checkpoint["state_dict"])
+        elif self.model.__class__.__name__ == "NonStrandSpecific":
+            self.model.model.load_state_dict(checkpoint["state_dict"])
+
+        self._start_step = checkpoint["step"]
+        if self._start_step >= self.max_steps:
+            self.max_steps += self._start_step
+
+        self._min_loss = checkpoint["min_loss"]
+        self._best_step = checkpoint["step"]
+        self.optimizer.load_state_dict(checkpoint["optimizer"])
+
+        if self.use_cuda:
+            for state in self.optimizer.state.values():
+                for k, v in state.items():
+                    if isinstance(v, torch.Tensor):
+                        state[k] = v.cuda()
+
+        logger.info(
+            ("Resuming from checkpoint: step {0}, min loss {1}").format(
+                self._start_step, self._min_loss))
+    
     def _get_batch(self, which_data):
         """
         Fetches a mini-batch of examples
@@ -283,25 +271,6 @@ class Trainer(object):
 
         return(batch_sequences, batch_targets)
 
-    def _checkpoint(self):
-        checkpoint_dict = {
-            "step": self._best_step,
-            "arch": self.model.__class__.__name__,
-            "state_dict": self.model.state_dict(),
-            "min_loss": self._min_loss,
-            "optimizer": self.optimizer.state_dict(),
-        }
-        if self._save_new_checkpoints is not None and \
-                self._save_new_checkpoints >= self.step:
-            checkpoint_filename = "checkpoint-{0}".format(
-                strftime("%m%d%H%M%S"))
-            self._save_checkpoint(
-                checkpoint_dict, False, filename=checkpoint_filename)
-            logger.debug("Saving checkpoint `{0}.pth.tar`".format(
-                checkpoint_filename))
-        else:
-            self._save_checkpoint(checkpoint_dict, False)
-
     def train_and_validate(self):
         """
         Trains the model and measures validation performance.
@@ -309,8 +278,6 @@ class Trainer(object):
         for step in range(self._start_step, self.max_steps):
             self.step = step
             self.train()
-            if step % self.nth_step_save_checkpoint == 0:
-                self._checkpoint()
             if self.step and self.step % self.nth_step_report_stats == 0:
                 self.validate()
             if self.step >= self._best_step + self.patience:
@@ -343,16 +310,17 @@ class Trainer(object):
         self.optimizer.step()
         if self.model.__class__.__name__ == "CAM":
             self.model.final.weight.data.clamp_(0)
-        if self.model.__class__.__name__ == "NonStrandSpecific":
+        elif self.model.__class__.__name__ == "NonStrandSpecific":
             self.model.model.final.weight.data.clamp_(0)
         self._train_loss.append(loss.item())
         t_f = time()
 
         self._time_per_step.append(t_f - t_i)
         if self.step and self.step % self.nth_step_report_stats == 0:
-            logger.info(("[STEP {0}] average number "
-                         "of steps per second: {1:.1f}").format(
-                self.step, 1. / np.average(self._time_per_step)))
+            logger.info(
+                ("[STEP {0}] average number of steps per second: {1:.1f}").format(
+                self.step, 1. / np.average(self._time_per_step))
+            )
             logger.info("Training loss: {0}".format(np.average(self._train_loss)))
             self._train_logger.log(10, np.average(self._train_loss))
             self._time_per_step = []
@@ -422,13 +390,25 @@ class Trainer(object):
         # Save best_model
         if validation_loss < self._min_loss:
             self._min_loss = validation_loss
-            self._best_step = copy.copy(self.step)
-            self._save_checkpoint({
+            self._best_step = int(self.step)
+            if self.model.__class__.__name__ == "CAM":
+                m = self.model
+            elif self.model.__class__.__name__ == "NonStrandSpecific":
+                m = self.model.model
+            params = {
+                "cnn_units": int(m._cnn_units),
+                "motif_length": int(m._motif_length),
+                "seq_length": int(m._sequence_length),
+            }
+            checkpoint = {
                 "step": self._best_step,
-                "arch": self.model.__class__.__name__,
-                "state_dict": self.model.state_dict(),
+                "arch": str(m.__class__.__name__),
+                "params": params,
+                "state_dict": copy.deepcopy(m.state_dict()),
                 "min_loss": self._min_loss,
-                "optimizer": self.optimizer.state_dict()}, True)
+                "optimizer": copy.deepcopy(self.optimizer.state_dict()),
+            }
+            self._save_checkpoint(checkpoint)
             logger.info("Updating `best_model.pth.tar`")
 
         # Logging
@@ -437,47 +417,44 @@ class Trainer(object):
             log_message.append(valid_scores[metric])
         self._validation_logger.log(10, "\t".join(map(str, log_message)))
 
-    def evaluate(self):
-        """
-        Measures the model test performance.
+    # def evaluate(self):
+    #     """
+    #     Measures the model test performance.
 
-        Returns
-        -------
-        dict
-            A dictionary, where keys are the names of the loss metrics,
-            and the values are the average value for that metric over
-            the test set.
-        """
-        if self._test_data is None:
-            self.create_test_set()
-        average_loss, all_predictions = self._evaluate_on_data(
-            self._test_data)
+    #     Returns
+    #     -------
+    #     dict
+    #         A dictionary, where keys are the names of the loss metrics,
+    #         and the values are the average value for that metric over
+    #         the test set.
+    #     """
+    #     if self._test_data is None:
+    #         self.create_test_set()
+    #     average_loss, all_predictions = self._evaluate_on_data(
+    #         self._test_data)
 
-        average_scores = self._test_metrics.update(all_predictions,
-                                                   self._all_test_targets)
-        np.savez_compressed(
-            os.path.join(self.output_dir, "test_predictions.npz"),
-            data=all_predictions)
+    #     average_scores = self._test_metrics.update(all_predictions,
+    #                                                self._all_test_targets)
+    #     np.savez_compressed(
+    #         os.path.join(self.output_dir, "test_predictions.npz"),
+    #         data=all_predictions)
 
-        for name, score in average_scores.items():
-            logger.info("Test {0}: {1}".format(name, score))
+    #     for name, score in average_scores.items():
+    #         logger.info("Test {0}: {1}".format(name, score))
 
-        test_performance = os.path.join(
-            self.output_dir, "test_performance.txt")
-        feature_scores_dict = self._test_metrics.write_feature_scores_to_file(
-            test_performance)
+    #     test_performance = os.path.join(
+    #         self.output_dir, "test_performance.txt")
+    #     feature_scores_dict = self._test_metrics.write_feature_scores_to_file(
+    #         test_performance)
 
-        average_scores["loss"] = average_loss
+    #     average_scores["loss"] = average_loss
 
-        self._test_metrics.visualize(
-            all_predictions, self._all_test_targets, self.output_dir)
+    #     self._test_metrics.visualize(
+    #         all_predictions, self._all_test_targets, self.output_dir)
 
-        return (average_scores, feature_scores_dict)
+    #     return (average_scores, feature_scores_dict)
 
-    def _save_checkpoint(self,
-                         state,
-                         is_best,
-                         filename="checkpoint"):
+    def _save_checkpoint(self, state):
         """
         Saves snapshot of the model state to file. Will save a checkpoint
         with name `<filename>.pth.tar` and, if this is the model's best
@@ -491,6 +468,7 @@ class Trainer(object):
         key of the dictionary loaded by `torch.load`.
         See: https://pytorch.org/docs/stable/notes/serialization.html for more
         information about how models are saved in PyTorch.
+
         Parameters
         ----------
         state : dict
@@ -499,25 +477,20 @@ class Trainer(object):
             keys that can be used for continued training in Selene
             _in addition_ to a key `state_dict` that contains
             `model.state_dict()`.
-        is_best : bool
-            Is this the model's best performance so far?
-        filename : str, optional
-            Default is "checkpoint". Specify the checkpoint filename. Will
-            append a file extension to the end of the `filename`
-            (e.g. `checkpoint.pth.tar`).
+        # filename : str, optional
+        #     Default is "checkpoint". Specify the checkpoint filename. Will
+        #     append a file extension to the end of the `filename`
+        #     (e.g. `checkpoint.pth.tar`).
+
         Returns
         -------
         None
         """
-        logger.debug("[TRAIN] {0}: Saving model state to file.".format(
-            state["step"]))
-        cp_filepath = os.path.join(
-            self.output_dir, filename)
-        torch.save(state, "{0}.pth.tar".format(cp_filepath))
-        if is_best:
-            best_filepath = os.path.join(self.output_dir, "best_model")
-            shutil.copyfile("{0}.pth.tar".format(cp_filepath),
-                            "{0}.pth.tar".format(best_filepath))
+        logger.debug(
+            "[TRAIN] %s: Saving model state to file." % state["step"]
+        )
+        f = os.path.join(self.output_dir, "best_model")
+        torch.save(state, "{0}.pth.tar".format(f))
 
 def initialize_logger(output_path, verbosity=2):
     """
@@ -532,10 +505,9 @@ def initialize_logger(output_path, verbosity=2):
         The path to the output file where logs will be written.
     verbosity : int, {2, 1, 0}
         Default is 2. The level of logging verbosity to use.
-            * 0 - Only warnings will be logged.
-            * 1 - Information and warnings will be logged.
-            * 2 - Debug messages, information, and warnings will all be
-                  logged.
+            * 0 - Only log warnings
+            * 1 - Log information and warnings
+            * 2 - Log debug messages, information, and warnings
     """
 
     logger = logging.getLogger("selene")
@@ -550,72 +522,16 @@ def initialize_logger(output_path, verbosity=2):
         logger.setLevel(logging.DEBUG)
 
     file_formatter = logging.Formatter(
-        "%(asctime)s - %(levelname)s - %(message)s")
+        "%(asctime)s - %(levelname)s - %(message)s"
+    )
 
     file_handle = logging.FileHandler(output_path)
     file_handle.setFormatter(file_formatter)
     logger.addHandler(file_handle)
 
-    stdout_formatter = logging.Formatter(
-        "%(asctime)s - %(message)s")
+    stdout_formatter = logging.Formatter("%(asctime)s - %(message)s")
 
     stdout_handle = logging.StreamHandler(sys.stdout)
     stdout_handle.setFormatter(stdout_formatter)
     stdout_handle.setLevel(logging.INFO)
     logger.addHandler(stdout_handle)
-
-def load_model_from_state_dict(state_dict, model):
-    """
-    Loads model weights that were saved to a file previously by `torch.save`.
-    This is a helper function to reconcile state dict keys where a model was
-    saved with/without torch.nn.DataParallel and now must be loaded
-    without/with torch.nn.DataParallel.
-    Parameters
-    ----------
-    state_dict : collections.OrderedDict
-        The state of the model.
-    model : torch.nn.Module
-        The PyTorch model, a module composed of submodules.
-    Returns
-    -------
-    torch.nn.Module
-        The model with weights loaded from the state dict.
-    Raises
-    ------
-    ValueError
-        If model state dict keys do not match the keys in `state_dict`.
-    """
-
-    if "state_dict" in state_dict:
-        state_dict = state_dict["state_dict"]
-
-    model_keys = model.state_dict().keys()
-    state_dict_keys = state_dict.keys()
-
-    if len(model_keys) != len(state_dict_keys):
-        try:
-            model.load_state_dict(state_dict, strict=False)
-            return(model)
-        except Exception as e:
-            raise ValueError("Loaded state dict does not match the model "
-                "architecture specified - please check that you are "
-                "using the correct architecture file and parameters.\n\n"
-                "{0}".format(e))
-
-    new_state_dict = OrderedDict()
-    for (k1, k2) in zip(model_keys, state_dict_keys):
-        value = state_dict[k2]
-        try:
-            new_state_dict[k1] = value
-        except Exception as e:
-            raise ValueError(
-                "Failed to load weight from module {0} in model weights "
-                "into model architecture module {1}. (If module name has "
-                "an additional prefix `model.` it is because the model is "
-                "wrapped in `selene_sdk.utils.NonStrandSpecific`. This "
-                "error was raised because the underlying module does "
-                "not match that expected by the loaded model:\n"
-                "{2}".format(k2, k1, e))
-    model.load_state_dict(new_state_dict)
-
-    return(model)

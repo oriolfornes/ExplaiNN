@@ -39,7 +39,7 @@ class __Model(nn.Module):
 class CAM(__Model):
     """Convolutional Additive Model (CAM)."""
 
-    def __init__(self, cnn_units, motif_length, seq_length, n_features=1,
+    def __init__(self, cnn_units, motif_length, sequence_length, n_features=1,
         weights_file=None):
         """
         Parameters
@@ -59,9 +59,11 @@ class CAM(__Model):
 
         self._cnn_units = cnn_units
         self._motif_length = motif_length
-        self._padding = self._motif_length
-        self._n_channels = math.floor(
-            (seq_length + 2*self._padding - (self._motif_length-1)) / 7.
+        self._sequence_length = sequence_length
+        self.__padding = self._motif_length
+        self.__n_channels = math.floor(
+            (self._sequence_length + 2*self.__padding - \
+            (self._motif_length-1)) / 7.
         )
 
         self.linears = nn.Sequential(
@@ -69,7 +71,7 @@ class CAM(__Model):
                 in_channels=4*self._cnn_units,
                 out_channels=1*self._cnn_units,
                 kernel_size=self._motif_length,
-                padding=self._padding,
+                padding=self.__padding,
                 groups=self._cnn_units,
             ),
             nn.BatchNorm1d(self._cnn_units),
@@ -78,7 +80,7 @@ class CAM(__Model):
             nn.Flatten(), 
             UnSqueeze(),
             nn.Conv1d(
-                in_channels=self._n_channels*self._cnn_units,
+                in_channels=self.__n_channels*self._cnn_units,
                 out_channels=100*self._cnn_units,
                 kernel_size=1,
                 groups=self._cnn_units,

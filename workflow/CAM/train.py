@@ -3,41 +3,18 @@
 from Bio import SeqIO
 import click
 from click_option_group import optgroup
-import copy
 import gzip
-from ignite.contrib.handlers.tqdm_logger import ProgressBar
-from ignite.contrib.metrics import GpuInfo, ROC_AUC
-from ignite.engine import (Events, create_supervised_trainer,
-    create_supervised_evaluator)
-from ignite.handlers import (ModelCheckpoint, EarlyStopping,
-    global_step_from_engine)
-from ignite.metrics import Loss
-import json
-# import math
-# import matplotlib.pyplot as plt
+import numpy as np
 import os
-# import pandas as pd
-# import seaborn as sns
-# from sklearn.metrics import (
-#     average_precision_score, precision_recall_curve,
-#     roc_auc_score, roc_curve,
-#     matthews_corrcoef
-# )
-# from sklearn.model_selection import train_test_split
-# from time import time
+import random
 import torch
-# import torch.nn as nn
-# # from torch.optim.lr_scheduler import ReduceLROnPlateau
 from torch.utils.data import DataLoader, TensorDataset
 
 # Local imports
-from utils.architectures.cam import Model, get_criterion, get_optimizer
-from utils.metrics import PearsonR
-from utils.sequence import one_hot_encode, reverse_complement_one_hot_encoding
-
-# Globals
-scripts_dir = os.path.dirname(os.path.realpath(__file__))
-bar_format="{desc}[{n_fmt}/{total_fmt}] {percentage:3.0f}%|{bar:20}{postfix} [{elapsed}<{remaining}]"
+from utils.architecture import CAM, NonStrandSpecific, get_loss_criterion, \
+                               get_metrics, get_optimizer
+from utils.selene import Trainer
+from utils.sequence import one_hot_encode, rc_one_hot_encoding
 
 CONTEXT_SETTINGS = {
     "help_option_names": ["-h", "--help"],
@@ -45,226 +22,219 @@ CONTEXT_SETTINGS = {
 
 @click.command(no_args_is_help=True, context_settings=CONTEXT_SETTINGS)
 @click.argument(
-    "training_file", type=click.Path(exists=True, resolve_path=True)
+    "training_file",
+    type=click.Path(exists=True, resolve_path=True),
 )
 @click.argument(
-    "validation_file", type=click.Path(exists=True, resolve_path=True)
+    "validation_file",
+    type=click.Path(exists=True, resolve_path=True),
+    nargs=-1,
 )
 @click.option(
-    "-d", "--dummy-dir",
-    help="Dummy directory.",
-    type=click.Path(resolve_path=True),
-    default="/tmp/",
-    show_default=True
+    "-b", "--batch-size",
+    help="Batch size.",
+    type=int,
+    default=2**6,
+    show_default=True,
+)
+@click.option(
+    "-d", "--debugging",
+    help="Debugging mode.",
+    is_flag=True,
 )
 @click.option(
     "-o", "--output-dir",
     help="Output directory.",
     type=click.Path(resolve_path=True),
     default="./",
-    show_default=True
-)
-@click.option(
-    "-r", "--reverse-complement",
-    help="Reverse complement train sequences.",
-    is_flag=1
+    show_default=True,
 )
 @click.option(
     "-t", "--threads",
     help="Number of threads to use.",
     type=int,
     default=1,
-    show_default=True
+    show_default=True,
+)
+@click.option(
+    "-r", "--rev-complement",
+    help="Reverse complement training sequences.",
+    is_flag=1
+)
+@click.option(
+    "-v", "--val-samples",
+    help="Number of validation samples to use.",
+    type=int,
+    default=640000,
+    show_default=True,
 )
 @optgroup.group("CAM")
 @optgroup.option(
-    "--seq-length",
-    help="Sequence length (in bp).",
+    "--cnn-units",
+    help="Number of CNN units.",
     type=int,
-    required=True
+    default=5,
+    show_default=True,
 )
 @optgroup.option(
-    "--n-cnn-units",
-    help="Number of individual CNN units.",
-    type=int,
-    default=10,
-    show_default=True
+    "--data",
+    help="Input data type.",
+    type=click.Choice(["binary", "continuous"]),
+    required=True,
 )
 @optgroup.option(
-    "--output",
-    help="Output type.",
-    type=click.Choice(["binary", "linear"]),
-    default="binary",
-    show_default=True
-)
-@optgroup.group("Ignite")
-@optgroup.option(
-    "--epochs",
-    help="Number of epochs to train.",
+    "--motif-length",
+    help="Length for motifs.",
     type=int,
-    default=100,
-    show_default=True
+    default=19,
+    show_default=True,
 )
 @optgroup.option(
-    "--patience",
-    help="If no improvement, number of epochs to wait before stopping training.",
-    type=int,
-    default=10,
-    show_default=True
-)
-@optgroup.option(
-    "--train-batch-size",
-    help="Batch size for training.",
-    type=int,
-    default=100,
-    show_default=True
-)
-@optgroup.option(
-    "--val-batch-size",
-    help="Batch size for validation.",
-    type=int,
-    default=1000,
-    show_default=True
+    "--strand-specific",
+    help="By default, score each input sequence and its " + \
+         "reverse-complement and return the mean.",
+    is_flag=True,
 )
 @optgroup.group("Optimizer")
 @optgroup.option(
     "--lr",
-    help="Learning rate.",
+    help="Learning rate for the `torch.optim.Adam` optimizer.",
     type=float,
     default=1e-03,
-    show_default=True
+    show_default=True,
+)
+@optgroup.group("Selene")
+@optgroup.option(
+    "--checkpoint-resume",
+    help="Resume training from model file.",
+    type=click.Path(exists=True, resolve_path=True),
+)
+@optgroup.option(
+    "--report-steps",
+    help="Report stats every `n` steps.",
+    type=int,
+    default=1000,
+    show_default=True,
+)
+# @optgroup.option(
+#     "--save-steps",
+#     help="Save a model every `n` steps.",
+#     type=int,
+#     default=1000,
+#     show_default=True,
+# )
+@optgroup.option(
+    "--train-steps",
+    help="Number of steps to train.",
+    type=int,
+    default=128000,
+    show_default=True,
+)
+@optgroup.option(
+    "--waiting-steps",
+    help="If no improvement, wait `n` steps before stopping training.",
+    type=int,
+    default=32000,
+    show_default=True,
 )
 
 def main(**params):
-
-    # Initialize
-    statistics = {}
-    device = "cpu"
-    if torch.cuda.is_available():
-        device = "cuda"
-    model = Model(params["seq_length"], params["n_cnn_units"]).to(device)
-    criterion = get_criterion(params["output"])
-    optimizer = get_optimizer(model.parameters(), params["lr"])
 
     # Create output dir
     if not os.path.exists(params["output_dir"]):
         os.makedirs(params["output_dir"])
 
     # Get DataLoaders
-    train_loader, val_loader = __get_data_loaders(params["training_file"],
-        params["validation_file"], params["train_batch_size"],
-        params["val_batch_size"], params["reverse_complement"],
-        params["threads"])
+    Xs_train, ys_train = _get_Xs_ys(params["training_file"],
+        params["debugging"])
+    Xs_val, ys_val = [], []
+    for validation_file in params["validation_file"]:
+        Xs, ys = _get_Xs_ys(validation_file, params["debugging"])
+        Xs_val.extend(Xs); ys_val.extend(ys)
+    train_loader, val_loader = _get_data_loaders(list(Xs_train),
+        list(ys_train), list(Xs_val), list(ys_val), params["batch_size"],
+        params["rev_complement"], params["threads"], params["val_samples"])
+    data_loaders = dict({"train": train_loader, "validation": val_loader})
 
-    # Trainer
-    trainer = create_supervised_trainer(model, optimizer, criterion,
-        device=device)
-    @trainer.on(Events.EPOCH_COMPLETED)
-    def log_results(trainer):
-        train_evaluator.run(train_loader)
-        metrics = train_evaluator.state.metrics
-        log_message = f"Training - Epoch: {trainer.state.epoch}"
-        for metric in metrics:
-            log_message += f", {metric}: {metrics[metric]:.4f}"
-        pbar.log_message(log_message)
-        statistics.setdefault(trainer.state.epoch, {})
-        statistics[trainer.state.epoch].setdefault("training",
-            copy.deepcopy(metrics))
-        val_evaluator.run(val_loader)
-        metrics = val_evaluator.state.metrics
-        log_message = f"Validation - Epoch: {trainer.state.epoch}"
-        for metric in metrics:
-            log_message += f", {metric}: {metrics[metric]:.4f}"
-        pbar.log_message(log_message)
-        statistics[trainer.state.epoch].setdefault("validation",
-            copy.deepcopy(metrics))
+    # Training
+    model = CAM(params["cnn_units"], params["motif_length"],
+        max(Xs_train[0].shape))
+    if not params["strand_specific"]:
+        model = NonStrandSpecific(model)
+    loss_criterion = get_loss_criterion(data=params["data"])
+    metrics = get_metrics(data=params["data"])
+    optimizer = get_optimizer(model.parameters(), params["lr"])
+    trainer = Trainer(
+        model,
+        data_loaders,
+        loss_criterion,
+        metrics,
+        optimizer,
+        max_steps=params["train_steps"],
+        patience=params["waiting_steps"],
+        report_stats_every_n_steps=params["report_steps"],
+        output_dir=params["output_dir"],
+        # save_checkpoint_every_n_steps=params["save_steps"],
+        cpu_n_threads=params["threads"],
+        use_cuda=torch.cuda.is_available(),
+        checkpoint_resume=params["checkpoint_resume"],
+    )
+    trainer.train_and_validate()
 
-    # Progress bar
-    GpuInfo().attach(trainer, name="gpu")
-    pbar = ProgressBar(bar_format=bar_format, persist=True)
-    pbar.attach(trainer, ["gpu:0 mem(%)", "gpu:0 util(%)"])
-
-    # Evaluators
-    metrics = {"loss": Loss(criterion)}
-    if params["output"] == "binary":
-        metrics.setdefault("aucROC", ROC_AUC(output_transform))
-        # score_function = score_function_binary
-    else:
-        metrics.setdefault("R", PearsonR())
-        # score_function = score_function_linear
-    train_evaluator = create_supervised_evaluator(model, metrics=metrics,
-        device=device)
-    val_evaluator = create_supervised_evaluator(model, metrics=metrics,
-        device=device)
-
-    # Checkpoint
-    model_checkpoint = ModelCheckpoint(params["output_dir"], "best", n_saved=1,
-        global_step_transform=global_step_from_engine(trainer),
-        score_function=score_function)
-    val_evaluator.add_event_handler(Events.COMPLETED, model_checkpoint,
-        {"model": model})
-
-    # Eearly stop
-    early_stop = EarlyStopping(patience=params["patience"],
-        score_function=score_function, trainer=trainer)
-    val_evaluator.add_event_handler(Events.COMPLETED, early_stop)
-
-    # Train
-    trainer.run(train_loader, max_epochs=params["epochs"])
-
-    # Write
-    json_file = os.path.join(params["output_dir"], "statistics.json")
-    with open(json_file, "wt") as handle:
-        handle.write(json.dumps(statistics, indent=4))
-
-def __get_data_loaders(training_file, val_file, train_batch_size=100, 
-    val_batch_size=1000, reverse_complement=False, threads=1):
+def _get_Xs_ys(fasta_file, debugging=False):
 
     # Initialize
-    train_Xs = []
-    train_ys = []
-    val_Xs = []
-    val_ys = []
+    Xs = []
+    ys = []
 
     # Xs / ys
-    handle = __get_handle(training_file)
+    handle = __get_handle(fasta_file)
     for record in SeqIO.parse(handle, "fasta"):
-        _, y = record.description.split()
-        train_Xs.append(one_hot_encode(str(record.seq).upper()))
-        train_ys.append([float(y)])
-    handle.close()
-    handle = __get_handle(val_file)
-    for record in SeqIO.parse(handle, "fasta"):
-        _, y = record.description.split()
-        val_Xs.append(one_hot_encode(str(record.seq).upper()))
-        val_ys.append([float(y)])
-    handle.close()
+        _, y_list = record.description.split()
+        Xs.append(one_hot_encode(str(record.seq).upper()))
+        ys.append([float(y) for y in y_list.split(";")])
+
+    # Return 1,000 sequences
+    if debugging:
+        return(np.array(Xs)[:1000], np.array(ys)[:1000])
+
+    return(np.array(Xs), np.array(ys))
+
+def _get_data_loaders(Xs_train, ys_train, Xs_val=None, ys_val=None,
+    batch_size=2**6, reverse_complement=False, threads=1, val_samples=640000):
+
+    # Initialize
+    ix = 0
+    Xs_val_nested = []
+    ys_val_nested = []
+    random.seed(123)
 
     # Reverse complement
     if reverse_complement:
-        n = len(train_Xs)
+        n = len(Xs_train)
         for i in range(n):
-            encoded_seq = reverse_complement_one_hot_encoding(train_Xs[i])
-            train_Xs.append(encoded_seq)
-            train_ys.append(train_ys[i])
-        # n = len(val_Xs)
-        # for i in range(n):
-        #     encoded_seq = reverse_complement_one_hot_encoding(val_Xs[i])
-        #     val_Xs.append(encoded_seq)
-        #     val_ys.append(val_ys[i])
+            encoded_seq = rc_one_hot_encoding(Xs_train[i])
+            Xs_train.append(encoded_seq)
+            ys_train.append(ys_train[i])
+
+    # Shuffle validation data (i.e. if multiple were provided)
+    while ix < len(Xs_val):
+        Xs_val_nested.append(Xs_val[ix:ix+2])
+        ys_val_nested.append(ys_val[ix:ix+2])
+        ix += 2
+    z = list(zip(Xs_val_nested, ys_val_nested))
+    random.shuffle(z)
+    Xs_val = [j for i in z for j in i[0]]
+    ys_val = [j for i in z for j in i[1]]
 
     # TensorDatasets
-    train_set = TensorDataset(torch.Tensor(train_Xs),
-        torch.Tensor(train_ys))
-    val_set = TensorDataset(torch.Tensor(val_Xs),
-        torch.Tensor(val_ys))
+    train_set = TensorDataset(torch.Tensor(Xs_train), torch.Tensor(ys_train))
+    val_set = TensorDataset(torch.Tensor(Xs_val[:val_samples]),
+        torch.Tensor(ys_val[:val_samples]))
 
     # DataLoaders
-    kwargs = dict(batch_size=train_batch_size, shuffle=True,
-        num_workers=threads)
+    kwargs = dict(batch_size=batch_size, num_workers=threads)
     train_loader = DataLoader(train_set, **kwargs)
-    kwargs = dict(batch_size=val_batch_size, shuffle=True,
-        num_workers=threads)
     val_loader = DataLoader(val_set, **kwargs)
 
     return(train_loader, val_loader)
@@ -280,15 +250,6 @@ def output_transform(output):
     y_pred, y = output
     y_pred = y_pred.greater_equal(0.5)
     return(y_pred, y)
-
-def score_function(engine):
-    return(engine.state.metrics["loss"]*-1)
-
-def score_function_binary(engine):
-    return(engine.state.metrics["aucROC"])
-
-def score_function_linear(engine):
-    return(engine.state.metrics["R"])
 
 if __name__ == "__main__":
     main()

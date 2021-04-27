@@ -35,6 +35,6 @@ def one_hot_decode(encoded_seq):
 
     return("".join(seq))
 
-def rev_comp_one_hot_encoding(encoded_seq):
+def rc_one_hot_encoding(encoded_seq):
     """Reverse complements one hot encoding for one sequence."""
     return(encoded_seq[::-1, ::-1])

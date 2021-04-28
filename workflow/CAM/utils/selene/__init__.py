@@ -3,14 +3,11 @@ Adapted from Selene:
 https://github.com/FunctionLab/selene/blob/master/selene_sdk/train_model.py
 """
 
-from collections import OrderedDict
 import copy
 import logging
 import numpy as np
 import os
-import shutil
 import sys
-from time import strftime
 from time import time
 import torch
 
@@ -223,10 +220,10 @@ class Trainer(object):
     def _load_checkpoint(self, checkpoint_resume):
         checkpoint = torch.load(checkpoint_resume)
 
-        if self.model.__class__.__name__ == "CAM":
-            self.model.load_state_dict(checkpoint["state_dict"])
-        elif self.model.__class__.__name__ == "NonStrandSpecific":
+        if self.model.__class__.__name__ == "NonStrandSpecific":
             self.model.model.load_state_dict(checkpoint["state_dict"])
+        else:
+            self.model.load_state_dict(checkpoint["state_dict"])
 
         self._start_step = checkpoint["step"]
         if self._start_step >= self.max_steps:
@@ -265,6 +262,7 @@ class Trainer(object):
             batch_sequences, batch_targets = \
                 next(self._data_iterators[which_data])
         t_f_sampling = time()
+
         logger.debug(
             ("[BATCH] Time to sample batch: {0} s.").format(
                  t_f_sampling - t_i_sampling))
@@ -308,10 +306,11 @@ class Trainer(object):
         self.optimizer.zero_grad()
         loss.backward()
         self.optimizer.step()
-        if self.model.__class__.__name__ == "CAM":
+        if self.model.__class__.__name__ == "NonStrandSpecific":
+            if self.model.model.__class__.__name__ == "CAM":
+                self.model.model.final.weight.data.clamp_(0)
+        elif self.model.__class__.__name__ == "CAM":
             self.model.final.weight.data.clamp_(0)
-        elif self.model.__class__.__name__ == "NonStrandSpecific":
-            self.model.model.final.weight.data.clamp_(0)
         self._train_loss.append(loss.item())
         t_f = time()
 
@@ -391,20 +390,15 @@ class Trainer(object):
         if validation_loss < self._min_loss:
             self._min_loss = validation_loss
             self._best_step = int(self.step)
-            if self.model.__class__.__name__ == "CAM":
-                m = self.model
-            elif self.model.__class__.__name__ == "NonStrandSpecific":
-                m = self.model.model
-            params = {
-                "cnn_units": int(m._cnn_units),
-                "motif_length": int(m._motif_length),
-                "seq_length": int(m._sequence_length),
-            }
+            if self.model.__class__.__name__ == "NonStrandSpecific":
+                model = copy.deepcopy(self.model.model)
+            else:
+                model = copy.deepcopy(self.model)
             checkpoint = {
                 "step": self._best_step,
-                "arch": str(m.__class__.__name__),
-                "params": params,
-                "state_dict": copy.deepcopy(m.state_dict()),
+                "arch": model.__class__.__name__,
+                "options": model._options,
+                "state_dict": self.model.state_dict(),
                 "min_loss": self._min_loss,
                 "optimizer": copy.deepcopy(self.optimizer.state_dict()),
             }
@@ -416,43 +410,6 @@ class Trainer(object):
         for metric in valid_scores:
             log_message.append(valid_scores[metric])
         self._validation_logger.log(10, "\t".join(map(str, log_message)))
-
-    # def evaluate(self):
-    #     """
-    #     Measures the model test performance.
-
-    #     Returns
-    #     -------
-    #     dict
-    #         A dictionary, where keys are the names of the loss metrics,
-    #         and the values are the average value for that metric over
-    #         the test set.
-    #     """
-    #     if self._test_data is None:
-    #         self.create_test_set()
-    #     average_loss, all_predictions = self._evaluate_on_data(
-    #         self._test_data)
-
-    #     average_scores = self._test_metrics.update(all_predictions,
-    #                                                self._all_test_targets)
-    #     np.savez_compressed(
-    #         os.path.join(self.output_dir, "test_predictions.npz"),
-    #         data=all_predictions)
-
-    #     for name, score in average_scores.items():
-    #         logger.info("Test {0}: {1}".format(name, score))
-
-    #     test_performance = os.path.join(
-    #         self.output_dir, "test_performance.txt")
-    #     feature_scores_dict = self._test_metrics.write_feature_scores_to_file(
-    #         test_performance)
-
-    #     average_scores["loss"] = average_loss
-
-    #     self._test_metrics.visualize(
-    #         all_predictions, self._all_test_targets, self.output_dir)
-
-    #     return (average_scores, feature_scores_dict)
 
     def _save_checkpoint(self, state):
         """

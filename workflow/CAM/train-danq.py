@@ -11,7 +11,7 @@ import torch
 from torch.utils.data import DataLoader, TensorDataset
 
 # Local imports
-from utils.architectures import CAM, NonStrandSpecific, get_loss_criterion, \
+from utils.architectures import DanQ, NonStrandSpecific, get_loss_criterion, \
                                 get_metrics, get_optimizer
 from utils.selene import Trainer
 from utils.sequence import one_hot_encode, rc_one_hot_encoding
@@ -68,26 +68,12 @@ CONTEXT_SETTINGS = {
     default=640000,
     show_default=True,
 )
-@optgroup.group("CAM")
-@optgroup.option(
-    "--cnn-units",
-    help="Number of CNN units.",
-    type=int,
-    default=5,
-    show_default=True,
-)
+@optgroup.group("DanQ")
 @optgroup.option(
     "--input-data",
     help="Type of input data.",
     type=click.Choice(["binary", "linear"]),
     required=True,
-)
-@optgroup.option(
-    "--motif-length",
-    help="Length for motifs.",
-    type=int,
-    default=19,
-    show_default=True,
 )
 @optgroup.option(
     "--strand-specific",
@@ -111,7 +97,7 @@ CONTEXT_SETTINGS = {
 )
 @optgroup.option(
     "--report-steps",
-    help="Report stats `n` steps.",
+    help="Report every `n` steps.",
     type=int,
     default=1000,
     show_default=True,
@@ -150,8 +136,8 @@ def main(**params):
     data_loaders = dict({"train": train_loader, "validation": val_loader})
 
     # Training
-    model = CAM(params["cnn_units"], params["motif_length"],
-        max(Xs_train[0].shape), apply_sigmoid=params["input_data"] == "binary")
+    model = DanQ(max(Xs_train[0].shape),
+        apply_sigmoid=params["input_data"] == "binary")
     if not params["strand_specific"]:
         model = NonStrandSpecific(model)
     loss_criterion = get_loss_criterion(input_data=params["input_data"])
@@ -167,7 +153,6 @@ def main(**params):
         patience=params["waiting_steps"],
         report_stats_every_n_steps=params["report_steps"],
         output_dir=params["output_dir"],
-        # save_checkpoint_every_n_steps=params["save_steps"],
         cpu_n_threads=params["threads"],
         use_cuda=torch.cuda.is_available(),
         checkpoint_resume=params["checkpoint_resume"],

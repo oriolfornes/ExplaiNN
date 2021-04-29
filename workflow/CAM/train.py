@@ -4,6 +4,7 @@ from Bio import SeqIO
 import click
 from click_option_group import optgroup
 import gzip
+import math
 import numpy as np
 import os
 import random
@@ -65,7 +66,7 @@ CONTEXT_SETTINGS = {
     "-v", "--val-samples",
     help="Number of validation samples to use.",
     type=int,
-    default=640000,
+    default=256000,
     show_default=True,
 )
 @optgroup.group("CAM")
@@ -109,25 +110,25 @@ CONTEXT_SETTINGS = {
     help="Resume training from model file.",
     type=click.Path(exists=True, resolve_path=True),
 )
+# @optgroup.option(
+#     "--report-steps",
+#     help="Report stats `n` steps.",
+#     type=int,
+#     default=1000,
+#     show_default=True,
+# )
 @optgroup.option(
-    "--report-steps",
-    help="Report stats `n` steps.",
+    "--max-epochs",
+    help="Number of epochs to train.",
     type=int,
-    default=1000,
+    default=128,
     show_default=True,
 )
 @optgroup.option(
-    "--train-steps",
-    help="Number of steps to train.",
+    "--patience",
+    help="If no improvement, wait `n` epochs before stopping training.",
     type=int,
-    default=128000,
-    show_default=True,
-)
-@optgroup.option(
-    "--waiting-steps",
-    help="If no improvement, wait `n` steps before stopping training.",
-    type=int,
-    default=32000,
+    default=16,
     show_default=True,
 )
 
@@ -149,7 +150,12 @@ def main(**params):
         params["rev_complement"], params["threads"], params["val_samples"])
     data_loaders = dict({"train": train_loader, "validation": val_loader})
 
-    # Training
+    # Get steps per epoch
+    steps_per_epoch = math.ceil(
+        len(train_loader.dataset) / float(params["batch_size"])
+    )
+
+    # Train 
     model = CAM(params["cnn_units"], params["motif_length"],
         max(Xs_train[0].shape), apply_sigmoid=params["input_data"] == "binary")
     if not params["strand_specific"]:
@@ -163,9 +169,9 @@ def main(**params):
         loss_criterion,
         metrics,
         optimizer,
-        max_steps=params["train_steps"],
-        patience=params["waiting_steps"],
-        report_stats_every_n_steps=params["report_steps"],
+        max_steps=steps_per_epoch*params["max_epochs"],
+        patience=steps_per_epoch*params["patience"],
+        report_stats_every_n_steps=steps_per_epoch,
         output_dir=params["output_dir"],
         # save_checkpoint_every_n_steps=params["save_steps"],
         cpu_n_threads=params["threads"],

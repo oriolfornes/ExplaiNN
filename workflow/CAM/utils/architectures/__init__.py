@@ -71,14 +71,14 @@ class CAM(_Model):
             "weights_file": weights_file,
         }
 
-        self.__n_channels = math.floor((sequence_length+motif_length+1)/7.)
+        self.__n_channels = math.floor((sequence_length-motif_length+1)/7.)
 
         self.linears = nn.Sequential(
             nn.Conv1d(
                 in_channels=4*cnn_units,
                 out_channels=1*cnn_units,
                 kernel_size=motif_length,
-                padding=motif_length,
+                padding=0,
                 groups=cnn_units,
             ),
             nn.BatchNorm1d(cnn_units),

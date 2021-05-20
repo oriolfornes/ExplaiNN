@@ -8,8 +8,6 @@ import torch.nn as nn
 import warnings
 warnings.filterwarnings("ignore")
 
-sigmoid = nn.Sigmoid()
-
 class ExpAct(nn.Module):
     """Exponential Activation."""
 
@@ -43,7 +41,7 @@ class CAM(_Model):
     """Convolutional Additive Model (CAM)."""
 
     def __init__(self, cnn_units, motif_length, sequence_length, n_features=1,
-        apply_sigmoid=False, weights_file=None):
+        input_data=None, weights_file=None):
         """
         Parameters
         ----------
@@ -55,7 +53,7 @@ class CAM(_Model):
             Input sequence length
         n_features : int
             Total number of features to predict
-        apply_sigmoid : bool
+        input_data : str
             ...
         weights_file : pass
             ...
@@ -67,7 +65,7 @@ class CAM(_Model):
             "motif_length": motif_length,
             "sequence_length": sequence_length,
             "n_features": n_features,
-            "apply_sigmoid": apply_sigmoid,
+            "input_data": input_data,
             "weights_file": weights_file,
         }
 
@@ -117,9 +115,6 @@ class CAM(_Model):
         outs = self.linears(x)
         out = self.final(outs)
 
-        if self._options["apply_sigmoid"]:
-            return(sigmoid(out))
-
         return(out)
 
 # DanQ Pytorch implementation 
@@ -127,7 +122,7 @@ class CAM(_Model):
 class DanQ(_Model):
     """DanQ architecture (Quang & Xie, 2016)."""
 
-    def __init__(self, sequence_length, n_features=1, apply_sigmoid=False,
+    def __init__(self, sequence_length, n_features=1, input_data=None,
         weights_file=None):
         """
         Parameters
@@ -136,7 +131,7 @@ class DanQ(_Model):
             Input sequence length
         n_features : int
             Total number of features to predict
-        apply_sigmoid : bool
+        input_data : str
             ...
         weights_file : pass
             ...
@@ -146,7 +141,7 @@ class DanQ(_Model):
         self._options = {
             "sequence_length": sequence_length,
             "n_features": n_features,
-            "apply_sigmoid": apply_sigmoid,
+            "input_data": input_data,
             "weights_file": weights_file,
         }
 
@@ -186,9 +181,6 @@ class DanQ(_Model):
         x = self.Linear1(x)
         x = nn.functional.relu(x)
         out = self.Linear2(x)
-
-        if self._options["apply_sigmoid"]:
-            return(sigmoid(out))
 
         return(out)
 
@@ -260,7 +252,7 @@ def get_loss_criterion(input_data="binary"):
     torch.nn._Loss
     """
     if input_data == "binary":
-        return(nn.BCELoss())
+        return(nn.BCEWithLogitsLoss())
     return(nn.MSELoss())
 
 def get_metrics(input_data="binary"):

@@ -157,7 +157,7 @@ def main(**params):
 
     # Train 
     model = CAM(params["cnn_units"], params["motif_length"],
-        max(Xs_train[0].shape), apply_sigmoid=params["input_data"] == "binary")
+        max(Xs_train[0].shape))
     if not params["strand_specific"]:
         model = NonStrandSpecific(model)
     loss_criterion = get_loss_criterion(input_data=params["input_data"])

@@ -142,8 +142,7 @@ def main(**params):
     )
 
     # Train
-    model = DanQ(max(Xs_train[0].shape),
-        apply_sigmoid=params["input_data"] == "binary")
+    model = DanQ(max(Xs_train[0].shape))
     if not params["strand_specific"]:
         model = NonStrandSpecific(model)
     loss_criterion = get_loss_criterion(input_data=params["input_data"])

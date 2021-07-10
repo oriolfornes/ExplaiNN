@@ -1,0 +1,483 @@
+[W 2021-07-07 09:46:24.965 LabApp] 'port' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
+[W 2021-07-07 09:46:24.965 LabApp] 'port' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
+[W 2021-07-07 09:46:24.965 LabApp] 'port' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
+[I 2021-07-07 09:46:24.973 LabApp] JupyterLab extension loaded from /home/ofornes/Anaconda3/envs/deep-motif-discovery-pipeline/lib/python3.8/site-packages/jupyterlab
+[I 2021-07-07 09:46:24.973 LabApp] JupyterLab application directory is /home/ofornes/Anaconda3/envs/deep-motif-discovery-pipeline/share/jupyter/lab
+[I 09:46:24.977 NotebookApp] Serving notebooks from local directory: /media/ofornes/Storage/Work/deep-motif-discovery/CAM
+[I 09:46:24.977 NotebookApp] Jupyter Notebook 6.3.0 is running at:
+[I 09:46:24.977 NotebookApp] http://localhost:8889/?token=161382fc20649666cfb255ae63a3c972933e36c82903bfe0
+[I 09:46:24.977 NotebookApp]  or http://127.0.0.1:8889/?token=161382fc20649666cfb255ae63a3c972933e36c82903bfe0
+[I 09:46:24.977 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+[C 09:46:24.982 NotebookApp] 
+    
+    To access the notebook, open this file in a browser:
+        file:///home/ofornes/.local/share/jupyter/runtime/nbserver-2731-open.html
+    Or copy and paste one of these URLs:
+        http://localhost:8889/?token=161382fc20649666cfb255ae63a3c972933e36c82903bfe0
+     or http://127.0.0.1:8889/?token=161382fc20649666cfb255ae63a3c972933e36c82903bfe0
+[I 09:47:03.716 NotebookApp] 302 GET /?token=161382fc20649666cfb255ae63a3c972933e36c82903bfe0 (127.0.0.1) 2.390000ms
+[W 09:47:08.129 NotebookApp] Notebook interpret.ipynb is not trusted
+[I 09:47:08.649 NotebookApp] Kernel started: 4e93cece-44fe-47a8-9a6e-2dc9c67cf06c, name: python3
+[W 09:47:08.660 NotebookApp] 404 GET /nbextensions/widgets/notebook/js/extension.js?v=20210707094623 (127.0.0.1) 6.520000ms referer=http://localhost:8889/notebooks/interpret.ipynb
+[I 09:49:09.129 NotebookApp] Saving file at /interpret.ipynb
+[I 09:49:38.849 NotebookApp] Saving file at /interpret.ipynb
+[I 09:49:42.438 NotebookApp] Saving file at /interpret.ipynb
+[I 09:49:43.871 NotebookApp] Saving file at /interpret.ipynb
+[I 09:49:53.020 NotebookApp] Saving file at /interpret.ipynb
+[I 09:49:57.190 NotebookApp] Saving file at /interpret.ipynb
+[I 09:49:57.831 NotebookApp] Saving file at /interpret.ipynb
+[I 09:49:57.976 NotebookApp] Saving file at /interpret.ipynb
+[I 09:49:58.823 NotebookApp] Saving file at /interpret.ipynb
+[I 09:50:00.291 NotebookApp] Saving file at /interpret.ipynb
+[I 09:50:10.081 NotebookApp] Saving file at /interpret.ipynb
+[I 09:50:10.220 NotebookApp] Saving file at /interpret.ipynb
+[I 09:50:11.763 NotebookApp] Saving file at /interpret.ipynb
+[I 09:50:14.385 NotebookApp] Saving file at /interpret.ipynb
+[I 09:50:14.619 NotebookApp] Saving file at /interpret.ipynb
+[I 09:50:21.350 NotebookApp] Saving file at /interpret.ipynb
+[I 09:50:24.966 NotebookApp] Saving file at /interpret.ipynb
+[I 09:50:29.747 NotebookApp] Saving file at /interpret.ipynb
+[I 09:50:55.758 NotebookApp] Saving file at /interpret.ipynb
+[I 09:50:59.832 NotebookApp] Saving file at /interpret.ipynb
+[I 09:51:03.740 NotebookApp] Saving file at /interpret.ipynb
+[I 09:51:06.208 NotebookApp] Saving file at /interpret.ipynb
+[I 09:51:31.793 NotebookApp] Saving file at /interpret.ipynb
+[I 09:51:33.010 NotebookApp] Saving file at /interpret.ipynb
+[I 09:51:34.692 NotebookApp] Saving file at /interpret.ipynb
+[I 09:51:37.746 NotebookApp] Saving file at /interpret.ipynb
+[I 09:51:49.245 NotebookApp] Saving file at /interpret.ipynb
+[I 09:51:52.685 NotebookApp] Saving file at /interpret.ipynb
+[I 09:51:57.983 NotebookApp] Saving file at /interpret.ipynb
+[I 09:52:13.780 NotebookApp] Saving file at /interpret.ipynb
+[I 09:52:21.564 NotebookApp] Saving file at /interpret.ipynb
+[I 09:53:09.235 NotebookApp] Saving file at /interpret.ipynb
+[I 09:53:11.950 NotebookApp] Saving file at /interpret.ipynb
+[I 09:53:14.414 NotebookApp] Saving file at /interpret.ipynb
+[I 09:53:50.049 NotebookApp] Saving file at /interpret.ipynb
+[I 09:53:50.861 NotebookApp] Saving file at /interpret.ipynb
+[I 09:53:51.024 NotebookApp] Saving file at /interpret.ipynb
+[I 09:53:51.682 NotebookApp] Saving file at /interpret.ipynb
+[I 09:53:53.318 NotebookApp] Saving file at /interpret.ipynb
+[I 09:53:53.471 NotebookApp] Saving file at /interpret.ipynb
+[I 09:53:54.196 NotebookApp] Saving file at /interpret.ipynb
+[I 09:54:01.926 NotebookApp] Saving file at /interpret.ipynb
+[I 09:54:02.945 NotebookApp] Saving file at /interpret.ipynb
+[I 09:54:04.995 NotebookApp] Saving file at /interpret.ipynb
+[I 09:54:08.560 NotebookApp] Saving file at /interpret.ipynb
+[I 09:54:22.417 NotebookApp] Saving file at /interpret.ipynb
+[I 09:54:22.966 NotebookApp] Saving file at /interpret.ipynb
+[I 09:54:29.370 NotebookApp] Saving file at /interpret.ipynb
+[I 09:54:57.832 NotebookApp] Saving file at /interpret.ipynb
+[I 09:54:58.895 NotebookApp] Saving file at /interpret.ipynb
+[I 09:54:59.835 NotebookApp] Saving file at /interpret.ipynb
+[I 09:55:08.546 NotebookApp] Saving file at /interpret.ipynb
+[I 09:55:22.814 NotebookApp] Saving file at /interpret.ipynb
+[I 09:55:25.685 NotebookApp] Saving file at /interpret.ipynb
+[I 09:55:27.936 NotebookApp] Saving file at /interpret.ipynb
+[I 09:55:36.334 NotebookApp] Saving file at /interpret.ipynb
+[I 09:55:38.859 NotebookApp] Saving file at /interpret.ipynb
+[I 09:56:01.222 NotebookApp] Saving file at /interpret.ipynb
+[I 09:56:09.925 NotebookApp] Saving file at /interpret.ipynb
+[I 09:56:14.636 NotebookApp] Saving file at /interpret.ipynb
+[I 09:56:14.780 NotebookApp] Saving file at /interpret.ipynb
+[I 09:56:30.810 NotebookApp] Saving file at /interpret.ipynb
+[I 09:56:32.453 NotebookApp] Saving file at /interpret.ipynb
+[I 09:56:34.525 NotebookApp] Saving file at /interpret.ipynb
+[I 09:56:39.009 NotebookApp] Saving file at /interpret.ipynb
+[I 09:56:39.237 NotebookApp] Saving file at /interpret.ipynb
+[I 09:56:40.028 NotebookApp] Saving file at /interpret.ipynb
+[I 09:56:41.833 NotebookApp] Saving file at /interpret.ipynb
+[I 09:56:42.288 NotebookApp] Saving file at /interpret.ipynb
+[I 09:56:50.267 NotebookApp] Saving file at /interpret.ipynb
+[I 09:56:51.151 NotebookApp] Saving file at /interpret.ipynb
+[I 09:56:51.403 NotebookApp] Saving file at /interpret.ipynb
+[I 09:56:58.671 NotebookApp] Saving file at /interpret.ipynb
+[I 09:57:06.653 NotebookApp] Saving file at /interpret.ipynb
+[I 09:57:10.952 NotebookApp] Saving file at /interpret.ipynb
+[I 09:57:12.187 NotebookApp] Saving file at /interpret.ipynb
+[I 09:57:14.241 NotebookApp] Saving file at /interpret.ipynb
+[I 09:57:16.869 NotebookApp] Saving file at /interpret.ipynb
+[I 09:57:18.122 NotebookApp] Saving file at /interpret.ipynb
+[I 09:57:25.290 NotebookApp] Saving file at /interpret.ipynb
+[I 09:58:16.494 NotebookApp] Saving file at /interpret.ipynb
+[I 09:58:31.649 NotebookApp] Saving file at /interpret.ipynb
+[I 09:58:31.901 NotebookApp] Saving file at /interpret.ipynb
+[I 09:59:54.190 NotebookApp] Saving file at /interpret.ipynb
+[I 10:00:31.189 NotebookApp] Saving file at /interpret.ipynb
+[I 10:00:40.269 NotebookApp] Saving file at /interpret.ipynb
+[I 10:01:08.736 NotebookApp] Saving file at /interpret.ipynb
+[I 10:01:56.663 NotebookApp] Saving file at /interpret.ipynb
+[I 10:01:57.682 NotebookApp] Saving file at /interpret.ipynb
+[I 10:02:55.233 NotebookApp] Saving file at /interpret.ipynb
+[I 10:03:08.753 NotebookApp] Saving file at /interpret.ipynb
+[I 10:05:28.674 NotebookApp] Saving file at /interpret.ipynb
+[I 10:05:29.114 NotebookApp] Saving file at /interpret.ipynb
+[I 10:05:29.236 NotebookApp] Saving file at /interpret.ipynb
+[I 10:06:07.822 NotebookApp] Saving file at /interpret.ipynb
+[I 10:06:12.511 NotebookApp] Saving file at /interpret.ipynb
+[I 10:06:18.086 NotebookApp] Saving file at /interpret.ipynb
+[I 10:06:31.755 NotebookApp] Saving file at /interpret.ipynb
+[I 10:06:31.899 NotebookApp] Saving file at /interpret.ipynb
+[I 10:06:33.458 NotebookApp] Saving file at /interpret.ipynb
+[I 10:07:09.607 NotebookApp] Saving file at /interpret.ipynb
+[I 10:09:24.989 NotebookApp] Saving file at /interpret.ipynb
+[I 10:09:37.081 NotebookApp] Saving file at /interpret.ipynb
+[I 10:09:39.315 NotebookApp] Saving file at /interpret.ipynb
+[I 10:09:49.602 NotebookApp] Saving file at /interpret.ipynb
+[I 10:09:51.609 NotebookApp] Saving file at /interpret.ipynb
+[I 10:10:10.040 NotebookApp] Saving file at /interpret.ipynb
+[I 10:10:16.799 NotebookApp] Saving file at /interpret.ipynb
+[I 10:10:28.302 NotebookApp] Saving file at /interpret.ipynb
+[I 10:10:31.749 NotebookApp] Saving file at /interpret.ipynb
+[I 10:10:31.884 NotebookApp] Saving file at /interpret.ipynb
+[I 10:10:46.353 NotebookApp] Saving file at /interpret.ipynb
+[I 10:11:08.607 NotebookApp] Saving file at /interpret.ipynb
+[I 10:11:15.577 NotebookApp] Saving file at /interpret.ipynb
+[I 10:11:15.794 NotebookApp] Saving file at /interpret.ipynb
+[I 10:11:16.048 NotebookApp] Saving file at /interpret.ipynb
+[I 10:11:16.281 NotebookApp] Saving file at /interpret.ipynb
+[I 10:11:27.244 NotebookApp] Saving file at /interpret.ipynb
+[I 10:11:31.555 NotebookApp] Saving file at /interpret.ipynb
+[I 10:11:38.988 NotebookApp] Saving file at /interpret.ipynb
+[I 10:11:41.620 NotebookApp] Saving file at /interpret.ipynb
+[I 10:11:42.514 NotebookApp] Saving file at /interpret.ipynb
+[I 10:11:43.631 NotebookApp] Saving file at /interpret.ipynb
+[I 10:11:50.593 NotebookApp] Saving file at /interpret.ipynb
+[I 10:11:50.824 NotebookApp] Saving file at /interpret.ipynb
+[I 10:12:12.510 NotebookApp] Saving file at /interpret.ipynb
+[I 10:12:12.621 NotebookApp] Saving file at /interpret.ipynb
+[I 10:12:20.083 NotebookApp] Saving file at /interpret.ipynb
+[I 10:12:22.093 NotebookApp] Saving file at /interpret.ipynb
+[I 10:12:22.248 NotebookApp] Saving file at /interpret.ipynb
+[I 10:12:32.864 NotebookApp] Saving file at /interpret.ipynb
+[I 10:12:47.330 NotebookApp] Saving file at /interpret.ipynb
+[I 10:12:51.007 NotebookApp] Saving file at /interpret.ipynb
+[I 10:13:01.455 NotebookApp] Saving file at /interpret.ipynb
+[I 10:13:09.446 NotebookApp] Saving file at /interpret.ipynb
+[I 10:13:29.768 NotebookApp] Saving file at /interpret.ipynb
+[I 10:13:38.729 NotebookApp] Saving file at /interpret.ipynb
+[I 10:14:15.203 NotebookApp] Saving file at /interpret.ipynb
+[I 10:14:17.031 NotebookApp] Saving file at /interpret.ipynb
+[I 10:14:21.543 NotebookApp] Saving file at /interpret.ipynb
+[I 10:14:21.811 NotebookApp] Saving file at /interpret.ipynb
+[I 10:14:23.173 NotebookApp] Saving file at /interpret.ipynb
+[I 10:14:28.106 NotebookApp] Saving file at /interpret.ipynb
+[I 10:14:37.507 NotebookApp] Saving file at /interpret.ipynb
+[I 10:14:40.061 NotebookApp] Saving file at /interpret.ipynb
+[I 10:14:46.732 NotebookApp] Saving file at /interpret.ipynb
+[I 10:14:57.733 NotebookApp] Saving file at /interpret.ipynb
+[I 10:14:58.605 NotebookApp] Saving file at /interpret.ipynb
+[I 10:15:06.591 NotebookApp] Saving file at /interpret.ipynb
+[I 10:15:18.265 NotebookApp] Saving file at /interpret.ipynb
+[I 10:15:20.920 NotebookApp] Saving file at /interpret.ipynb
+[I 10:15:30.558 NotebookApp] Saving file at /interpret.ipynb
+[I 10:17:08.561 NotebookApp] Saving file at /interpret.ipynb
+[I 10:19:08.657 NotebookApp] Saving file at /interpret.ipynb
+[I 13:05:08.862 NotebookApp] Saving file at /interpret.ipynb
+[I 13:07:08.740 NotebookApp] Saving file at /interpret.ipynb
+[I 13:07:21.121 NotebookApp] Saving file at /interpret.ipynb
+[I 13:07:24.005 NotebookApp] Saving file at /interpret.ipynb
+[I 13:09:08.742 NotebookApp] Saving file at /interpret.ipynb
+[I 13:11:09.751 NotebookApp] Saving file at /interpret.ipynb
+[I 14:11:09.433 NotebookApp] Saving file at /interpret.ipynb
+[I 14:13:10.314 NotebookApp] Saving file at /interpret.ipynb
+[I 14:15:08.932 NotebookApp] Saving file at /interpret.ipynb
+[I 14:15:43.712 NotebookApp] Saving file at /interpret.ipynb
+[I 14:15:58.194 NotebookApp] Saving file at /interpret.ipynb
+[I 14:16:05.205 NotebookApp] Saving file at /interpret.ipynb
+[I 14:16:12.822 NotebookApp] Saving file at /interpret.ipynb
+[I 14:16:14.842 NotebookApp] Saving file at /interpret.ipynb
+[I 14:16:18.579 NotebookApp] Saving file at /interpret.ipynb
+[I 16:36:35.675 NotebookApp] Saving file at /interpret.ipynb
+[I 16:37:09.665 NotebookApp] Saving file at /interpret.ipynb
+[I 16:39:09.656 NotebookApp] Saving file at /interpret.ipynb
+[I 16:41:09.655 NotebookApp] Saving file at /interpret.ipynb
+[I 16:43:24.933 NotebookApp] Saving file at /interpret.ipynb
+[I 16:45:24.724 NotebookApp] Saving file at /interpret.ipynb
+[I 16:47:24.681 NotebookApp] Saving file at /interpret.ipynb
+[I 16:49:24.758 NotebookApp] Saving file at /interpret.ipynb
+[I 16:51:24.760 NotebookApp] Saving file at /interpret.ipynb
+[I 16:53:09.139 NotebookApp] Saving file at /interpret.ipynb
+[I 16:55:09.695 NotebookApp] Saving file at /interpret.ipynb
+[I 16:57:09.673 NotebookApp] Saving file at /interpret.ipynb
+[I 16:59:09.782 NotebookApp] Saving file at /interpret.ipynb
+[I 17:01:09.795 NotebookApp] Saving file at /interpret.ipynb
+[I 17:03:09.845 NotebookApp] Saving file at /interpret.ipynb
+[I 17:05:09.775 NotebookApp] Saving file at /interpret.ipynb
+[I 17:07:12.255 NotebookApp] Saving file at /interpret.ipynb
+[I 17:09:13.020 NotebookApp] Saving file at /interpret.ipynb
+[I 17:11:12.069 NotebookApp] Saving file at /interpret.ipynb
+[I 17:13:12.062 NotebookApp] Saving file at /interpret.ipynb
+[I 17:15:27.059 NotebookApp] Saving file at /interpret.ipynb
+[I 17:17:24.999 NotebookApp] Saving file at /interpret.ipynb
+[I 17:19:20.642 NotebookApp] Saving file at /interpret.ipynb
+[I 17:21:25.313 NotebookApp] Saving file at /interpret.ipynb
+[I 17:30:17.205 NotebookApp] Saving file at /interpret.ipynb
+[I 17:30:17.346 NotebookApp] Saving file at /interpret.ipynb
+[I 17:30:32.265 NotebookApp] Saving file at /interpret.ipynb
+[I 17:30:33.840 NotebookApp] Saving file at /interpret.ipynb
+[I 17:30:52.461 NotebookApp] Saving file at /interpret.ipynb
+[I 17:30:52.581 NotebookApp] Saving file at /interpret.ipynb
+[I 17:31:09.207 NotebookApp] Saving file at /interpret.ipynb
+[I 17:31:37.203 NotebookApp] Saving file at /interpret.ipynb
+[I 17:31:40.458 NotebookApp] Saving file at /interpret.ipynb
+[I 17:31:40.678 NotebookApp] Saving file at /interpret.ipynb
+[I 17:31:40.993 NotebookApp] Saving file at /interpret.ipynb
+[I 17:31:44.038 NotebookApp] Saving file at /interpret.ipynb
+[I 17:31:44.180 NotebookApp] Saving file at /interpret.ipynb
+[I 17:31:44.401 NotebookApp] Saving file at /interpret.ipynb
+[I 17:31:54.222 NotebookApp] Saving file at /interpret.ipynb
+[I 17:33:12.269 NotebookApp] Saving file at /interpret.ipynb
+[I 17:34:27.109 NotebookApp] Kernel interrupted: 4e93cece-44fe-47a8-9a6e-2dc9c67cf06c
+[I 17:34:27.274 NotebookApp] Starting buffering for 4e93cece-44fe-47a8-9a6e-2dc9c67cf06c:7b6539f141994c4faf496c66f8ba3135
+[I 17:34:30.115 NotebookApp] Kernel restarted: 4e93cece-44fe-47a8-9a6e-2dc9c67cf06c
+[I 17:34:30.217 NotebookApp] Restoring connection for 4e93cece-44fe-47a8-9a6e-2dc9c67cf06c:7b6539f141994c4faf496c66f8ba3135
+[I 17:34:30.818 NotebookApp] Replaying 3 buffered messages
+[I 17:35:22.098 NotebookApp] Kernel interrupted: 4e93cece-44fe-47a8-9a6e-2dc9c67cf06c
+[I 17:35:27.099 NotebookApp] Starting buffering for 4e93cece-44fe-47a8-9a6e-2dc9c67cf06c:7b6539f141994c4faf496c66f8ba3135
+[I 17:35:27.418 NotebookApp] Kernel restarted: 4e93cece-44fe-47a8-9a6e-2dc9c67cf06c
+[I 17:35:27.452 NotebookApp] Restoring connection for 4e93cece-44fe-47a8-9a6e-2dc9c67cf06c:7b6539f141994c4faf496c66f8ba3135
+[I 17:35:27.886 NotebookApp] Replaying 3 buffered messages
+[I 17:35:40.533 NotebookApp] Saving file at /interpret.ipynb
+[I 17:35:50.772 NotebookApp] Saving file at /interpret.ipynb
+[I 17:35:57.241 NotebookApp] Saving file at /interpret.ipynb
+[I 17:37:12.127 NotebookApp] Saving file at /interpret.ipynb
+[I 17:39:11.059 NotebookApp] Saving file at /interpret.ipynb
+[I 17:41:16.926 NotebookApp] Saving file at /interpret.ipynb
+[I 17:45:52.080 NotebookApp] Starting buffering for 4e93cece-44fe-47a8-9a6e-2dc9c67cf06c:7b6539f141994c4faf496c66f8ba3135
+[I 17:49:39.651 NotebookApp] Restoring connection for 4e93cece-44fe-47a8-9a6e-2dc9c67cf06c:7b6539f141994c4faf496c66f8ba3135
+[I 18:13:50.039 NotebookApp] Saving file at /interpret.ipynb
+[I 18:15:09.662 NotebookApp] Saving file at /interpret.ipynb
+[I 18:17:09.852 NotebookApp] Saving file at /interpret.ipynb
+[I 18:19:13.964 NotebookApp] Saving file at /interpret.ipynb
+[I 18:21:26.140 NotebookApp] Saving file at /interpret.ipynb
+[I 18:26:10.469 NotebookApp] Saving file at /interpret.ipynb
+[I 18:26:22.742 NotebookApp] Saving file at /interpret.ipynb
+[I 18:26:38.186 NotebookApp] Saving file at /interpret.ipynb
+[I 18:27:09.274 NotebookApp] Saving file at /interpret.ipynb
+[I 18:29:09.434 NotebookApp] Saving file at /interpret.ipynb
+[I 18:31:09.563 NotebookApp] Saving file at /interpret.ipynb
+[I 18:31:13.804 NotebookApp] Saving file at /interpret.ipynb
+[I 18:31:18.359 NotebookApp] Saving file at /interpret.ipynb
+[I 18:31:31.994 NotebookApp] Saving file at /interpret.ipynb
+[I 18:31:39.590 NotebookApp] Saving file at /interpret.ipynb
+[I 18:31:59.534 NotebookApp] Saving file at /interpret.ipynb
+[I 18:32:05.454 NotebookApp] Saving file at /interpret.ipynb
+[I 18:32:21.592 NotebookApp] Saving file at /interpret.ipynb
+[I 18:33:09.181 NotebookApp] Saving file at /interpret.ipynb
+[I 18:33:09.990 NotebookApp] Saving file at /interpret.ipynb
+[I 18:33:21.370 NotebookApp] Saving file at /interpret.ipynb
+[I 18:33:49.734 NotebookApp] Saving file at /interpret.ipynb
+[I 18:34:00.254 NotebookApp] Saving file at /interpret.ipynb
+[I 18:34:51.976 NotebookApp] Saving file at /interpret.ipynb
+[I 18:35:09.198 NotebookApp] Saving file at /interpret.ipynb
+[I 18:35:17.554 NotebookApp] Saving file at /interpret.ipynb
+[I 18:35:30.174 NotebookApp] Saving file at /interpret.ipynb
+[I 18:35:36.107 NotebookApp] Saving file at /interpret.ipynb
+[I 18:35:57.446 NotebookApp] Saving file at /interpret.ipynb
+[I 18:36:03.366 NotebookApp] Saving file at /interpret.ipynb
+[I 18:36:14.410 NotebookApp] Saving file at /interpret.ipynb
+[I 18:36:25.172 NotebookApp] Saving file at /interpret.ipynb
+[I 18:36:27.310 NotebookApp] Saving file at /interpret.ipynb
+[I 18:36:35.882 NotebookApp] Saving file at /interpret.ipynb
+[I 18:36:43.374 NotebookApp] Saving file at /interpret.ipynb
+[I 18:36:43.560 NotebookApp] Saving file at /interpret.ipynb
+[I 18:37:27.146 NotebookApp] Saving file at /interpret.ipynb
+[I 18:37:30.866 NotebookApp] Saving file at /interpret.ipynb
+[I 18:37:43.438 NotebookApp] Saving file at /interpret.ipynb
+[I 18:37:51.060 NotebookApp] Saving file at /interpret.ipynb
+[I 18:38:03.830 NotebookApp] Saving file at /interpret.ipynb
+[I 18:38:15.619 NotebookApp] Saving file at /interpret.ipynb
+[I 18:38:25.103 NotebookApp] Saving file at /interpret.ipynb
+[I 18:39:02.707 NotebookApp] Saving file at /interpret.ipynb
+[I 18:39:02.902 NotebookApp] Saving file at /interpret.ipynb
+[I 18:39:09.365 NotebookApp] Saving file at /interpret.ipynb
+[I 18:39:26.738 NotebookApp] Saving file at /interpret.ipynb
+[I 18:39:58.644 NotebookApp] Saving file at /interpret.ipynb
+[I 18:40:13.034 NotebookApp] Saving file at /interpret.ipynb
+[I 18:40:20.974 NotebookApp] Saving file at /interpret.ipynb
+[I 18:40:26.398 NotebookApp] Saving file at /interpret.ipynb
+[I 18:40:58.452 NotebookApp] Saving file at /interpret.ipynb
+[I 18:41:05.176 NotebookApp] Saving file at /interpret.ipynb
+[I 18:41:09.207 NotebookApp] Saving file at /interpret.ipynb
+[I 18:41:11.319 NotebookApp] Saving file at /interpret.ipynb
+[I 18:41:12.894 NotebookApp] Saving file at /interpret.ipynb
+[I 18:41:58.583 NotebookApp] Saving file at /interpret.ipynb
+[I 18:43:10.835 NotebookApp] Saving file at /interpret.ipynb
+[I 18:45:05.470 NotebookApp] Saving file at /interpret.ipynb
+[I 18:45:10.830 NotebookApp] Saving file at /interpret.ipynb
+[I 18:45:37.642 NotebookApp] Saving file at /interpret.ipynb
+[I 18:45:37.932 NotebookApp] Saving file at /interpret.ipynb
+[I 18:45:38.235 NotebookApp] Saving file at /interpret.ipynb
+[I 18:45:39.119 NotebookApp] Saving file at /interpret.ipynb
+[I 18:45:45.591 NotebookApp] Saving file at /interpret.ipynb
+[I 18:45:45.818 NotebookApp] Saving file at /interpret.ipynb
+[I 18:45:47.443 NotebookApp] Saving file at /interpret.ipynb
+[I 18:46:19.881 NotebookApp] Saving file at /interpret.ipynb
+[I 18:46:52.091 NotebookApp] Saving file at /interpret.ipynb
+[I 18:46:58.452 NotebookApp] Saving file at /interpret.ipynb
+[I 18:47:09.585 NotebookApp] Saving file at /interpret.ipynb
+[I 18:48:32.582 NotebookApp] Saving file at /interpret.ipynb
+[I 18:49:09.954 NotebookApp] Saving file at /interpret.ipynb
+[I 18:51:09.175 NotebookApp] Saving file at /interpret.ipynb
+[I 18:54:53.238 NotebookApp] Saving file at /interpret.ipynb
+[I 18:54:53.438 NotebookApp] Saving file at /interpret.ipynb
+[I 18:54:54.474 NotebookApp] Saving file at /interpret.ipynb
+[I 18:55:02.358 NotebookApp] Saving file at /interpret.ipynb
+[I 18:55:09.067 NotebookApp] Saving file at /interpret.ipynb
+[I 18:55:09.286 NotebookApp] Saving file at /interpret.ipynb
+[I 18:57:09.121 NotebookApp] Saving file at /interpret.ipynb
+[I 18:59:09.767 NotebookApp] Saving file at /interpret.ipynb
+[I 19:12:44.558 NotebookApp] Saving file at /interpret.ipynb
+[I 19:13:09.143 NotebookApp] Saving file at /interpret.ipynb
+[I 19:15:09.247 NotebookApp] Saving file at /interpret.ipynb
+[I 20:13:26.222 NotebookApp] Saving file at /interpret.ipynb
+[I 20:13:48.094 NotebookApp] Saving file at /interpret.ipynb
+[I 20:15:09.341 NotebookApp] Saving file at /interpret.ipynb
+[I 20:17:15.182 NotebookApp] Saving file at /interpret.ipynb
+[I 20:20:41.450 NotebookApp] Saving file at /interpret.ipynb
+[I 20:20:42.467 NotebookApp] Saving file at /interpret.ipynb
+[I 20:21:09.815 NotebookApp] Saving file at /interpret.ipynb
+[I 20:23:09.492 NotebookApp] Saving file at /interpret.ipynb
+[I 07:37:47.715 NotebookApp] Saving file at /interpret.ipynb
+[I 07:39:10.772 NotebookApp] Saving file at /interpret.ipynb
+[I 07:41:10.613 NotebookApp] Saving file at /interpret.ipynb
+[I 07:43:10.145 NotebookApp] Saving file at /interpret.ipynb
+[I 07:50:03.405 NotebookApp] Saving file at /interpret.ipynb
+[I 07:50:09.579 NotebookApp] Saving file at /interpret.ipynb
+[I 07:50:12.708 NotebookApp] Saving file at /interpret.ipynb
+[I 07:51:09.965 NotebookApp] Saving file at /interpret.ipynb
+[I 07:53:10.653 NotebookApp] Saving file at /interpret.ipynb
+[I 07:54:47.756 NotebookApp] Kernel interrupted: 4e93cece-44fe-47a8-9a6e-2dc9c67cf06c
+[I 07:55:11.250 NotebookApp] Saving file at /interpret.ipynb
+[I 07:56:18.421 NotebookApp] KernelRestarter: restarting kernel (1/5), keep random ports
+kernel 4e93cece-44fe-47a8-9a6e-2dc9c67cf06c restarted
+[I 09:25:23.754 NotebookApp] Saving file at /interpret.ipynb
+[I 09:25:30.393 NotebookApp] Starting buffering for 4e93cece-44fe-47a8-9a6e-2dc9c67cf06c:7b6539f141994c4faf496c66f8ba3135
+[I 09:25:30.703 NotebookApp] Kernel restarted: 4e93cece-44fe-47a8-9a6e-2dc9c67cf06c
+[I 09:25:30.782 NotebookApp] Restoring connection for 4e93cece-44fe-47a8-9a6e-2dc9c67cf06c:7b6539f141994c4faf496c66f8ba3135
+[I 09:25:31.168 NotebookApp] Replaying 3 buffered messages
+[I 09:27:10.801 NotebookApp] Saving file at /interpret.ipynb
+[I 09:31:28.756 NotebookApp] Saving file at /interpret.ipynb
+[I 09:31:38.863 NotebookApp] Saving file at /interpret.ipynb
+[I 09:33:11.846 NotebookApp] Saving file at /interpret.ipynb
+[I 13:35:10.378 NotebookApp] Saving file at /interpret.ipynb
+[I 13:35:18.196 NotebookApp] Saving file at /interpret.ipynb
+[I 13:35:18.411 NotebookApp] Saving file at /interpret.ipynb
+[I 13:35:26.098 NotebookApp] Kernel interrupted: 4e93cece-44fe-47a8-9a6e-2dc9c67cf06c
+[I 13:35:29.169 NotebookApp] Starting buffering for 4e93cece-44fe-47a8-9a6e-2dc9c67cf06c:7b6539f141994c4faf496c66f8ba3135
+[I 13:35:29.987 NotebookApp] Kernel restarted: 4e93cece-44fe-47a8-9a6e-2dc9c67cf06c
+[I 13:35:30.026 NotebookApp] Restoring connection for 4e93cece-44fe-47a8-9a6e-2dc9c67cf06c:7b6539f141994c4faf496c66f8ba3135
+[I 13:35:30.535 NotebookApp] Replaying 3 buffered messages
+[I 13:37:10.277 NotebookApp] Saving file at /interpret.ipynb
+[I 13:39:11.082 NotebookApp] Saving file at /interpret.ipynb
+[I 13:46:34.917 NotebookApp] Saving file at /interpret.ipynb
+[I 13:46:35.187 NotebookApp] Saving file at /interpret.ipynb
+[I 13:47:10.992 NotebookApp] Saving file at /interpret.ipynb
+[I 13:49:10.441 NotebookApp] Saving file at /interpret.ipynb
+[I 13:58:33.565 NotebookApp] Saving file at /interpret.ipynb
+[I 13:58:40.118 NotebookApp] Saving file at /interpret.ipynb
+[I 13:58:40.394 NotebookApp] Saving file at /interpret.ipynb
+[I 13:58:40.623 NotebookApp] Saving file at /interpret.ipynb
+[I 13:58:40.870 NotebookApp] Saving file at /interpret.ipynb
+[I 13:59:10.439 NotebookApp] Saving file at /interpret.ipynb
+[I 14:01:14.030 NotebookApp] Saving file at /interpret.ipynb
+[I 14:03:30.086 NotebookApp] Saving file at /interpret.ipynb
+[I 14:05:10.441 NotebookApp] Saving file at /interpret.ipynb
+[I 14:12:10.511 NotebookApp] Saving file at /interpret.ipynb
+[I 14:13:11.915 NotebookApp] Saving file at /interpret.ipynb
+[I 14:16:23.830 NotebookApp] Starting buffering for 4e93cece-44fe-47a8-9a6e-2dc9c67cf06c:7b6539f141994c4faf496c66f8ba3135
+[I 14:18:08.884 NotebookApp] Restoring connection for 4e93cece-44fe-47a8-9a6e-2dc9c67cf06c:7b6539f141994c4faf496c66f8ba3135
+[I 14:19:21.824 NotebookApp] Saving file at /interpret.ipynb
+[I 14:21:15.962 NotebookApp] Saving file at /interpret.ipynb
+[I 14:23:15.950 NotebookApp] Saving file at /interpret.ipynb
+[W 14:43:38.888 NotebookApp] WebSocket ping timeout after 119995 ms.
+[I 14:43:43.903 NotebookApp] Starting buffering for 4e93cece-44fe-47a8-9a6e-2dc9c67cf06c:7b6539f141994c4faf496c66f8ba3135
+[W 15:28:49.786 NotebookApp] Notebook interpret.ipynb is not trusted
+[W 15:28:50.335 NotebookApp] 404 GET /nbextensions/widgets/notebook/js/extension.js?v=20210707094623 (127.0.0.1) 6.780000ms referer=http://localhost:8889/notebooks/interpret.ipynb
+[I 15:29:21.790 NotebookApp] Saving file at /interpret.ipynb
+[W 15:29:21.791 NotebookApp] Notebook interpret.ipynb is not trusted
+[I 15:30:50.785 NotebookApp] Saving file at /interpret.ipynb
+[I 15:32:50.282 NotebookApp] Saving file at /interpret.ipynb
+[I 15:38:50.407 NotebookApp] Saving file at /interpret.ipynb
+[I 15:39:05.434 NotebookApp] Saving file at /interpret.ipynb
+[I 15:39:05.766 NotebookApp] Saving file at /interpret.ipynb
+[I 15:40:50.522 NotebookApp] Saving file at /interpret.ipynb
+[I 15:42:51.340 NotebookApp] Saving file at /interpret.ipynb
+[I 15:51:14.144 NotebookApp] Saving file at /interpret.ipynb
+[I 15:52:50.940 NotebookApp] Saving file at /interpret.ipynb
+[I 15:54:50.973 NotebookApp] Saving file at /interpret.ipynb
+[I 15:58:25.743 NotebookApp] Saving file at /interpret.ipynb
+[I 15:58:50.561 NotebookApp] Saving file at /interpret.ipynb
+[I 16:00:50.626 NotebookApp] Saving file at /interpret.ipynb
+[I 16:04:03.007 NotebookApp] Saving file at /interpret.ipynb
+[I 16:06:50.421 NotebookApp] Saving file at /interpret.ipynb
+[I 16:08:50.627 NotebookApp] Saving file at /interpret.ipynb
+[I 16:28:25.049 NotebookApp] Saving file at /interpret.ipynb
+[I 16:28:50.450 NotebookApp] Saving file at /interpret.ipynb
+[I 16:30:50.366 NotebookApp] Saving file at /interpret.ipynb
+[I 16:47:04.147 NotebookApp] Kernel interrupted: 4e93cece-44fe-47a8-9a6e-2dc9c67cf06c
+[I 16:49:27.946 NotebookApp] Saving file at /interpret.ipynb
+[I 16:49:36.051 NotebookApp] Saving file at /interpret.ipynb
+[I 16:49:45.774 NotebookApp] Saving file at /interpret.ipynb
+[I 16:50:50.306 NotebookApp] Saving file at /interpret.ipynb
+[I 16:52:50.263 NotebookApp] Saving file at /interpret.ipynb
+[I 16:54:51.290 NotebookApp] Saving file at /interpret.ipynb
+[I 17:23:28.158 NotebookApp] Kernel interrupted: 4e93cece-44fe-47a8-9a6e-2dc9c67cf06c
+[I 17:23:28.603 NotebookApp] Kernel interrupted: 4e93cece-44fe-47a8-9a6e-2dc9c67cf06c
+[I 17:23:28.792 NotebookApp] Kernel interrupted: 4e93cece-44fe-47a8-9a6e-2dc9c67cf06c
+[I 17:23:52.257 NotebookApp] Kernel interrupted: 4e93cece-44fe-47a8-9a6e-2dc9c67cf06c
+[I 17:23:52.733 NotebookApp] Kernel interrupted: 4e93cece-44fe-47a8-9a6e-2dc9c67cf06c
+[I 17:23:53.702 NotebookApp] Kernel interrupted: 4e93cece-44fe-47a8-9a6e-2dc9c67cf06c
+[I 17:23:56.248 NotebookApp] Kernel interrupted: 4e93cece-44fe-47a8-9a6e-2dc9c67cf06c
+[I 17:24:00.449 NotebookApp] Starting buffering for 4e93cece-44fe-47a8-9a6e-2dc9c67cf06c:9f7efe4062074a428fc4a429e1dc92b8
+[I 17:24:03.074 NotebookApp] Kernel restarted: 4e93cece-44fe-47a8-9a6e-2dc9c67cf06c
+[I 17:24:03.118 NotebookApp] Restoring connection for 4e93cece-44fe-47a8-9a6e-2dc9c67cf06c:9f7efe4062074a428fc4a429e1dc92b8
+[I 17:24:03.812 NotebookApp] Replaying 3 buffered messages
+[I 13:29:26.666 NotebookApp] Saving file at /interpret.ipynb
+[I 13:29:41.745 NotebookApp] Saving file at /interpret.ipynb
+[I 13:29:59.011 NotebookApp] Saving file at /interpret.ipynb
+[I 13:30:02.053 NotebookApp] Saving file at /interpret.ipynb
+[I 13:30:08.688 NotebookApp] Starting buffering for 4e93cece-44fe-47a8-9a6e-2dc9c67cf06c:9f7efe4062074a428fc4a429e1dc92b8
+[I 13:30:09.613 NotebookApp] Kernel restarted: 4e93cece-44fe-47a8-9a6e-2dc9c67cf06c
+[I 13:30:09.671 NotebookApp] Restoring connection for 4e93cece-44fe-47a8-9a6e-2dc9c67cf06c:9f7efe4062074a428fc4a429e1dc92b8
+[I 13:30:10.243 NotebookApp] Replaying 3 buffered messages
+[I 13:30:51.931 NotebookApp] Saving file at /interpret.ipynb
+[I 13:32:51.923 NotebookApp] Saving file at /interpret.ipynb
+[I 13:33:21.618 NotebookApp] KernelRestarter: restarting kernel (1/5), keep random ports
+kernel 4e93cece-44fe-47a8-9a6e-2dc9c67cf06c restarted
+Traceback (most recent call last):
+  File "/home/ofornes/Anaconda3/envs/deep-motif-discovery-pipeline/lib/python3.8/runpy.py", line 194, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/ofornes/Anaconda3/envs/deep-motif-discovery-pipeline/lib/python3.8/runpy.py", line 87, in _run_code
+    exec(code, run_globals)
+  File "/home/ofornes/Anaconda3/envs/deep-motif-discovery-pipeline/lib/python3.8/site-packages/ipykernel_launcher.py", line 16, in <module>
+    app.launch_new_instance()
+  File "/home/ofornes/Anaconda3/envs/deep-motif-discovery-pipeline/lib/python3.8/site-packages/traitlets/config/application.py", line 844, in launch_instance
+    app.initialize(argv)
+  File "/home/ofornes/Anaconda3/envs/deep-motif-discovery-pipeline/lib/python3.8/site-packages/traitlets/config/application.py", line 87, in inner
+    return method(app, *args, **kwargs)
+  File "/home/ofornes/Anaconda3/envs/deep-motif-discovery-pipeline/lib/python3.8/site-packages/ipykernel/kernelapp.py", line 567, in initialize
+    self.init_sockets()
+  File "/home/ofornes/Anaconda3/envs/deep-motif-discovery-pipeline/lib/python3.8/site-packages/ipykernel/kernelapp.py", line 271, in init_sockets
+    self.shell_port = self._bind_socket(self.shell_socket, self.shell_port)
+  File "/home/ofornes/Anaconda3/envs/deep-motif-discovery-pipeline/lib/python3.8/site-packages/ipykernel/kernelapp.py", line 218, in _bind_socket
+    return self._try_bind_socket(s, port)
+  File "/home/ofornes/Anaconda3/envs/deep-motif-discovery-pipeline/lib/python3.8/site-packages/ipykernel/kernelapp.py", line 194, in _try_bind_socket
+    s.bind("tcp://%s:%i" % (self.ip, port))
+  File "/home/ofornes/Anaconda3/envs/deep-motif-discovery-pipeline/lib/python3.8/site-packages/zmq/sugar/socket.py", line 172, in bind
+    super().bind(addr)
+  File "zmq/backend/cython/socket.pyx", line 540, in zmq.backend.cython.socket.Socket.bind
+  File "zmq/backend/cython/checkrc.pxd", line 28, in zmq.backend.cython.checkrc._check_rc
+zmq.error.ZMQError: Address already in use
+[I 13:33:24.732 NotebookApp] KernelRestarter: restarting kernel (2/5), keep random ports
+kernel 4e93cece-44fe-47a8-9a6e-2dc9c67cf06c restarted
+[I 13:33:59.380 NotebookApp] Kernel interrupted: 4e93cece-44fe-47a8-9a6e-2dc9c67cf06c
+[I 13:33:59.504 NotebookApp] Kernel interrupted: 4e93cece-44fe-47a8-9a6e-2dc9c67cf06c
+[I 13:33:59.534 NotebookApp] Saving file at /interpret.ipynb
+[I 13:33:59.782 NotebookApp] Kernel interrupted: 4e93cece-44fe-47a8-9a6e-2dc9c67cf06c
+[I 13:34:01.549 NotebookApp] Starting buffering for 4e93cece-44fe-47a8-9a6e-2dc9c67cf06c:9f7efe4062074a428fc4a429e1dc92b8
+[I 13:34:01.857 NotebookApp] Kernel restarted: 4e93cece-44fe-47a8-9a6e-2dc9c67cf06c
+[I 13:34:01.995 NotebookApp] Restoring connection for 4e93cece-44fe-47a8-9a6e-2dc9c67cf06c:9f7efe4062074a428fc4a429e1dc92b8
+[I 13:34:02.342 NotebookApp] Replaying 3 buffered messages
+[I 15:59:28.610 NotebookApp] Starting buffering for 4e93cece-44fe-47a8-9a6e-2dc9c67cf06c:9f7efe4062074a428fc4a429e1dc92b8

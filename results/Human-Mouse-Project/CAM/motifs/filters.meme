@@ -7,7 +7,7 @@ strands: + -
 Background letter frequencies (from uniform background):
 A 0.25000 C 0.25000 G 0.25000 T 0.25000
 
-MOTIF human-mouse AAACTGTGCCCAGTCCAGG
+MOTIF filter0 human-mouse AAACTGTGCCCAGTCCAGG
 letter-probability matrix: alength= 4 w= 19 nsites= 130726 E= 0
  0.51277481   0.1928767  0.28039564  0.01395285
  0.35597552  0.27533036  0.33781701   0.0308771
@@ -29,7 +29,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 130726 E= 0
  0.11950095  0.06033638  0.63333282  0.18682985
  0.37292956  0.09738288  0.47708389  0.05260367
 
-MOTIF human-mouse CCTGGAGGGCTGACTAGGA
+MOTIF filter1 human-mouse CCTGGAGGGCTGACTAGGA
 letter-probability matrix: alength= 4 w= 19 nsites= 2286 E= 0
  0.24190726  0.44575678  0.12423447  0.18810149
  0.17634221  0.63203841  0.00436491  0.18725447
@@ -51,7 +51,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 2286 E= 0
  0.01611498  0.26132404  0.51350174  0.20905923
  0.57348452  0.09768862  0.15569123  0.17313563
 
-MOTIF human-mouse CAGAGTACAGGTTGGGCCG
+MOTIF filter2 human-mouse CAGAGTACAGGTTGGGCCG
 letter-probability matrix: alength= 4 w= 19 nsites= 1160 E= 0
  0.35431034  0.52068966  0.08534483  0.03965517
  0.60154905  0.20223752  0.08089501  0.11531842
@@ -73,7 +73,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 1160 E= 0
  0.00599315  0.97517123  0.01113014  0.00770548
   0.0008569  0.02056555   0.9117395  0.06683805
 
-MOTIF human-mouse TCCTACATATCCCAAGCCA
+MOTIF filter3 human-mouse TCCTACATATCCCAAGCCA
 letter-probability matrix: alength= 4 w= 19 nsites= 14017 E= 0
  0.17243347  0.27530855  0.21837768  0.33388029
  0.21779926  0.44242252  0.09674438  0.24303384
@@ -95,7 +95,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 14017 E= 0
  0.20698362     0.38446  0.33352572  0.07503066
  0.44506491   0.2631808  0.06135325  0.23040104
 
-MOTIF human-mouse CCCCTCCTGGCCTGGGCAA
+MOTIF filter4 human-mouse CCCCTCCTGGCCTGGGCAA
 letter-probability matrix: alength= 4 w= 19 nsites= 308 E= 0
  0.20454545  0.67532468  0.10714286  0.01298701
  0.14239482  0.74433657  0.01941748  0.09385113
@@ -117,7 +117,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 308 E= 0
  0.81877023  0.02265372  0.15533981  0.00323625
  0.55194805  0.10714286  0.30519481  0.03571429
 
-MOTIF human-mouse GACTGGAAGATCCTACAGT
+MOTIF filter5 human-mouse GACTGGAAGATCCTACAGT
 letter-probability matrix: alength= 4 w= 19 nsites= 302 E= 0
  0.31125828  0.06622517   0.4205298  0.20198675
  0.43377483  0.16556291  0.17218543  0.22847682
@@ -139,7 +139,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 302 E= 0
   0.0130719  0.33986928  0.60457516  0.04248366
  0.15081967  0.05901639  0.03606557  0.75409836
 
-MOTIF human-mouse CTCATTGGCCAGCACTAGA
+MOTIF filter6 human-mouse CTCATTGGCCAGCACTAGA
 letter-probability matrix: alength= 4 w= 19 nsites= 651 E= 0
   0.0030722  0.84178187  0.12135177  0.03379416
  0.00614439  0.29339478  0.20890937  0.49155146
@@ -161,7 +161,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 651 E= 0
  0.09891808  0.14528594  0.63369397  0.12210201
  0.39069767   0.0496124  0.35503876  0.20465116
 
-MOTIF human-mouse AAAAAAAAAACAAACCAAA
+MOTIF filter7 human-mouse AAAAAAAAAACAAACCAAA
 letter-probability matrix: alength= 4 w= 19 nsites= 589 E= 0
  0.73514431  0.02546689  0.23938879         0.0
  0.77027027  0.22635135  0.00337838         0.0
@@ -183,7 +183,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 589 E= 0
  0.97128378         0.0  0.00337838  0.02533784
  0.98305085  0.00169492  0.01016949  0.00508475
 
-MOTIF human-mouse CCGGCGTCACCGAGGGTGG
+MOTIF filter8 human-mouse CCGGCGTCACCGAGGGTGG
 letter-probability matrix: alength= 4 w= 19 nsites= 748 E= 0
  0.04679144  0.62566845  0.19919786  0.12834225
  0.00398936  0.53723404  0.15824468  0.30053191
@@ -205,7 +205,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 748 E= 0
  0.00928382  0.01061008  0.97877984  0.00132626
  0.21409574  0.33909574  0.42819149  0.01861702
 
-MOTIF human-mouse ATGGCCACCTGGTGGCTGT
+MOTIF filter9 human-mouse ATGGCCACCTGGTGGCTGT
 letter-probability matrix: alength= 4 w= 19 nsites= 745 E= 0
  0.33422819   0.0590604   0.2885906  0.31812081
  0.05481283  0.29411765  0.09491979  0.55614973
@@ -227,7 +227,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 745 E= 0
  0.01068091  0.46595461  0.52336449         0.0
  0.17245989  0.05614973  0.05748663  0.71390374
 
-MOTIF human-mouse CTGTGCCTCTGTGAGAGGC
+MOTIF filter10 human-mouse CTGTGCCTCTGTGAGAGGC
 letter-probability matrix: alength= 4 w= 19 nsites= 582 E= 0
  0.02405498   0.8161512   0.1185567  0.04123711
  0.30756014  0.17697595  0.02405498  0.49140893
@@ -249,7 +249,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 582 E= 0
  0.00516351  0.46127367  0.53184165  0.00172117
  0.05719237  0.62564991   0.2339688  0.08318891
 
-MOTIF human-mouse GATGGGGCCACTGCACTCC
+MOTIF filter11 human-mouse GATGGGGCCACTGCACTCC
 letter-probability matrix: alength= 4 w= 19 nsites= 151 E= 0
  0.17880795         0.0  0.81456954  0.00662252
  0.75163399  0.23529412         0.0   0.0130719
@@ -271,7 +271,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 151 E= 0
         0.0  0.92810458   0.0130719  0.05882353
  0.03947368  0.86842105  0.01315789  0.07894737
 
-MOTIF human-mouse CGCTGAGCCATCTCTCCAG
+MOTIF filter12 human-mouse CGCTGAGCCATCTCTCCAG
 letter-probability matrix: alength= 4 w= 19 nsites= 177 E= 0
  0.04519774  0.53672316  0.03954802  0.37853107
  0.46067416         0.0  0.48314607  0.05617978
@@ -293,7 +293,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 177 E= 0
  0.99441341         0.0         0.0  0.00558659
  0.01129944  0.00564972  0.97740113  0.00564972
 
-MOTIF human-mouse AGCGGTCCTTACACCAGAG
+MOTIF filter13 human-mouse AGCGGTCCTTACACCAGAG
 letter-probability matrix: alength= 4 w= 19 nsites= 1219 E= 0
  0.55865463  0.16160788  0.07136998  0.20836751
  0.05473856  0.03676471   0.7246732  0.18382353
@@ -315,7 +315,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 1219 E= 0
  0.48184818  0.02640264  0.40016502  0.09158416
   0.1156406  0.19717138  0.57154742   0.1156406
 
-MOTIF human-mouse GCTCAGTTGTCACAAGTCT
+MOTIF filter14 human-mouse GCTCAGTTGTCACAAGTCT
 letter-probability matrix: alength= 4 w= 19 nsites= 903 E= 0
    0.213732   0.0786268  0.58361019  0.12403101
  0.02983425  0.70055249  0.06077348  0.20883978
@@ -337,7 +337,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 903 E= 0
         0.0  0.99779006         0.0  0.00220994
  0.26327434  0.21238938  0.00110619  0.52323009
 
-MOTIF human-mouse CGTCGCCTGAGACTCACAG
+MOTIF filter15 human-mouse CGTCGCCTGAGACTCACAG
 letter-probability matrix: alength= 4 w= 19 nsites= 1304 E= 0
  0.32361963  0.50460123  0.11809816  0.05368098
  0.02837423  0.18788344  0.73542945  0.04831288
@@ -359,7 +359,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 1304 E= 0
  0.47856049  0.04058193  0.02679939  0.45405819
  0.06825153   0.0690184  0.86196319  0.00076687
 
-MOTIF human-mouse TATGCAGCGCCTTTTGTAT
+MOTIF filter16 human-mouse TATGCAGCGCCTTTTGTAT
 letter-probability matrix: alength= 4 w= 19 nsites= 129 E= 0
  0.13953488  0.02325581   0.2248062   0.6124031
  0.73643411  0.05426357         0.0  0.20930233
@@ -381,7 +381,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 129 E= 0
  0.53435115  0.17557252  0.02290076  0.26717557
  0.06870229  0.00763359  0.02290076  0.90076336
 
-MOTIF human-mouse TGAAAGGCTAGTGTGACCC
+MOTIF filter17 human-mouse TGAAAGGCTAGTGTGACCC
 letter-probability matrix: alength= 4 w= 19 nsites= 219 E= 0
  0.36073059  0.03196347  0.04109589  0.56621005
  0.16438356  0.13242009  0.52054795   0.1826484
@@ -403,7 +403,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 219 E= 0
  0.29680365  0.47945205         0.0  0.22374429
  0.26605505  0.58256881  0.08715596  0.06422018
 
-MOTIF human-mouse TGGTGAGTGTCCAAAGATC
+MOTIF filter18 human-mouse TGGTGAGTGTCCAAAGATC
 letter-probability matrix: alength= 4 w= 19 nsites= 2137 E= 0
  0.00842302  0.28685073  0.28076743  0.42395882
  0.13919926  0.13873371    0.391527  0.33054004
@@ -425,7 +425,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 2137 E= 0
  0.04803695  0.35889145  0.22817552  0.36489607
  0.10194625   0.4536608  0.11492122  0.32947173
 
-MOTIF human-mouse GCGCCACTGCACTCCAGCC
+MOTIF filter19 human-mouse GCGCCACTGCACTCCAGCC
 letter-probability matrix: alength= 4 w= 19 nsites= 328 E= 0
  0.32621951  0.00304878  0.67073171         0.0
  0.02114804  0.50755287  0.01208459   0.4592145
@@ -447,7 +447,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 328 E= 0
  0.00299401  0.98802395  0.00598802  0.00299401
         0.0         1.0         0.0         0.0
 
-MOTIF human-mouse CCCCGCCAGAGGACGCGCG
+MOTIF filter20 human-mouse CCCCGCCAGAGGACGCGCG
 letter-probability matrix: alength= 4 w= 19 nsites= 1327 E= 0
  0.03541824  0.86284853  0.04220045  0.05953278
  0.25995492  0.39519159  0.21111946  0.13373403
@@ -469,7 +469,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 1327 E= 0
  0.16842105  0.40526316  0.38120301  0.04511278
  0.02257336  0.21745673  0.72159518  0.03837472
 
-MOTIF human-mouse CTTGCACTGTGCAAAATGA
+MOTIF filter21 human-mouse CTTGCACTGTGCAAAATGA
 letter-probability matrix: alength= 4 w= 19 nsites= 1478 E= 0
  0.36874154  0.37550744  0.06359946  0.19215156
  0.02491582  0.28148148  0.23636364  0.45723906
@@ -491,7 +491,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 1478 E= 0
  0.23358158  0.02437373  0.43398781  0.30805687
  0.35054348  0.18070652  0.30366848  0.16508152
 
-MOTIF human-mouse CTGGGCCCAGTCGGCACAG
+MOTIF filter22 human-mouse CTGGGCCCAGTCGGCACAG
 letter-probability matrix: alength= 4 w= 19 nsites= 626 E= 0
  0.04472843   0.9456869  0.00319489  0.00638978
  0.07006369  0.15764331  0.06687898  0.70541401
@@ -513,7 +513,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 626 E= 0
   0.6539075  0.05901116   0.1291866  0.15789474
  0.03030303  0.04625199  0.91547049  0.00797448
 
-MOTIF human-mouse TGAGCATACATACAGGTCA
+MOTIF filter23 human-mouse TGAGCATACATACAGGTCA
 letter-probability matrix: alength= 4 w= 19 nsites= 26 E= 0
  0.03846154         0.0         0.0  0.96153846
  0.22222222   0.2962963  0.37037037  0.11111111
@@ -535,7 +535,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 26 E= 0
         0.0         1.0         0.0         0.0
  0.92592593         0.0         0.0  0.07407407
 
-MOTIF human-mouse GTGAAGGCCAGCAGCCAAC
+MOTIF filter24 human-mouse GTGAAGGCCAGCAGCCAAC
 letter-probability matrix: alength= 4 w= 19 nsites= 88 E= 0
         0.0  0.01136364  0.94318182  0.04545455
  0.30681818  0.21590909  0.10227273       0.375
@@ -557,7 +557,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 88 E= 0
  0.54545455       0.375  0.03409091  0.04545455
        0.25  0.45454545  0.06818182  0.22727273
 
-MOTIF human-mouse ACCACACCCAAGCATAGCT
+MOTIF filter25 human-mouse ACCACACCCAAGCATAGCT
 letter-probability matrix: alength= 4 w= 19 nsites= 2199 E= 0
  0.42883129  0.11005002  0.41018645  0.05093224
  0.31972789  0.49659864  0.14829932  0.03537415
@@ -579,7 +579,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 2199 E= 0
  0.13775971  0.71273713  0.00180668  0.14769648
  0.12273551  0.31974638  0.00905797  0.54846014
 
-MOTIF human-mouse TGTATAATCATTTTTTCAG
+MOTIF filter26 human-mouse TGTATAATCATTTTTTCAG
 letter-probability matrix: alength= 4 w= 19 nsites= 1136 E= 0
   0.2834507  0.24119718  0.10915493  0.36619718
  0.20877193  0.28684211   0.2877193  0.21666667
@@ -601,7 +601,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 1136 E= 0
  0.53070175  0.03947368  0.05789474  0.37192982
  0.18165785  0.11287478  0.47795414  0.22751323
 
-MOTIF human-mouse AACATTGTGACCTGAAAGC
+MOTIF filter27 human-mouse AACATTGTGACCTGAAAGC
 letter-probability matrix: alength= 4 w= 19 nsites= 217 E= 0
  0.62672811  0.10599078  0.13824885  0.12903226
  0.53917051  0.19815668  0.20737327  0.05529954
@@ -623,7 +623,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 217 E= 0
  0.11981567  0.11520737  0.74193548  0.02304147
  0.03225806  0.96774194         0.0         0.0
 
-MOTIF human-mouse TTGAGACGGAGTCTCACTC
+MOTIF filter28 human-mouse TTGAGACGGAGTCTCACTC
 letter-probability matrix: alength= 4 w= 19 nsites= 135 E= 0
         0.0         0.0  0.23703704  0.76296296
         0.0  0.03676471  0.08088235  0.88235294
@@ -645,7 +645,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 135 E= 0
  0.13333333  0.00740741         0.0  0.85925926
  0.19259259  0.62962963  0.03703704  0.14074074
 
-MOTIF human-mouse TGTAGACTGTGCTCAGAGA
+MOTIF filter29 human-mouse TGTAGACTGTGCTCAGAGA
 letter-probability matrix: alength= 4 w= 19 nsites= 153 E= 0
  0.03267974  0.16993464  0.05228758  0.74509804
   0.0130719         0.0  0.90196078  0.08496732
@@ -667,7 +667,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 153 E= 0
  0.01973684  0.11842105  0.86184211         0.0
  0.46710526  0.19078947  0.08552632  0.25657895
 
-MOTIF human-mouse GTATAGAAAATCTCCAGAA
+MOTIF filter30 human-mouse GTATAGAAAATCTCCAGAA
 letter-probability matrix: alength= 4 w= 19 nsites= 1592 E= 0
  0.10552764  0.02386935  0.76570352   0.1048995
  0.31994981  0.07214555  0.26913425  0.33877039
@@ -689,7 +689,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 1592 E= 0
  0.79197995   0.0037594  0.18796992  0.01629073
  0.99686717         0.0  0.00125313   0.0018797
 
-MOTIF human-mouse CGCGCCGTCTGCTGGCGGC
+MOTIF filter31 human-mouse CGCGCCGTCTGCTGGCGGC
 letter-probability matrix: alength= 4 w= 19 nsites= 87 E= 0
  0.03448276  0.42528736  0.37931034  0.16091954
  0.03448276         0.0  0.96551724         0.0
@@ -711,7 +711,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 87 E= 0
  0.26436782  0.02298851  0.57471264  0.13793103
  0.10344828  0.82758621  0.03448276  0.03448276
 
-MOTIF human-mouse CACCATGGCGGCGGCTGCG
+MOTIF filter32 human-mouse CACCATGGCGGCGGCTGCG
 letter-probability matrix: alength= 4 w= 19 nsites= 277 E= 0
  0.00361011  0.94945848  0.03971119  0.00722022
  0.82310469  0.15523466  0.01805054  0.00361011
@@ -733,7 +733,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 277 E= 0
  0.19855596    0.566787  0.06859206  0.16606498
  0.11913357  0.04693141  0.75090253  0.08303249
 
-MOTIF human-mouse ATTTCACTTCCTCATTTTA
+MOTIF filter33 human-mouse ATTTCACTTCCTCATTTTA
 letter-probability matrix: alength= 4 w= 19 nsites= 1705 E= 0
  0.29970674  0.17536657  0.23636364  0.28856305
  0.23739742   0.0855803  0.15767878  0.51934349
@@ -755,7 +755,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 1705 E= 0
  0.22633745  0.19400353  0.19165197  0.38800705
  0.41117647  0.09823529  0.22235294  0.26823529
 
-MOTIF human-mouse CTACGAACAGGCCCAAGGC
+MOTIF filter34 human-mouse CTACGAACAGGCCCAAGGC
 letter-probability matrix: alength= 4 w= 19 nsites= 1959 E= 0
  0.11485452  0.60949464  0.18223583  0.09341501
       0.125  0.14176829  0.34095528  0.39227642
@@ -777,7 +777,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 1959 E= 0
  0.02851324  0.21588595  0.74185336  0.01374745
         0.0  0.45107034  0.12640163  0.42252803
 
-MOTIF human-mouse GAATGGGCCCCTCCTGCCT
+MOTIF filter35 human-mouse GAATGGGCCCCTCCTGCCT
 letter-probability matrix: alength= 4 w= 19 nsites= 208 E= 0
  0.04807692  0.13942308  0.79326923  0.01923077
  0.68269231  0.05769231  0.23076923  0.02884615
@@ -799,7 +799,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 208 E= 0
  0.01442308  0.95673077  0.02884615         0.0
  0.00480769  0.37980769  0.01442308  0.60096154
 
-MOTIF human-mouse CCTGGAGTGGGGCAATCTC
+MOTIF filter36 human-mouse CCTGGAGTGGGGCAATCTC
 letter-probability matrix: alength= 4 w= 19 nsites= 413 E= 0
   0.1622276  0.73365617  0.04116223    0.062954
  0.15217391  0.52657005   0.1884058  0.13285024
@@ -821,7 +821,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 413 E= 0
  0.00963855  0.13253012  0.00240964  0.85542169
  0.01690821  0.54830918  0.02898551   0.4057971
 
-MOTIF human-mouse CTCTCGTGAAGCCACGCCC
+MOTIF filter37 human-mouse CTCTCGTGAAGCCACGCCC
 letter-probability matrix: alength= 4 w= 19 nsites= 177 E= 0
  0.03389831  0.61016949  0.11299435  0.24293785
  0.25842697  0.30337079  0.11797753  0.32022472
@@ -843,7 +843,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 177 E= 0
         0.0         1.0         0.0         0.0
         0.0  0.81460674         0.0  0.18539326
 
-MOTIF human-mouse CGGGCTGGCACAAAAGACC
+MOTIF filter38 human-mouse CGGGCTGGCACAAAAGACC
 letter-probability matrix: alength= 4 w= 19 nsites= 70 E= 0
         0.0  0.91428571  0.01428571  0.07142857
  0.22857143  0.02857143  0.67142857  0.07142857
@@ -865,7 +865,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 70 E= 0
         0.0         0.8  0.17142857  0.02857143
  0.11428571  0.75714286         0.1  0.02857143
 
-MOTIF human-mouse CAAAGGTCTAGGGGATCCC
+MOTIF filter39 human-mouse CAAAGGTCTAGGGGATCCC
 letter-probability matrix: alength= 4 w= 19 nsites= 65 E= 0
  0.06153846  0.86153846  0.01538462  0.06153846
         0.5  0.21212121  0.07575758  0.21212121
@@ -887,7 +887,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 65 E= 0
  0.01515152  0.98484848         0.0         0.0
  0.03030303  0.93939394  0.03030303         0.0
 
-MOTIF human-mouse GGCGTCGCGCGCGCGCGCG
+MOTIF filter40 human-mouse GGCGTCGCGCGCGCGCGCG
 letter-probability matrix: alength= 4 w= 19 nsites= 818 E= 0
  0.17848411  0.25672372  0.50488998   0.0599022
  0.05487805  0.30121951  0.39878049  0.24512195
@@ -909,7 +909,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 818 E= 0
         0.0  0.97815534  0.01456311  0.00728155
  0.04622871  0.00851582  0.69829684  0.24695864
 
-MOTIF human-mouse CCCAGGCCCCAGACGTGCT
+MOTIF filter41 human-mouse CCCAGGCCCCAGACGTGCT
 letter-probability matrix: alength= 4 w= 19 nsites= 228 E= 0
  0.04385965  0.82017544  0.06140351   0.0745614
  0.04366812  0.86462882  0.05676856   0.0349345
@@ -931,7 +931,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 228 E= 0
  0.18340611  0.70742358  0.09170306  0.01746725
  0.17982456   0.3377193  0.02631579  0.45614035
 
-MOTIF human-mouse AAATTCTCCAGGTAAATTC
+MOTIF filter42 human-mouse AAATTCTCCAGGTAAATTC
 letter-probability matrix: alength= 4 w= 19 nsites= 424 E= 0
  0.45990566  0.20283019  0.06839623  0.26886792
  0.51058824  0.00235294        0.08  0.40705882
@@ -953,7 +953,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 424 E= 0
  0.00705882  0.12470588  0.01176471  0.85647059
  0.16824645  0.54265403  0.23459716  0.05450237
 
-MOTIF human-mouse TTGAGAGCTTGAGGCTATA
+MOTIF filter43 human-mouse TTGAGAGCTTGAGGCTATA
 letter-probability matrix: alength= 4 w= 19 nsites= 294 E= 0
  0.13605442   0.1462585         0.0  0.71768707
   0.0170068  0.08843537  0.04421769  0.85034014
@@ -975,7 +975,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 294 E= 0
  0.10238908  0.09215017  0.39590444  0.40955631
   0.3630137  0.21575342  0.20205479  0.21917808
 
-MOTIF human-mouse AAAAGCGATCTAGTTTAGG
+MOTIF filter44 human-mouse AAAAGCGATCTAGTTTAGG
 letter-probability matrix: alength= 4 w= 19 nsites= 2208 E= 0
  0.55253623   0.0942029  0.23097826  0.12228261
  0.77958446  0.08536585  0.06594399  0.06910569
@@ -997,7 +997,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 2208 E= 0
  0.27933213  0.16380866  0.45712996  0.09972924
  0.12001812  0.17889493  0.66530797  0.03577899
 
-MOTIF human-mouse TATCAAAAAATATTTTTGA
+MOTIF filter45 human-mouse TATCAAAAAATATTTTTGA
 letter-probability matrix: alength= 4 w= 19 nsites= 1497 E= 0
  0.15898464  0.26653307  0.16499666  0.40948564
  0.67885638  0.02925532  0.00797872  0.28390957
@@ -1019,7 +1019,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 1497 E= 0
  0.18031704  0.14134742  0.51585205  0.16248349
  0.93456709  0.04097819  0.00132188  0.02313285
 
-MOTIF human-mouse CCAGCCCCCAGCACTGTCC
+MOTIF filter46 human-mouse CCAGCCCCCAGCACTGTCC
 letter-probability matrix: alength= 4 w= 19 nsites= 3747 E= 0
  0.12009608   0.4643715  0.07872965  0.33680278
  0.11401172  0.66888652  0.05114544  0.16595631
@@ -1041,7 +1041,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 3747 E= 0
  0.06992821  0.47248072  0.37463441  0.08295666
  0.05782041  0.47055689  0.18651745  0.28510525
 
-MOTIF human-mouse CCTTGGTTTAAGTTTTCTT
+MOTIF filter47 human-mouse CCTTGGTTTAAGTTTTCTT
 letter-probability matrix: alength= 4 w= 19 nsites= 474 E= 0
  0.04219409  0.59915612  0.33755274  0.02109705
   0.0021097  0.62869198         0.0  0.36919831
@@ -1063,7 +1063,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 474 E= 0
  0.06329114  0.16033755  0.27637131         0.5
  0.13983051  0.02330508  0.00423729  0.83262712
 
-MOTIF human-mouse ACCCGGAGCTACAGAGCCC
+MOTIF filter48 human-mouse ACCCGGAGCTACAGAGCCC
 letter-probability matrix: alength= 4 w= 19 nsites= 278 E= 0
   0.3705036  0.12230216  0.24460432  0.26258993
  0.02150538  0.50896057  0.41577061  0.05376344
@@ -1085,7 +1085,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 278 E= 0
   0.1218638  0.40143369  0.10035842  0.37634409
  0.12589928  0.66906475  0.04316547   0.1618705
 
-MOTIF human-mouse AATTTGCTCTGTCTTGGAT
+MOTIF filter49 human-mouse AATTTGCTCTGTCTTGGAT
 letter-probability matrix: alength= 4 w= 19 nsites= 1086 E= 0
  0.48618785  0.00368324  0.19981584  0.31031308
  0.44117647  0.11488971  0.09650735  0.34742647
@@ -1107,7 +1107,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 1086 E= 0
  0.41712707  0.19521179  0.34990792  0.03775322
   0.0156682   0.2202765  0.12442396  0.63963134
 
-MOTIF human-mouse TTGTGTTAGCATGCGGGCC
+MOTIF filter50 human-mouse TTGTGTTAGCATGCGGGCC
 letter-probability matrix: alength= 4 w= 19 nsites= 126 E= 0
  0.01587302  0.03174603   0.1984127  0.75396825
  0.35714286  0.00793651  0.00793651  0.62698413
@@ -1129,7 +1129,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 126 E= 0
  0.02380952   0.5952381  0.11111111  0.26984127
  0.01587302  0.42063492  0.25396825  0.30952381
 
-MOTIF human-mouse GTCACTTCTCTGATGTGCA
+MOTIF filter51 human-mouse GTCACTTCTCTGATGTGCA
 letter-probability matrix: alength= 4 w= 19 nsites= 747 E= 0
         0.0         0.0  0.98125837  0.01874163
  0.25668449   0.2540107  0.03743316  0.45187166
@@ -1151,7 +1151,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 747 E= 0
  0.29278075  0.68181818  0.02406417   0.0013369
  0.48456376   0.0295302  0.17315436  0.31275168
 
-MOTIF human-mouse AACAATTATCAGCCCAAAA
+MOTIF filter52 human-mouse AACAATTATCAGCCCAAAA
 letter-probability matrix: alength= 4 w= 19 nsites= 6153 E= 0
  0.61758492   0.0182025  0.10710223  0.25711035
  0.50762245  0.29841064  0.02092118  0.17304573
@@ -1173,7 +1173,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 6153 E= 0
  0.36434234  0.07911341  0.30787898  0.24866526
  0.76168073  0.07008436  0.16580143  0.00243348
 
-MOTIF human-mouse ACGGCCACTAGGGGGCGCT
+MOTIF filter53 human-mouse ACGGCCACTAGGGGGCGCT
 letter-probability matrix: alength= 4 w= 19 nsites= 323 E= 0
  0.50464396  0.04024768  0.21981424  0.23529412
  0.10835913  0.43962848  0.03095975  0.42105263
@@ -1195,7 +1195,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 323 E= 0
  0.10526316  0.70897833  0.18266254  0.00309598
  0.03405573  0.31888545  0.07739938  0.56965944
 
-MOTIF human-mouse GGGAACTGTGGAACAGCCC
+MOTIF filter54 human-mouse GGGAACTGTGGAACAGCCC
 letter-probability matrix: alength= 4 w= 19 nsites= 4195 E= 0
  0.36328963  0.03337306  0.46626937  0.13706794
  0.08097839  0.27000712  0.39776775  0.25124673
@@ -1217,7 +1217,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 4195 E= 0
   0.0155881  0.41851677  0.39348134  0.17241379
  0.03670377  0.55150367  0.00876154  0.40303102
 
-MOTIF human-mouse ACTCTTTAAAACCGACTTC
+MOTIF filter55 human-mouse ACTCTTTAAAACCGACTTC
 letter-probability matrix: alength= 4 w= 19 nsites= 278 E= 0
   0.8381295  0.10791367  0.01798561  0.03597122
  0.08273381  0.65467626  0.07913669  0.18345324
@@ -1239,7 +1239,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 278 E= 0
  0.03971119  0.28158845  0.09386282  0.58483755
  0.01805054  0.81949458  0.14801444  0.01444043
 
-MOTIF human-mouse GCAAGGTCATAGTCTGTTC
+MOTIF filter56 human-mouse GCAAGGTCATAGTCTGTTC
 letter-probability matrix: alength= 4 w= 19 nsites= 259 E= 0
  0.18146718   0.1003861  0.50965251  0.20849421
        0.15  0.48461538  0.27692308  0.08846154
@@ -1261,7 +1261,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 259 E= 0
  0.29230769  0.04615385  0.10384615  0.55769231
  0.12692308  0.77692308  0.02692308  0.06923077
 
-MOTIF human-mouse GACCACCAGAGGGCAGCAT
+MOTIF filter57 human-mouse GACCACCAGAGGGCAGCAT
 letter-probability matrix: alength= 4 w= 19 nsites= 218 E= 0
   0.1559633  0.11926606  0.66055046  0.06422018
  0.59633028  0.02293578  0.30733945   0.0733945
@@ -1283,7 +1283,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 218 E= 0
   0.7260274   0.1369863   0.1369863         0.0
  0.11872146  0.02739726  0.15068493  0.70319635
 
-MOTIF human-mouse GGGATGATGCTGATTATTA
+MOTIF filter58 human-mouse GGGATGATGCTGATTATTA
 letter-probability matrix: alength= 4 w= 19 nsites= 378 E= 0
  0.22751323   0.0026455  0.74074074  0.02910053
  0.38522427  0.02110818  0.44063325   0.1530343
@@ -1305,7 +1305,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 378 E= 0
  0.00527704  0.34300792         0.0  0.65171504
  0.56728232  0.10290237   0.1292876   0.2005277
 
-MOTIF human-mouse AGAGTCCAGAGCTAATCAG
+MOTIF filter59 human-mouse AGAGTCCAGAGCTAATCAG
 letter-probability matrix: alength= 4 w= 19 nsites= 6377 E= 0
  0.45162302  0.00956563  0.43688255  0.10192881
  0.08081913  0.17398781  0.40409567  0.34109739
@@ -1327,7 +1327,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 6377 E= 0
  0.88967026   0.0073449  0.07688701  0.02609783
     0.28343  0.08637718  0.57579558  0.05439724
 
-MOTIF human-mouse CGCAAGCCCGTAATCCCAG
+MOTIF filter60 human-mouse CGCAAGCCCGTAATCCCAG
 letter-probability matrix: alength= 4 w= 19 nsites= 290 E= 0
         0.1  0.54482759  0.17241379  0.18275862
  0.08965517  0.04137931  0.52068966  0.34827586
@@ -1349,7 +1349,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 290 E= 0
  0.72260274  0.04794521  0.22260274  0.00684932
  0.03082192   0.2260274  0.72945205  0.01369863
 
-MOTIF human-mouse ATCACTTTTGGAAGCCAAA
+MOTIF filter61 human-mouse ATCACTTTTGGAAGCCAAA
 letter-probability matrix: alength= 4 w= 19 nsites= 816 E= 0
  0.62009804  0.12254902  0.03308824  0.22426471
  0.21638142  0.11246944  0.29828851  0.37286064
@@ -1371,7 +1371,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 816 E= 0
   0.5515528  0.28074534  0.07329193  0.09440994
  0.59022556   0.0037594  0.32205514   0.0839599
 
-MOTIF human-mouse CAGACTTTTAGGCAGACCC
+MOTIF filter62 human-mouse CAGACTTTTAGGCAGACCC
 letter-probability matrix: alength= 4 w= 19 nsites= 83896 E= 0
  0.27529322  0.31719033  0.29991895   0.1075975
  0.44547192  0.20431856  0.25550504  0.09470448
@@ -1393,7 +1393,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 83896 E= 0
  0.11002541  0.51175409  0.13422221  0.24399829
  0.15358061  0.65915151  0.12880916  0.05845872
 
-MOTIF human-mouse TTTGGTTCCGCTTTTTGTT
+MOTIF filter63 human-mouse TTTGGTTCCGCTTTTTGTT
 letter-probability matrix: alength= 4 w= 19 nsites= 983 E= 0
  0.09053917   0.3214649  0.14852492  0.43947101
  0.28992879   0.1353001  0.03153611  0.54323499
@@ -1415,7 +1415,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 983 E= 0
  0.22990844  0.01220753  0.03153611  0.72634791
  0.22833843  0.02650357   0.0733945  0.67176351
 
-MOTIF human-mouse AAGGATTAAACCTAGAAAA
+MOTIF filter64 human-mouse AAGGATTAAACCTAGAAAA
 letter-probability matrix: alength= 4 w= 19 nsites= 12903 E= 0
  0.34457103  0.32062311  0.15585523  0.17895063
  0.48157305  0.01970177  0.18481032  0.31391486
@@ -1437,7 +1437,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 12903 E= 0
   0.4013163  0.20511034  0.34347658  0.05009679
   0.5536991  0.32219459  0.02191483  0.10219148
 
-MOTIF human-mouse GGGGGGGGGGGGGGGGGGG
+MOTIF filter65 human-mouse GGGGGGGGGGGGGGGGGGG
 letter-probability matrix: alength= 4 w= 19 nsites= 1043 E= 0
  0.01342282  0.03451582  0.86673058  0.08533078
  0.28298279  0.06883365  0.60707457  0.04110899
@@ -1459,7 +1459,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 1043 E= 0
  0.23580366  0.17228104  0.42637151  0.16554379
  0.25048356  0.20212766  0.47485493  0.07253385
 
-MOTIF human-mouse GGTTCACAGCACACCTTGT
+MOTIF filter66 human-mouse GGTTCACAGCACACCTTGT
 letter-probability matrix: alength= 4 w= 19 nsites= 241 E= 0
  0.38174274  0.00414938  0.41493776  0.19917012
         0.0  0.00826446  0.96280992  0.02892562
@@ -1481,7 +1481,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 241 E= 0
  0.00826446  0.00826446  0.96694215  0.01652893
         0.0  0.14049587         0.0  0.85950413
 
-MOTIF human-mouse TTGGTCACGTGACCAGCCC
+MOTIF filter67 human-mouse TTGGTCACGTGACCAGCCC
 letter-probability matrix: alength= 4 w= 19 nsites= 169 E= 0
  0.26627219  0.17751479  0.24260355  0.31360947
   0.0591716  0.24852071  0.27218935  0.42011834
@@ -1503,7 +1503,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 169 E= 0
  0.35502959  0.55621302  0.06508876  0.02366864
  0.16568047   0.4260355  0.32544379  0.08284024
 
-MOTIF human-mouse GTCGGGACAGTAAGCAGCA
+MOTIF filter68 human-mouse GTCGGGACAGTAAGCAGCA
 letter-probability matrix: alength= 4 w= 19 nsites= 105 E= 0
  0.35238095  0.03809524  0.59047619  0.01904762
         0.0  0.21698113  0.36792453  0.41509434
@@ -1525,7 +1525,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 105 E= 0
  0.28301887  0.38679245  0.17924528   0.1509434
  0.94339623  0.05660377         0.0         0.0
 
-MOTIF human-mouse CCGGGTGCGCATGCGCACG
+MOTIF filter69 human-mouse CCGGGTGCGCATGCGCACG
 letter-probability matrix: alength= 4 w= 19 nsites= 278 E= 0
  0.01438849  0.60791367  0.05395683  0.32374101
  0.11111111  0.46594982  0.35125448  0.07168459
@@ -1547,7 +1547,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 278 E= 0
  0.03610108  0.44765343  0.44043321  0.07581227
  0.30685921         0.0  0.37545126  0.31768953
 
-MOTIF human-mouse GATGGTCTCAGGCGAAGCC
+MOTIF filter70 human-mouse GATGGTCTCAGGCGAAGCC
 letter-probability matrix: alength= 4 w= 19 nsites= 716 E= 0
         0.0  0.02234637  0.97346369  0.00418994
  0.72105997  0.06415621  0.14086471  0.07391911
@@ -1569,7 +1569,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 716 E= 0
  0.00139276  0.94707521  0.01114206  0.04038997
  0.08240223  0.49860335   0.1047486  0.31424581
 
-MOTIF human-mouse CTCAGCTCTGGACTGTTCA
+MOTIF filter71 human-mouse CTCAGCTCTGGACTGTTCA
 letter-probability matrix: alength= 4 w= 19 nsites= 34403 E= 0
  0.02432927  0.66997064  0.04220562  0.26349446
  0.24042892   0.2466599  0.04541371  0.46749746
@@ -1591,7 +1591,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 34403 E= 0
  0.03806249  0.39831546  0.29333761  0.27028445
  0.35606327  0.21165788  0.21719391  0.21508494
 
-MOTIF human-mouse AAATGAGGAAGTAAAATTT
+MOTIF filter72 human-mouse AAATGAGGAAGTAAAATTT
 letter-probability matrix: alength= 4 w= 19 nsites= 361 E= 0
  0.66204986  0.06371191  0.11911357  0.15512465
  0.73407202         0.0         0.0  0.26592798
@@ -1613,7 +1613,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 361 E= 0
  0.06371191  0.16066482  0.06925208  0.70637119
  0.39612188  0.08310249  0.12188366  0.39889197
 
-MOTIF human-mouse CGCCGCTGCCCGCGCCCCC
+MOTIF filter73 human-mouse CGCCGCTGCCCGCGCCCCC
 letter-probability matrix: alength= 4 w= 19 nsites= 336 E= 0
  0.02380952  0.89880952      0.0625  0.01488095
  0.29376855  0.01186944  0.64688427  0.04747774
@@ -1635,7 +1635,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 336 E= 0
  0.18047337  0.45266272  0.27810651   0.0887574
         0.0  0.68639053  0.24852071  0.06508876
 
-MOTIF human-mouse ATTTCTGAGTGGCAAGCAT
+MOTIF filter74 human-mouse ATTTCTGAGTGGCAAGCAT
 letter-probability matrix: alength= 4 w= 19 nsites= 383 E= 0
  0.80678851  0.04438642  0.08093995  0.06788512
  0.07571802  0.23498695  0.18798956  0.50130548
@@ -1657,7 +1657,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 383 E= 0
  0.59220779  0.01038961  0.00779221  0.38961039
   0.2421875    0.234375      0.0625   0.4609375
 
-MOTIF human-mouse TAATCCCAGCACTTTGGGA
+MOTIF filter75 human-mouse TAATCCCAGCACTTTGGGA
 letter-probability matrix: alength= 4 w= 19 nsites= 686 E= 0
         0.0  0.00145773         0.0  0.99854227
         1.0         0.0         0.0         0.0
@@ -1679,7 +1679,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 686 E= 0
         0.0  0.00145773  0.99708455  0.00145773
  0.98825257  0.00146843         0.0    0.010279
 
-MOTIF human-mouse TTTAGATATATCCTTGGAC
+MOTIF filter76 human-mouse TTTAGATATATCCTTGGAC
 letter-probability matrix: alength= 4 w= 19 nsites= 1330 E= 0
  0.02932331  0.06165414  0.01729323  0.89172932
  0.10969196  0.29301277  0.09090909  0.50638618
@@ -1701,7 +1701,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 1330 E= 0
  0.46387833  0.38479087  0.06311787  0.08821293
   0.0514198   0.4704528   0.0115119   0.4666155
 
-MOTIF human-mouse GCAGCCCAAGGGAGCAAGC
+MOTIF filter77 human-mouse GCAGCCCAAGGGAGCAAGC
 letter-probability matrix: alength= 4 w= 19 nsites= 194 E= 0
  0.08247423  0.12371134  0.75257732  0.04123711
  0.04639175  0.91752577         0.0  0.03608247
@@ -1723,7 +1723,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 194 E= 0
  0.03608247  0.40206186  0.54639175  0.01546392
  0.00515464  0.85051546   0.1185567   0.0257732
 
-MOTIF human-mouse TAAAACACCAAGGGACTAC
+MOTIF filter78 human-mouse TAAAACACCAAGGGACTAC
 letter-probability matrix: alength= 4 w= 19 nsites= 234 E= 0
  0.32905983  0.16239316  0.11111111   0.3974359
   0.3787234  0.08510638   0.2893617  0.24680851
@@ -1745,7 +1745,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 234 E= 0
   0.6302521  0.11764706  0.14285714   0.1092437
  0.02521008  0.92016807  0.02941176  0.02521008
 
-MOTIF human-mouse TCTGAATTTAGAACAGTGT
+MOTIF filter79 human-mouse TCTGAATTTAGAACAGTGT
 letter-probability matrix: alength= 4 w= 19 nsites= 1004 E= 0
  0.13545817  0.25498008  0.05876494  0.55079681
  0.18849206  0.34126984  0.23313492  0.23710317
@@ -1767,7 +1767,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 1004 E= 0
  0.05019685  0.27755906  0.41535433  0.25688976
  0.02171767  0.29220138  0.02171767  0.66436328
 
-MOTIF human-mouse GCCCCGGCCGGAGTCCAGG
+MOTIF filter80 human-mouse GCCCCGGCCGGAGTCCAGG
 letter-probability matrix: alength= 4 w= 19 nsites= 416 E= 0
  0.06009615  0.12259615  0.73317308  0.08413462
         0.0  0.96642686  0.03357314         0.0
@@ -1789,7 +1789,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 416 E= 0
  0.29256595  0.05275779   0.6498801  0.00479616
  0.13975904  0.01686747  0.49156627  0.35180723
 
-MOTIF human-mouse ACGGCGTGTCACGTGAGTA
+MOTIF filter81 human-mouse ACGGCGTGTCACGTGAGTA
 letter-probability matrix: alength= 4 w= 19 nsites= 328 E= 0
  0.46646341  0.01219512  0.29878049  0.22256098
  0.09756098  0.44207317  0.38414634  0.07621951
@@ -1811,7 +1811,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 328 E= 0
  0.17073171  0.34146341  0.11280488       0.375
  0.60122699  0.15337423  0.18711656  0.05828221
 
-MOTIF human-mouse GAAAGCCCTATACCTGCGC
+MOTIF filter82 human-mouse GAAAGCCCTATACCTGCGC
 letter-probability matrix: alength= 4 w= 19 nsites= 59708 E= 0
  0.28847056  0.18580425  0.42394654  0.10177866
  0.42561453  0.34732106  0.16461962   0.0624448
@@ -1833,7 +1833,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 59708 E= 0
  0.04653001  0.21928048   0.4812711  0.25291842
  0.07978003  0.58339664  0.24908346  0.08773987
 
-MOTIF human-mouse AAAGTGCTGGGATTACAGG
+MOTIF filter83 human-mouse AAAGTGCTGGGATTACAGG
 letter-probability matrix: alength= 4 w= 19 nsites= 627 E= 0
  0.99202552         0.0  0.00797448         0.0
  0.99362041   0.0015949   0.0015949  0.00318979
@@ -1855,7 +1855,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 627 E= 0
  0.03827751  0.00318979  0.95374801  0.00478469
  0.06891026  0.01762821  0.89102564   0.0224359
 
-MOTIF human-mouse GAATTATGCAACATGTAAT
+MOTIF filter84 human-mouse GAATTATGCAACATGTAAT
 letter-probability matrix: alength= 4 w= 19 nsites= 629 E= 0
   0.3036566  0.15580286  0.52146264   0.0190779
  0.62025316  0.05221519  0.28006329  0.04746835
@@ -1877,7 +1877,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 629 E= 0
  0.95454545         0.0         0.0  0.04545455
  0.00470219         0.0         0.0  0.99529781
 
-MOTIF human-mouse CTTGTCTAATACTTGGAAA
+MOTIF filter85 human-mouse CTTGTCTAATACTTGGAAA
 letter-probability matrix: alength= 4 w= 19 nsites= 10453 E= 0
  0.19343729  0.37367263  0.09958863  0.33330144
  0.15958865  0.23509808  0.21119787  0.39411541
@@ -1899,7 +1899,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 10453 E= 0
  0.56652199  0.16691829  0.25721834  0.00934139
  0.67571402  0.22659353  0.05948553  0.03820692
 
-MOTIF human-mouse AAAGTGTTGATGGAGGCCA
+MOTIF filter86 human-mouse AAAGTGTTGATGGAGGCCA
 letter-probability matrix: alength= 4 w= 19 nsites= 750 E= 0
         0.8  0.00666667       0.152  0.04133333
  0.56191744         0.0  0.02396804  0.41411451
@@ -1921,7 +1921,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 750 E= 0
  0.32490013  0.43009321  0.19973369  0.04527297
  0.80958722  0.09587217   0.0159787  0.07856192
 
-MOTIF human-mouse GCGCTGGGTTTTTCCATCG
+MOTIF filter87 human-mouse GCGCTGGGTTTTTCCATCG
 letter-probability matrix: alength= 4 w= 19 nsites= 2118 E= 0
  0.08640227    0.098678   0.8101983  0.00472144
  0.29877474  0.40292177  0.18708765  0.11121583
@@ -1943,7 +1943,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 2118 E= 0
  0.21222494  0.51784841  0.16430318  0.10562347
  0.31348425  0.14566929  0.41633858  0.12450787
 
-MOTIF human-mouse GCCGGTGTGAGCCTAGCCT
+MOTIF filter88 human-mouse GCCGGTGTGAGCCTAGCCT
 letter-probability matrix: alength= 4 w= 19 nsites= 80 E= 0
      0.3625         0.0       0.375      0.2625
       0.025        0.65         0.0       0.325
@@ -1965,7 +1965,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 80 E= 0
         0.0        0.95         0.0        0.05
      0.1125      0.0125      0.1625      0.7125
 
-MOTIF human-mouse TAAACCGCGCGAGCGCGAG
+MOTIF filter89 human-mouse TAAACCGCGCGAGCGCGAG
 letter-probability matrix: alength= 4 w= 19 nsites= 554 E= 0
   0.1967509  0.08844765  0.08303249  0.63176895
  0.53417266  0.11870504  0.17266187  0.17446043
@@ -1987,7 +1987,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 554 E= 0
  0.41621622   0.1045045  0.39099099  0.08828829
  0.24319419   0.2722323  0.46823956  0.01633394
 
-MOTIF human-mouse AGAGGCACCACTTTAAAGT
+MOTIF filter90 human-mouse AGAGGCACCACTTTAAAGT
 letter-probability matrix: alength= 4 w= 19 nsites= 350 E= 0
  0.44571429  0.24857143  0.22571429        0.08
    0.101983  0.17847025  0.58923513  0.13031161
@@ -2009,7 +2009,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 350 E= 0
  0.04532578  0.12747875  0.73654391  0.09065156
  0.07386364  0.40340909  0.00284091  0.51988636
 
-MOTIF human-mouse GGACTCAGGCAAATTTTTG
+MOTIF filter91 human-mouse GGACTCAGGCAAATTTTTG
 letter-probability matrix: alength= 4 w= 19 nsites= 1388 E= 0
   0.2759366  0.01440922  0.61095101  0.09870317
  0.35729691  0.06398275   0.4162473  0.16247304
@@ -2031,7 +2031,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 1388 E= 0
   0.0647482  0.20719424  0.27482014  0.45323741
  0.16967509  0.10397112  0.47075812  0.25559567
 
-MOTIF human-mouse TCTGCTCATATGTATGCGT
+MOTIF filter92 human-mouse TCTGCTCATATGTATGCGT
 letter-probability matrix: alength= 4 w= 19 nsites= 821 E= 0
  0.31425091  0.07308161  0.07795371  0.53471376
  0.09367397  0.47688564  0.30778589   0.1216545
@@ -2053,7 +2053,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 821 E= 0
  0.19417476  0.06553398  0.53033981  0.20995146
  0.12150668  0.30862697  0.03159174  0.53827461
 
-MOTIF human-mouse AGGAGGAAGTGTGTCACTT
+MOTIF filter93 human-mouse AGGAGGAAGTGTGTCACTT
 letter-probability matrix: alength= 4 w= 19 nsites= 256 E= 0
    0.515625  0.23828125  0.07421875    0.171875
    0.296875         0.0    0.703125         0.0
@@ -2075,7 +2075,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 256 E= 0
         0.0     0.03125   0.0078125   0.9609375
     0.15625  0.24609375   0.2890625  0.30859375
 
-MOTIF human-mouse ATTAAAAAGAGGAAGTAAC
+MOTIF filter94 human-mouse ATTAAAAAGAGGAAGTAAC
 letter-probability matrix: alength= 4 w= 19 nsites= 1034 E= 0
  0.53481625  0.13733075  0.11025145  0.21760155
  0.20289855  0.27342995  0.02318841  0.50048309
@@ -2097,7 +2097,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 1034 E= 0
  0.34459459  0.20945946  0.11969112  0.32625483
  0.12934363  0.30791506   0.2953668  0.26737452
 
-MOTIF human-mouse GCTATGTATAGCTCAGAGA
+MOTIF filter95 human-mouse GCTATGTATAGCTCAGAGA
 letter-probability matrix: alength= 4 w= 19 nsites= 738 E= 0
  0.13279133  0.08130081  0.64092141  0.14498645
  0.01079622  0.83130904  0.02564103  0.13225371
@@ -2119,7 +2119,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 738 E= 0
  0.13765182  0.34682861  0.41160594  0.10391363
  0.35549525  0.34735414  0.17774763  0.11940299
 
-MOTIF human-mouse TTGTGCACGGTGTAGGAGT
+MOTIF filter96 human-mouse TTGTGCACGGTGTAGGAGT
 letter-probability matrix: alength= 4 w= 19 nsites= 474 E= 0
  0.21097046  0.16455696  0.17088608   0.4535865
  0.18565401  0.05907173  0.36075949  0.39451477
@@ -2141,7 +2141,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 474 E= 0
  0.05907173   0.3649789  0.53797468  0.03797468
  0.14225053  0.03821656  0.06581741   0.7537155
 
-MOTIF human-mouse GGTTGGCGCCAAGCCTCAA
+MOTIF filter97 human-mouse GGTTGGCGCCAAGCCTCAA
 letter-probability matrix: alength= 4 w= 19 nsites= 11137 E= 0
   0.0838646  0.04965431  0.65610128  0.21037982
  0.11700412    0.350654  0.43218061  0.10016126
@@ -2163,7 +2163,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 11137 E= 0
  0.64633384  0.14387782  0.13119586  0.07859248
  0.49136156  0.04064095  0.42932593  0.03867156
 
-MOTIF human-mouse CTCTGTCTGAGGCCATGCT
+MOTIF filter98 human-mouse CTCTGTCTGAGGCCATGCT
 letter-probability matrix: alength= 4 w= 19 nsites= 2082 E= 0
  0.01681076  0.95533141  0.00864553   0.0192123
  0.28838772  0.00575816  0.06525912  0.64059501
@@ -2185,7 +2185,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 2082 E= 0
   0.0105871  0.88306064  0.02550529  0.08084697
  0.15510597  0.22928709  0.15028902  0.46531792
 
-MOTIF human-mouse CAGTGTAGAACTGCCGCGG
+MOTIF filter99 human-mouse CAGTGTAGAACTGCCGCGG
 letter-probability matrix: alength= 4 w= 19 nsites= 357 E= 0
         0.0  0.98319328   0.0140056  0.00280112
  0.96918768         0.0  0.02240896  0.00840336
@@ -2207,7 +2207,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 357 E= 0
  0.25423729  0.05367232  0.58474576  0.10734463
  0.05681818  0.21306818     0.59375  0.13636364
 
-MOTIF human-mouse ATAGAAACTGAAACCAAAA
+MOTIF filter100 human-mouse ATAGAAACTGAAACCAAAA
 letter-probability matrix: alength= 4 w= 19 nsites= 363 E= 0
  0.85950413  0.00550964  0.00275482   0.1322314
  0.24242424  0.08815427  0.28650138  0.38292011
@@ -2229,7 +2229,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 363 E= 0
  0.32782369  0.24793388  0.19283747  0.23140496
  0.34986226  0.23415978   0.2231405  0.19283747
 
-MOTIF human-mouse GCGGCGCCGCACACTGCGC
+MOTIF filter101 human-mouse GCGGCGCCGCACACTGCGC
 letter-probability matrix: alength= 4 w= 19 nsites= 11467 E= 0
  0.03950467  0.29580535  0.40516264  0.25952734
  0.06656226  0.57417559  0.19933873  0.15992343
@@ -2251,7 +2251,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 11467 E= 0
  0.05160281  0.29997394  0.56398228  0.08444097
  0.00374076  0.50239234  0.36050457  0.13336233
 
-MOTIF human-mouse ACTCTGGCAAAATTCACAG
+MOTIF filter102 human-mouse ACTCTGGCAAAATTCACAG
 letter-probability matrix: alength= 4 w= 19 nsites= 3386 E= 0
  0.44122859  0.16981689  0.33461311  0.05434141
    0.401649  0.54534747  0.02326266  0.02974087
@@ -2273,7 +2273,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 3386 E= 0
  0.74098167  0.02395033  0.04553519  0.18953282
  0.02551929  0.41216617   0.4231454  0.13916914
 
-MOTIF human-mouse GCCCCGGGGCCGCGCCCTC
+MOTIF filter103 human-mouse GCCCCGGGGCCGCGCCCTC
 letter-probability matrix: alength= 4 w= 19 nsites= 153 E= 0
  0.00653595  0.21568627  0.60784314  0.16993464
   0.0130719  0.62745098  0.35947712         0.0
@@ -2295,7 +2295,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 153 E= 0
  0.10457516  0.07843137  0.35294118  0.46405229
  0.00662252  0.49668874  0.49006623  0.00662252
 
-MOTIF human-mouse GGCCCGGGGGCCGCCGGGG
+MOTIF filter104 human-mouse GGCCCGGGGGCCGCCGGGG
 letter-probability matrix: alength= 4 w= 19 nsites= 794 E= 0
  0.13350126  0.29596977  0.44836272  0.12216625
  0.00125945  0.23173804  0.71536524  0.05163728
@@ -2317,7 +2317,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 794 E= 0
  0.15491184  0.39420655  0.42947103  0.02141058
  0.08575032   0.4148802  0.49180328   0.0075662
 
-MOTIF human-mouse CCCTCTCGGGCCTGGGGGA
+MOTIF filter105 human-mouse CCCTCTCGGGCCTGGGGGA
 letter-probability matrix: alength= 4 w= 19 nsites= 992 E= 0
  0.01209677  0.52419355  0.22681452  0.23689516
         0.0  0.81891348  0.18108652         0.0
@@ -2339,7 +2339,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 992 E= 0
   0.0020141  0.01711984  0.98086606         0.0
   0.5840081  0.30364372  0.05769231  0.05465587
 
-MOTIF human-mouse TACCAAAAGGCCAAAAATT
+MOTIF filter106 human-mouse TACCAAAAGGCCAAAAATT
 letter-probability matrix: alength= 4 w= 19 nsites= 1134 E= 0
  0.01763668  0.17636684  0.30335097   0.5026455
  0.54028021  0.11908932  0.02189142  0.31873905
@@ -2361,7 +2361,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 1134 E= 0
  0.48248687  0.02364273         0.0   0.4938704
  0.28045574  0.06485539  0.12357581  0.53111306
 
-MOTIF human-mouse ACACAGCTACACAGAGAAA
+MOTIF filter107 human-mouse ACACAGCTACACAGAGAAA
 letter-probability matrix: alength= 4 w= 19 nsites= 930 E= 0
  0.37204301   0.2483871  0.15053763  0.22903226
         0.0  0.99679487         0.0  0.00320513
@@ -2383,7 +2383,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 930 E= 0
  0.44064171  0.40534759  0.09839572  0.05561497
  0.60622318  0.35944206  0.00321888  0.03111588
 
-MOTIF human-mouse GAACCATGGCTTCTGCCAG
+MOTIF filter108 human-mouse GAACCATGGCTTCTGCCAG
 letter-probability matrix: alength= 4 w= 19 nsites= 86 E= 0
  0.02325581  0.06976744  0.47674419  0.43023256
  0.76744186  0.09302326  0.01162791  0.12790698
@@ -2405,7 +2405,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 86 E= 0
  0.75581395  0.03488372  0.04651163   0.1627907
  0.12790698  0.20930233  0.55813953  0.10465116
 
-MOTIF human-mouse GATATTTCCCAAAGTTCGG
+MOTIF filter109 human-mouse GATATTTCCCAAAGTTCGG
 letter-probability matrix: alength= 4 w= 19 nsites= 13703 E= 0
  0.34335547  0.03948041  0.48828724  0.12887689
  0.37578273   0.0340032  0.23889617   0.3513179
@@ -2427,7 +2427,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 13703 E= 0
  0.18545722  0.11369813  0.35328682  0.34755784
  0.29894395  0.10811609  0.40912783  0.18381213
 
-MOTIF human-mouse CCACTGCGCCCGCGGGCGG
+MOTIF filter110 human-mouse CCACTGCGCCCGCGGGCGG
 letter-probability matrix: alength= 4 w= 19 nsites= 4697 E= 0
  0.04854162   0.5514158   0.2876304  0.11241218
  0.07058075  0.37982196  0.19499788  0.35459941
@@ -2449,7 +2449,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 4697 E= 0
  0.21818182   0.0573262  0.48705882  0.23743316
  0.31313131  0.22501612  0.43455835  0.02729422
 
-MOTIF human-mouse CCTGGGCAAGGGAGGGCGG
+MOTIF filter111 human-mouse CCTGGGCAAGGGAGGGCGG
 letter-probability matrix: alength= 4 w= 19 nsites= 619 E= 0
         0.0  0.86591276  0.12439418  0.00969305
         0.0  0.99515347         0.0  0.00484653
@@ -2471,7 +2471,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 619 E= 0
  0.28292683  0.17398374  0.43089431  0.11219512
  0.26427406  0.21207178  0.32952692  0.19412724
 
-MOTIF human-mouse AGTATACAGCCTCAAAACT
+MOTIF filter112 human-mouse AGTATACAGCCTCAAAACT
 letter-probability matrix: alength= 4 w= 19 nsites= 666 E= 0
  0.76876877  0.00900901  0.07357357  0.14864865
   0.0045045  0.07357357  0.91891892    0.003003
@@ -2493,7 +2493,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 666 E= 0
  0.02102102  0.50600601  0.36786787  0.10510511
  0.03003003  0.19369369    0.003003  0.77327327
 
-MOTIF human-mouse GCAAAACCTAGTATTGCCT
+MOTIF filter113 human-mouse GCAAAACCTAGTATTGCCT
 letter-probability matrix: alength= 4 w= 19 nsites= 261 E= 0
  0.05363985  0.02298851   0.6743295  0.24904215
         0.0  0.79770992  0.00763359  0.19465649
@@ -2515,7 +2515,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 261 E= 0
  0.17557252   0.3778626   0.1870229  0.25954198
  0.07662835  0.02298851         0.0  0.90038314
 
-MOTIF human-mouse CGAAATTACGCGATGCTTC
+MOTIF filter114 human-mouse CGAAATTACGCGATGCTTC
 letter-probability matrix: alength= 4 w= 19 nsites= 395 E= 0
   0.1721519  0.35443038  0.18481013  0.28860759
  0.19143577  0.23173804  0.38287154  0.19395466
@@ -2537,7 +2537,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 395 E= 0
  0.29072682  0.06015038  0.25062657  0.39849624
  0.36616162  0.39141414  0.11868687  0.12373737
 
-MOTIF human-mouse AACCGAACGATCGGTCCTC
+MOTIF filter115 human-mouse AACCGAACGATCGGTCCTC
 letter-probability matrix: alength= 4 w= 19 nsites= 160 E= 0
     0.58125     0.05625     0.29375     0.06875
     0.76875     0.00625         0.0       0.225
@@ -2559,7 +2559,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 160 E= 0
  0.07741935  0.19354839  0.05806452  0.67096774
   0.0516129  0.75483871  0.00645161  0.18709677
 
-MOTIF human-mouse CTGTACTATATAAAAGTTC
+MOTIF filter116 human-mouse CTGTACTATATAAAAGTTC
 letter-probability matrix: alength= 4 w= 19 nsites= 237 E= 0
  0.21097046  0.46413502  0.14767932  0.17721519
       0.175  0.02083333  0.00833333  0.79583333
@@ -2581,7 +2581,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 237 E= 0
  0.06198347  0.10330579  0.01239669  0.82231405
  0.00416667      0.5625       0.175  0.25833333
 
-MOTIF human-mouse CTTGCTACCTATGGTTCTC
+MOTIF filter117 human-mouse CTTGCTACCTATGGTTCTC
 letter-probability matrix: alength= 4 w= 19 nsites= 141 E= 0
         0.0         1.0         0.0         0.0
  0.14893617         0.0  0.19858156  0.65248227
@@ -2603,7 +2603,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 141 E= 0
  0.04255319  0.07801418  0.34751773  0.53191489
  0.13475177  0.46099291  0.08510638  0.31914894
 
-MOTIF human-mouse CAAAAAATATAACAAGTAT
+MOTIF filter118 human-mouse CAAAAAATATAACAAGTAT
 letter-probability matrix: alength= 4 w= 19 nsites= 173 E= 0
  0.00578035  0.79190751  0.16763006  0.03468208
  0.90229885  0.00574713   0.0862069  0.00574713
@@ -2625,7 +2625,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 173 E= 0
  0.62068966  0.02873563  0.13793103  0.21264368
  0.13793103   0.0862069  0.13218391  0.64367816
 
-MOTIF human-mouse CGGCCCTTGCCGGAGGCTG
+MOTIF filter119 human-mouse CGGCCCTTGCCGGAGGCTG
 letter-probability matrix: alength= 4 w= 19 nsites= 1434 E= 0
  0.23082287   0.4735007   0.0488145  0.24686192
  0.35629784  0.14752958  0.38135003  0.11482255
@@ -2647,7 +2647,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 1434 E= 0
  0.07117934  0.42288904  0.07117934  0.43475227
  0.03072626  0.04050279  0.58240223  0.34636872
 
-MOTIF human-mouse TGTTCTGGCTCTGGCCCAG
+MOTIF filter120 human-mouse TGTTCTGGCTCTGGCCCAG
 letter-probability matrix: alength= 4 w= 19 nsites= 2896 E= 0
  0.13501381  0.01035912  0.39882597   0.4558011
  0.27329193   0.1563147  0.56694272  0.00345066
@@ -2669,7 +2669,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 2896 E= 0
  0.99207989         0.0  0.00757576  0.00034435
  0.12085635   0.0894337  0.78832873  0.00138122
 
-MOTIF human-mouse CCCACATTCCAGGTTTCCT
+MOTIF filter121 human-mouse CCCACATTCCAGGTTTCCT
 letter-probability matrix: alength= 4 w= 19 nsites= 127 E= 0
  0.03937008  0.92125984  0.01574803  0.02362205
  0.08527132  0.82945736         0.0  0.08527132
@@ -2691,7 +2691,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 127 E= 0
       0.248       0.344       0.256       0.152
       0.024       0.272       0.336       0.368
 
-MOTIF human-mouse GAAAGATTAAAAAATTTTT
+MOTIF filter122 human-mouse GAAAGATTAAAAAATTTTT
 letter-probability matrix: alength= 4 w= 19 nsites= 501 E= 0
  0.30339321  0.14770459  0.30738523  0.24151697
  0.93027888  0.02390438  0.02589641  0.01992032
@@ -2713,7 +2713,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 501 E= 0
  0.02777778  0.00396825  0.09722222  0.87103175
         0.0  0.05168986  0.05964215  0.88866799
 
-MOTIF human-mouse GCTTGAGCATTGGTGTGTA
+MOTIF filter123 human-mouse GCTTGAGCATTGGTGTGTA
 letter-probability matrix: alength= 4 w= 19 nsites= 2392 E= 0
  0.38210702   0.0798495  0.49874582  0.03929766
  0.19440968  0.41051314  0.34626617  0.04881101
@@ -2735,7 +2735,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 2392 E= 0
         0.0         0.0  0.48854644  0.51145356
  0.96668055  0.00208247  0.02165764  0.00957934
 
-MOTIF human-mouse CTAGACAGGCCGAGAACGT
+MOTIF filter124 human-mouse CTAGACAGGCCGAGAACGT
 letter-probability matrix: alength= 4 w= 19 nsites= 580 E= 0
  0.04310345  0.86896552  0.01206897  0.07586207
  0.06712565         0.0         0.0  0.93287435
@@ -2757,7 +2757,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 580 E= 0
  0.06228374   0.0899654  0.48788927  0.35986159
  0.09532062  0.24783362   0.0762565  0.58058925
 
-MOTIF human-mouse TAGCTATTTTACCCTAGGA
+MOTIF filter125 human-mouse TAGCTATTTTACCCTAGGA
 letter-probability matrix: alength= 4 w= 19 nsites= 332 E= 0
   0.0813253         0.0  0.02710843  0.89156627
  0.93674699         0.0  0.01506024  0.04819277
@@ -2779,7 +2779,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 332 E= 0
  0.16257669  0.06134969  0.42944785  0.34662577
  0.47678019   0.2755418  0.11764706  0.13003096
 
-MOTIF human-mouse TCTCTACCGCCCCCTAGTG
+MOTIF filter126 human-mouse TCTCTACCGCCCCCTAGTG
 letter-probability matrix: alength= 4 w= 19 nsites= 139 E= 0
  0.18705036  0.30215827   0.1294964  0.38129496
  0.17266187  0.56834532   0.1294964   0.1294964
@@ -2801,7 +2801,7 @@ letter-probability matrix: alength= 4 w= 19 nsites= 139 E= 0
  0.02158273  0.27338129         0.0  0.70503597
         0.0  0.14492754  0.85507246         0.0
 
-MOTIF human-mouse CAAGGAAGCAGCACCGCCA
+MOTIF filter127 human-mouse CAAGGAAGCAGCACCGCCA
 letter-probability matrix: alength= 4 w= 19 nsites= 351 E= 0
  0.23646724   0.6980057  0.04558405  0.01994302
  0.49431818  0.16193182  0.29829545  0.04545455

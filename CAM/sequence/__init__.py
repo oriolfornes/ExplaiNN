@@ -1,3 +1,4 @@
+from Bio.Seq import Seq
 import numpy as np
 
 def one_hot_encode(seq):
@@ -38,3 +39,7 @@ def one_hot_decode(encoded_seq):
 def rc_one_hot_encoding(encoded_seq):
     """Reverse complements one hot encoding for one sequence."""
     return(encoded_seq[::-1, ::-1])
+
+def rc(seq):
+    """Reverse complements one sequence."""
+    return(str(Seq(seq).reverse_complement()))

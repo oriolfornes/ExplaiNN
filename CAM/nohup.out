@@ -481,3 +481,4 @@ kernel 4e93cece-44fe-47a8-9a6e-2dc9c67cf06c restarted
 [I 13:34:01.995 NotebookApp] Restoring connection for 4e93cece-44fe-47a8-9a6e-2dc9c67cf06c:9f7efe4062074a428fc4a429e1dc92b8
 [I 13:34:02.342 NotebookApp] Replaying 3 buffered messages
 [I 15:59:28.610 NotebookApp] Starting buffering for 4e93cece-44fe-47a8-9a6e-2dc9c67cf06c:9f7efe4062074a428fc4a429e1dc92b8
+[IPKernelApp] WARNING | Parent appears to have exited, shutting down.

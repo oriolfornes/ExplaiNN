@@ -57,11 +57,12 @@ def reformat_motifs(l, oformat, out_file):
         s += "A 0.25000 C 0.25000 G 0.25000 T 0.25000\n"
     for m in l:
         if oformat == "meme":
+            matrix_id = m.matrix_id
             name = m.name
             consensus = m.pssm.consensus
             w = len(consensus)
             nsites = int(sum([m.counts[n][0] for n in "ACGT"]))
-            s += "\nMOTIF %s %s\n" % (name, consensus)
+            s += "\nMOTIF %s %s %s\n" % (matrix_id, name, consensus)
             s += "letter-probability matrix: alength= 4 w= %s nsites= %s E= 0\n" % \
                 (w, nsites)
             for row in np.transpose(np.array(list(m.pwm.values()))):

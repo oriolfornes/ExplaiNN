@@ -198,8 +198,8 @@ def main(**params):
             _train(sequence_length, n_features, data_loaders, input_data,
                 steps_per_epoch, params["cnn_units"], params["kernel_size"],
                 params["clamp_weights"], params["no_padding"], params["lr"],
-                params["patience"], params["patience"], params["threads"],
-                init_dir)
+                int(params["patience"] / 2.), params["patience"],
+                params["threads"], init_dir)
 
         # Get best initialized
         df = pd.read_csv(os.path.join(init_dir, "validation.txt"), sep="\t")

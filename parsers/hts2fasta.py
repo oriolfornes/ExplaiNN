@@ -12,7 +12,6 @@ import os
 # import pandas as pd
 import random
 import re
-import subprocess as sp
 from tqdm import tqdm
 bar_format = "{percentage:3.0f}%|{bar:20}{r_bar}"
 

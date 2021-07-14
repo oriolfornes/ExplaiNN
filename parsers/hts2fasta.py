@@ -73,8 +73,10 @@ def __get_FASTA_sequences(reads_files, output_dir="./"):
 
     # Initialize
     tf = None
+    records = []
     prefixes = []
     sequences = {}
+    cycles2sequences = {}
     cycles = ["0." for _ in reads_files]
     # ZNF8.FL@HTS.Lys@AAT_A_TC40NACGGGA.C1.5ACGACGCTCTTCCGATCTTC.3ACGGGAAGATCGGAAGAGCA@Reads.flabby-yellow-insect.Train.fastq.gz
     # ZNF8.FL@HTS.Lys@AAT_A_TC40NACGGGA.C2.5ACGACGCTCTTCCGATCTTC.3ACGGGAAGATCGGAAGAGCA@Reads.squirrely-pumpkin-wrasse.Train.fastq.gz
@@ -96,18 +98,41 @@ def __get_FASTA_sequences(reads_files, output_dir="./"):
             sequences.setdefault(seq, copy(cycles))
             sequences[seq][i] = "1."
 
-    # Sequences as records
-    records = []
-    for id, seq in enumerate(sorted(sequences)):
-        desc = ";".join(sequences[seq])
-        records.append(SeqRecord(Seq(seq), id=str(id), description=desc))
-    random.shuffle(records)
+    # For each sequence...
+    for i, s in enumerate(sorted(sequences)):
+        cycles2sequences.setdefault(tuple(sequences[s]), [])
+        cycles2sequences[tuple(sequences[s])].append((i, s))  
+
+    # For each cycle...
+    for c in cycles2sequences:
+
+        # Initialize
+        desc = ";".join(c)
+        records.append([])
+
+        # Sequences as records
+        for i, s in cycles2sequences[c]:
+            records[-1].append(SeqRecord(Seq(s), id=str(i), description=desc))
+
+        # Random shuffle
+        random.shuffle(records[-1])
 
     # Save sequences
     prefix = "%s@%s" % (tf, "+".join(prefixes))
     sequences_file = os.path.join(output_dir, "%s.fa.gz" % prefix)
-    with gzip.open(sequences_file, "wt") as handle:  
-        SeqIO.write(records, handle, "fasta")
+    with gzip.open(sequences_file, "wt") as handle:
+        sequences = []
+        while True:
+            exit_loop = True
+            for i in range(len(records)):
+                if len(records[i]) > 0:
+                    exit_loop = False
+                    sequences.append(records[i].pop())
+                else:
+                    pass
+            if exit_loop:
+                break
+        SeqIO.write(sequences, handle, "fasta")
 
 if __name__ == "__main__":
     main()

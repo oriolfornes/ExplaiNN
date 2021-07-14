@@ -66,7 +66,7 @@ def main(**params):
 def __get_FASTA_sequences(intensity_file, no_linker=False, output_dir="./"):
 
     # Initialize
-    sequences = []
+    records = []
     # YY1.NA@PBM.ME@PBM14342.5GTGAAATTGTTATCCGCTCT@QNZS.wimpy-thistle-catfish.Train.tsv
     # YY1.NA@PBM.HK@PBM14358.5GTGAAATTGTTATCCGCTCT@QNZS.breezy-magnolia-dane.Val.tsv
     # YY1.NA@PBM.ME@PBM14342.5GTGAAATTGTTATCCGCTCT@SDQN.squirrely-blue-quokka.Train.tsv
@@ -79,6 +79,10 @@ def __get_FASTA_sequences(intensity_file, no_linker=False, output_dir="./"):
     # Intensities as pandas DataFrame
     df = pd.read_csv(intensity_file, sep="\t", skiprows=1, usecols=[4, 5, 6, 7],
         names=["name", "sequence", "linker_sequence", "signal"])
+    # df.sort_values(by="signal", ascending=False, inplace=True)
+    # positives = df.iloc[:int(df.shape[0]/2.), :].copy()
+    # negatives = df.iloc[int(df.shape[0]/2.):, :].copy()
+    # negatives.sort_values(by="signal", inplace=True)
 
     # Save sequences
     for _, row in df.iterrows():
@@ -86,11 +90,39 @@ def __get_FASTA_sequences(intensity_file, no_linker=False, output_dir="./"):
             s = Seq(row["sequence"])
         else:
             s = Seq(row["sequence"] + row["linker_sequence"])
-        record = SeqRecord(s, row["name"], description=str(row["signal"]))
-        sequences.append(record)
-    random.shuffle(sequences)
+        r = SeqRecord(s, row["name"], description=str(row["signal"]))
+        records.append(r)
+    random.shuffle(records)
+    # records.append([])
+    # for _, row in positives.iterrows():
+    #     if no_linker:
+    #         s = Seq(row["sequence"])
+    #     else:
+    #         s = Seq(row["sequence"] + row["linker_sequence"])
+    #     record = SeqRecord(s, row["name"], description=str(row["signal"]))
+    #     records[-1].append(record)
+    # records.append([])
+    # for _, row in negatives.iterrows():
+    #     if no_linker:
+    #         s = Seq(row["sequence"])
+    #     else:
+    #         s = Seq(row["sequence"] + row["linker_sequence"])
+    #     record = SeqRecord(s, row["name"], description=str(row["signal"]))
+    #     records[-1].append(record)
     with gzip.open(sequences_file, "wt") as handle:
-        SeqIO.write(sequences, handle, "fasta")
+        SeqIO.write(records, handle, "fasta")
+        # sequences = []
+        # while True:
+        #     exit_loop = True
+        #     for i in range(len(records)):
+        #         if len(records[i]) > 0:
+        #             exit_loop = False
+        #             sequences.append(records[i].pop())
+        #         else:
+        #             pass
+        #     if exit_loop:
+        #         break
+        # SeqIO.write(sequences, handle, "fasta")
 
 if __name__ == "__main__":
     main()

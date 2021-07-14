@@ -285,7 +285,7 @@ class Trainer(object):
         t_f = time()
 
         self._time_per_step.append(t_f - t_i)
-        if (self.step != self._start_step and \
+        if (self.step > 0 and \
             self.step % self.nth_step_report_stats == 0):
             self.logger.info(
                 f"[STEP {self.step}] average number of steps per second" +

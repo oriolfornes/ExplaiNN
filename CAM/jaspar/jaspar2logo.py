@@ -29,9 +29,13 @@ def parse_args():
     parser.add_argument("motif_file", metavar="motif.jaspar")
     parser.add_argument("logo_file", metavar="logo.png")
 
+    # Optional args
+    parser.add_argument("-r", "--rev-complement", action="store_true",
+        help="plot the reverse complement logo")
+
     return(parser.parse_args())
 
-def get_figure(motif_file):
+def get_figure(motif_file, rc=False):
 
     # From https://biopython.readthedocs.io/en/latest/chapter_motifs.html
     m = motifs.read(open(motif_file), "jaspar")
@@ -39,6 +43,9 @@ def get_figure(motif_file):
 
     # From https://www.bioconductor.org/packages/release/bioc/html/seqLogo.html
     pwm = list(m.pwm.values())
+    if rc:
+        arr = np.array(pwm)
+        pwm = np.flip(arr).tolist()
     IC = 2 + np.add.reduce(pwm * np.log2(pwm))
     df = pd.DataFrame({
         "pos": [i + 1 for i in range(len(IC))],
@@ -69,7 +76,7 @@ def main():
     args = parse_args()
 
     # Get figure
-    fig = get_figure(args.motif_file)
+    fig = get_figure(args.motif_file, rc=args.rev_complement)
 
     # Save
     fig.savefig(args.logo_file, bbox_inches="tight", pad_inches=0)

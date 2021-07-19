@@ -58,13 +58,13 @@ CONTEXT_SETTINGS = {
     help="Reverse complement training sequences.",
     is_flag=True,
 )
-# @click.option(
-#     "-t", "--threads",
-#     help="Number of CPU threads to use.",
-#     type=int,
-#     default=1,
-#     show_default=True,
-# )
+@click.option(
+    "-t", "--threads",
+    help="Number of CPU threads to use.",
+    type=int,
+    default=1,
+    show_default=True,
+)
 @click.option(
     "-v", "--val-samples",
     help="Number of validation samples to use. " + \

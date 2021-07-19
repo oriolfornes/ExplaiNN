@@ -68,7 +68,7 @@ CONTEXT_SETTINGS = {
 )
 @click.option(
     "-t", "--threads",
-    help="Number of threads to use.",
+    help="Number of CPU threads to use.",
     type=int,
     default=1,
     show_default=True,

@@ -234,6 +234,7 @@ def _get_Xs_ys(fasta_file, debugging=False, reverse_complement=False):
         _, y_list = record.description.split()
         Xs.append(one_hot_encode(str(record.seq).upper()))
         ys.append([float(y) for y in y_list.split(";")])
+    handle.close()
 
     # Reverse complement
     if reverse_complement:

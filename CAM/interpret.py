@@ -218,6 +218,7 @@ def _get_Xs_ys_seq_ids_seqs(fasta_file, debugging=False,
         ys.append([float(y) for y in y_list.split(";")])
         seq_ids.append((record.id, "+"))
         seqs.append(str(record.seq))
+    handle.close()
 
     # Reverse complement
     if reverse_complement:

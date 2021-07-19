@@ -326,9 +326,9 @@ def _get_sites(handle, idxs, seq_ids, seqs, activations, threshold,
             record = SeqRecord(seq, id=seq_id, name="", description="")
             handle.write(record.format("fasta"))
 
-            # If count >100K, this filter is way too ubiquitous!!!
+            # If count reaches 1M, this filter is way too ubiquitous!!!
             count += 1
-            if count == 100000:
+            if count == 1e6:
                 return
 
 def _get_motif(handle):

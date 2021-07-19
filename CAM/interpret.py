@@ -263,7 +263,7 @@ def _get_activations(model, data_loader, activations):
     idx = 0
 
     with torch.no_grad():
-        for x, _ in tqdm(data_loader, total=len(data_loader),
+        for x, _ in tqdm(iter(data_loader), total=len(data_loader),
                 bar_format=bar_format):
 
             # Get activations

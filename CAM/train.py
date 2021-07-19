@@ -292,11 +292,12 @@ def _get_data_loaders(Xs_train, ys_train, Xs_val=None, ys_val=None,
     else:
         return(train_loader)
 
-def __get_handle(file_name):
+def __get_handle(file_name, mode="rt"):
     if file_name.endswith("gz"):
-        handle = gzip.open(file_name, "rt")
+        handle = gzip.open(file_name, mode)
     else:
-        handle = open(file_name, "rt")
+        handle = open(file_name, mode)
+
     return(handle)
 
 def _train(sequence_length, n_features, data_loaders, input_data,

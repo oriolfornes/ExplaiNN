@@ -175,22 +175,25 @@ def main(**params):
 
         # Get sites
         sites_file = os.path.join(params["output_dir"], "sites",
-            f"filter{i}.fa")
+            f"filter{i}.fa.gz")
         if not os.path.exists(sites_file):
-            sites = _get_sites(idxs, seq_ids, seqs, activations[:, i, :],
+            handle = __get_handle(sites_file, "wt")
+            _get_sites(handle, idxs, seq_ids, seqs, activations[:, i, :],
                 thresholds[i], model._options["kernel_size"])
-            with open(sites_file, "w") as handle:
-                SeqIO.write(sites, handle, "fasta")
+            handle.close()
 
         # Get motif
         motif_file = os.path.join(params["output_dir"], "motifs",
             f"filter{i}.jaspar")
         if not os.path.exists(motif_file):
-            motif = _get_motif(sites_file)
+            handle = __get_handle(sites_file)
+            motif = _get_motif(handle)
+            handle.close()
             motif.matrix_id = f"filter{i}"
             motif.name = params["name"]
-            with open(motif_file, "w") as handle:
-                handle.write(format(motif, "jaspar"))
+            handle = __get_handle(motif_file, "wt")
+            handle.write(format(motif, "jaspar"))
+            handle.close()
             jaspar_motifs.append(motif)
 
         # Get logos
@@ -214,10 +217,11 @@ def main(**params):
     weights_file = os.path.join(params["output_dir"], "weights.tsv")
     if not os.path.exists(weights_file):
         weights = model.final.weight.detach().cpu().numpy()
-        with open(weights_file, "w") as handle:
-            for i, weight in enumerate(weights.T):
-                s = "\t".join(map(str, weight))
-                handle.write(f"filter{i}\t{s}\n")
+        handle = __get_handle(weights_file, "wt")
+        for i, weight in enumerate(weights.T):
+            s = "\t".join(map(str, weight))
+            handle.write(f"filter{i}\t{s}\n")
+        handle.close()
 
 def _get_Xs_ys_seq_ids_seqs(fasta_file, debugging=False,
     reverse_complement=False):
@@ -293,14 +297,12 @@ def _get_activations(model, data_loader, activations):
 
     return(activations.numpy())
 
-def _get_sites(idxs, seq_ids, seqs, activations, threshold, kernel_size=19):
+def _get_sites(handle, idxs, seq_ids, seqs, activations, threshold,
+               kernel_size=19):
     """
     For each filter and each sequence, get sites reaching at least ½ of the
     maximum activation value for that filter.
     """
-
-    # Initialize
-    sites = []
 
     # For each sequence...
     for i in idxs:
@@ -318,11 +320,10 @@ def _get_sites(idxs, seq_ids, seqs, activations, threshold, kernel_size=19):
             end = j+kernel_size
             seq = Seq(seqs[i][start:end])
             seq_id = "%s_%s_from=%s_to=%s" % (record_id, strand, start, end)
-            sites.append(SeqRecord(seq, id=seq_id, name="", description=""))
+            record = SeqRecord(seq, id=seq_id, name="", description="")
+            handle.write(record.format("fasta"))
 
-    return(sites)
-
-def _get_motif(sites_file):
+def _get_motif(handle):
     """
     From https://github.com/biopython/biopython/blob/master/Bio/motifs/__init__.py
     Read the motif from JASPAR .sites file.
@@ -333,19 +334,18 @@ def _get_motif(sites_file):
     instances = []
     pfm = {}
 
-    with open(sites_file) as handle:
-        for line in handle:
-            if not line.startswith(">"):
-                break
-            # line contains the header ">...."
-            # now read the actual sequence
-            line = next(handle)
-            instance = ""
-            for c in line.strip().upper():
-                if c == c.upper():
-                    instance += c
-            instance = Seq(instance)
-            instances.append(instance)
+    for line in handle:
+        if not line.startswith(">"):
+            break
+        # line contains the header ">...."
+        # now read the actual sequence
+        line = next(handle)
+        instance = ""
+        for c in line.strip().upper():
+            if c == c.upper():
+                instance += c
+        instance = Seq(instance)
+        instances.append(instance)
 
     instances = motifs.Instances(instances, alphabet)
     motif = motifs.Motif(alphabet=alphabet, instances=instances)

@@ -258,29 +258,35 @@ def _get_data_loaders(Xs_train, ys_train, Xs_val=None, ys_val=None,
     random.seed(123)
 
     # Shuffle validation data (i.e. if multiple validation sets were provided)
-    while ix < len(Xs_val):
-        Xs_val_nested.append(Xs_val[ix:ix+2])
-        ys_val_nested.append(ys_val[ix:ix+2])
-        ix += 2
-    z = list(zip(Xs_val_nested, ys_val_nested))
-    random.shuffle(z)
-    Xs_val = [j for i in z for j in i[0]]
-    ys_val = [j for i in z for j in i[1]]
+    if Xs_val is not None and ys_val is not None:
+        while ix < len(Xs_val):
+            Xs_val_nested.append(Xs_val[ix:ix+2])
+            ys_val_nested.append(ys_val[ix:ix+2])
+            ix += 2
+        z = list(zip(Xs_val_nested, ys_val_nested))
+        random.shuffle(z)
+        Xs_val = [j for i in z for j in i[0]]
+        ys_val = [j for i in z for j in i[1]]
 
     # TensorDatasets
     train_set = TensorDataset(torch.Tensor(Xs_train), torch.Tensor(ys_train))
-    if val_samples is None:
-        val_set = TensorDataset(torch.Tensor(Xs_val[:val_samples]),
-            torch.Tensor(ys_val[:val_samples]))
-    else:
-        val_set = TensorDataset(torch.Tensor(Xs_val), torch.Tensor(ys_val))
+    if Xs_val is not None and ys_val is not None:
+        if val_samples is None:
+            val_set = TensorDataset(torch.Tensor(Xs_val[:val_samples]),
+                torch.Tensor(ys_val[:val_samples]))
+        else:
+            val_set = TensorDataset(torch.Tensor(Xs_val), torch.Tensor(ys_val))
 
     # DataLoaders
     kwargs = dict(batch_size=batch_size, num_workers=threads)
     train_loader = DataLoader(train_set, **kwargs)
-    val_loader = DataLoader(val_set, **kwargs)
+    if Xs_val is not None and ys_val is not None:
+        val_loader = DataLoader(val_set, **kwargs)
 
-    return(train_loader, val_loader)
+    if Xs_val is not None and ys_val is not None:
+        return(train_loader, val_loader)
+    else:
+        return(train_loader)
 
 def __get_handle(file_name):
     if file_name.endswith("gz"):

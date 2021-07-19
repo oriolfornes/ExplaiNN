@@ -41,9 +41,9 @@ def reformat_jaspar_motif(motif_file, oformat, out_file):
     for m in motifs.parse(open(motif_file), "jaspar"):
         l.append(m)
 
-    reformat_motifs(l, oformat, out_file)
+    reformat_motif(l, oformat, out_file)
 
-def reformat_motifs(l, oformat, out_file):
+def reformat_motif(l, oformat, out_file):
 
     # Initialize
     s = ""

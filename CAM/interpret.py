@@ -2,22 +2,20 @@
 
 from Bio import SeqIO
 from Bio import motifs
+from Bio.Seq import Seq
+from Bio.SeqRecord import SeqRecord
 import click
-from click_option_group import optgroup
-import gc
-import gzip
-from io import StringIO
 import numpy as np
 import os
 import torch
-from torch.utils.data import DataLoader, TensorDataset
 from tqdm import tqdm
 bar_format = "{percentage:3.0f}%|{bar:20}{r_bar}"
 
 # Local imports
 from architectures import CAM
 from jaspar import get_figure, reformat_jaspar_motif
-from sequence import one_hot_encode, one_hot_decode, rc_one_hot_encoding
+from sequence import one_hot_encode, rc_one_hot_encoding, rc
+from train import _get_data_loaders, __get_handle
 
 # CUDA
 device = "cpu"
@@ -50,11 +48,22 @@ CONTEXT_SETTINGS = {
     is_flag=True,
 )
 @click.option(
+    "-n", "--name",
+    help="Name for Biopython's {Motif} class.",
+    type=str,
+    required=True,
+)
+@click.option(
     "-o", "--output-dir",
     help="Output directory.",
     type=click.Path(resolve_path=True),
     default="./",
     show_default=True,
+)
+@click.option(
+    "-r", "--rev-complement",
+    help="Reverse complement training sequences.",
+    is_flag=True,
 )
 @click.option(
     "-t", "--threads",
@@ -66,215 +75,140 @@ CONTEXT_SETTINGS = {
 
 def main(**params):
 
+    ##############
+    # Initialize #
+    ############## 
+
     # Create output dirs
     if not os.path.isdir(params["output_dir"]):
         os.makedirs(params["output_dir"])
-    # for subdir in ["profiles", "sites", "logos"]:
-    for subdir in ["profiles", "logos"]:
+    for subdir in ["sites", "motifs", "logos"]:
         if not os.path.isdir(os.path.join(params["output_dir"], subdir)):
             os.makedirs(os.path.join(params["output_dir"], subdir))
 
-    # Load model
-    # if device == "cpu":
-    #     map_location = device
-    # else:
-    #     map_location = "cuda:0"
+    # Get model
     selene_dict = torch.load(params["model_file"])
     model = CAM(
         selene_dict["options"]["cnn_units"],
         selene_dict["options"]["kernel_size"],
         selene_dict["options"]["sequence_length"],
         selene_dict["options"]["n_features"],
-        # selene_dict["options"]["input_data"],
+        selene_dict["options"]["clamp_weights"],
+        selene_dict["options"]["no_padding"],
         selene_dict["options"]["weights_file"],
     )
+    model.load_state_dict(selene_dict["state_dict"])
     model.to(device)
 
-    # Get Xs/ys
-    Xs, ys = _get_Xs_ys(params["training_file"], params["debugging"])
-    print(Xs.shape)
-    print(ys.shape)
-    exit(0)
+    ##############
+    # Load Data  #
+    ##############
+
+    # Get data
+    Xs, ys, seq_ids, seqs = _get_Xs_ys_seq_ids_seqs(params["training_file"],
+        params["debugging"], params["rev_complement"])
 
     # Get DataLoader
-    data_loader = _get_data_loader(list(Xs), list(ys), params["batch_size"],
-        params["threads"])
+    train_loader = _get_data_loaders(list(Xs), list(ys),
+        batch_size=params["batch_size"], threads=params["threads"])
+    data_loader = train_loader
 
-    # Get well predicted sequences
-    ixs = _get_well_predicted_sequences(model, data_loader)
-    print(ixs)
-    exit(0)
-
-
-    # Get weights
-    weights = model.final.weight.detach().cpu().numpy().flatten().tolist()
-
-    # Zip
-    # zipped_list = zip(profiles, sites, weights)
-    zipped_list = zip(pfms, weights)
-    for f, z in enumerate(sorted(zipped_list, key=lambda x: x[-1], reverse=True)):
-        jaspar_file = os.path.join(params["output_dir"], "profiles",
-            "filter=%s.jaspar" % str(f+1))
-        z[0].matrix_id = "filter=%s" % str(f+1)
-        z[0].name = "CAM;l=%s" % str(selene_dict["params"]["motif_length"])
-        with open(jaspar_file, "w") as o:
-            o.write(format(z[0], "jaspar"))
-        meme_file = os.path.join(params["output_dir"], "profiles",
-            "filter=%s.meme" % str(f+1))
-        reformat_jaspar_motif(jaspar_file, "meme", meme_file)
-        png_file = os.path.join(params["output_dir"], "logos",
-            "filter=%s.png" % str(f+1))
-        fig = get_figure(jaspar_file)
-        fig.savefig(png_file, bbox_inches="tight", pad_inches=0)
-        # sites_file = os.path.join(params["output_dir"], "sites",
-        #     "filter=%s.txt" % str(f+1))
-        # with open(sites_file, "w") as o:
-        #     o.write("\n".join(z[1]))
-    with open(os.path.join(params["output_dir"], "weights.txt"), "w") as o:
-        for f, w in enumerate(weights):
-            o.write("filter=%s\t%s\n" % (str(f+1), str(w)))
-
-def _fix_state_dict(state_dict):
-
-    for k in frozenset(state_dict.keys()):
-        state_dict[k[6:]] = state_dict.pop(k)
-
-    return(state_dict)
-
-def _get_well_predicted_sequences(model, data_loader):
-
-    # Get sequences, outputs, labels, and activations
-    _, outputs, labels, _ = \
-        __get_sequences_outputs_labels_n_activations(model, data_loader)
-
-    # Filter sequences/activations
-    if model._options["input_data"] == "binary":
-        ixs = np.argwhere(
-            np.sum(np.equal(np.round(outputs), labels), axis=1) >= \
-            model._options["n_features"]
-        ).squeeze()
-
-    return(ixs)
-
-def _get_activations_profiles_and_sites(model, data_loader):
-
-    pass
-
-    # # Get Position Frequency Matrices (PFMs)
-    # pfms = __get_pfms(sequences, activations, model._motif_length)
-
-    # # Get motif
-    # for j in range(len(pfms)):
-    #     handle = StringIO("\n".join(["\t".join(map(str, i)) for i in pfms[j]]))
-    #     profiles.append(motifs.read(handle, "pfm-four-rows"))
-
-    # # return(profiles, sites)
-    # return(profiles)
-
-def __get_sequences_outputs_labels_n_activations(model, data_loader):
+    ##############
+    # Interpret  #
+    ############## 
 
     # Initialize
-    labels = []
-    outputs = []
-    sequences = []
-    activations = torch.tensor([], dtype=torch.float32)
-    kwargs = {"total": len(data_loader), "bar_format": bar_format}
-    sigmoid = torch.nn.Sigmoid()
+    jaspar_motifs = []
+    if np.unique(ys[:, 0]).size == 2:
+        input_data = "binary"
+    else:
+        input_data = "linear"
+    if selene_dict["options"]["no_padding"]:
+        padding = 0
+    else:
+        padding = selene_dict["options"]["kernel_size"]
 
-    with torch.no_grad():
+    # Fix sequences
+    for i in range(len(seqs)):
+        seqs[i] = "N" * padding + seqs[i] + "N" * padding
+    seqs = np.array(seqs)
 
-        for x, label in tqdm(data_loader, **kwargs):
+    # Get predict
+    outputs, labels = _predict(model, data_loader, input_data)
 
-            # Get sequences
-            for encoded_sequence in x:
-                sequence = "N" * model._options["motif_length"] + \
-                    one_hot_decode(encoded_sequence.numpy()) + \
-                    "N" * model._options["motif_length"]
-                sequences.append(one_hot_encode(sequence))
+    # Get activations
+    x = len(seqs)
+    y = model._options["cnn_units"]
+    z = len(seqs[0]) - model._options["kernel_size"] + 1
+    size = (x, y, z)
+    activations = _get_activations(model, data_loader,
+        torch.zeros(size, dtype=torch.float32))
 
-            # Get outputs and labels
-            x = x.to(device)
-            out = model(x)
-            out = out.detach().cpu()
-            if model._options["input_data"] == "binary":
-                out = sigmoid(out)
-            outputs.extend(out.numpy())
-            labels.extend(label.numpy())
+    # Get the indices of well predicted sequences
+    if input_data == "binary":
+        idxs = np.where((labels == 1.) & (outputs >= .5))[0]
+    else:
+        l_idxs = np.argsort(-labels.flatten())[:int(max(labels.shape) * .1)]
+        o_idxs = np.argsort(-outputs.flatten())[:int(max(outputs.shape) * .1)]
+        idxs = np.intersect1d(l_idxs, o_idxs)
 
-            # Get activations
-            x = x.repeat(1, model._options["cnn_units"], 1)
-            activation = model.linears[:3](x)
-            activations = torch.cat([activations, activation.cpu()])
-
-    return(np.array(sequences), np.array(outputs), np.array(labels),
-        activations.numpy())
-
-# def __get_pfms_and_sites(sequences, activations, motif_length=19):
-def __get_pfms(sequences, activations, motif_length=19):
-
-    """
-    For each filter, build a Position Frequency Matrix (PFM) from all sites
-    reaching at least ½ the maximum activation value for that filter across all input sequences
-    
-     the
-    activations and the original sequences, and keep the sites used to
-    derive such matrix.
-
-    params :
-        actvations (np.array) : (N*N_filters*L) array containing the ourput for each filter and selected sequence of the test set
-        sequnces (np.array) : (N*4*200) selected sequences (ACGT)
-        y (np.array) : (N*T) original target of the selected sequnces
-        output_file_path (str) : path to directory to store the resulting pwm meme file
-    """
-
-    # Initialize
-    n_filters = activations.shape[1]
-    pfms = np.zeros((n_filters, 4, motif_length))
-    # sites = [[] for _ in range(n_filters)]
-
-    # Find the threshold value for activations (i.e. 50%)
-    activation_thresholds = 0.5*np.amax(activations, axis=(0, 2))
+    # For each filter, get the activation threshold (i.e. ≥50%)
+    thresholds = 0.5 * np.amax(activations[idxs, :, :], axis=(0, 2))
 
     # For each filter...
-    for i in range(n_filters):
+    for i in tqdm(range(selene_dict["options"]["cnn_units"]),
+                  total=selene_dict["options"]["cnn_units"],
+                  bar_format=bar_format):
 
-        activated_sequences_list = []
+        # Get sites
+        sites_file = os.path.join(params["output_dir"], "sites",
+            f"filter{i}.fa")
+        if not os.path.exists(sites_file):
+            sites = _get_sites(idxs, seq_ids, seqs, activations[:, i, :],
+                thresholds[i], model._options["kernel_size"])
+            with open(sites_file, "w") as handle:
+                SeqIO.write(sites, handle, "fasta")
 
-        # For each sequence...
-        for j in range(len(sequences)):
+        # Get motif
+        motif_file = os.path.join(params["output_dir"], "motifs",
+            f"filter{i}.jaspar")
+        if not os.path.exists(motif_file):
+            motif = _get_motif(sites_file)
+            motif.matrix_id = f"filter{i}"
+            motif.name = params["name"]
+            with open(motif_file, "w") as handle:
+                handle.write(format(motif, "jaspar"))
+            jaspar_motifs.append(motif)
 
-            # Get indices of sequences that activate the filter
-            idx = np.where(activations[j,i,:] > activation_thresholds[i])
+        # Get logos
+        for reverse_complement in [False, True]:
+            if reverse_complement:
+                logo_file = os.path.join(params["output_dir"], "logos",
+                    f"filter{i}.rev.png")
+            else:
+                logo_file = os.path.join(params["output_dir"], "logos",
+                    f"filter{i}.fwd.png")
+            if not os.path.exists(logo_file):
+                fig = get_figure(motif_file, reverse_complement)
+                fig.savefig(logo_file, bbox_inches="tight", pad_inches=0)
 
-            for ix in idx[0]:
+    # Get weights
+    weights_file = os.path.join(params["output_dir"], "weights.tsv")
+    if not os.path.exists(weights_file):
+        weights = model.final.weight.detach().cpu().numpy()
+        with open(weights_file, "w") as handle:
+            for i, weight in enumerate(weights.T):
+                s = "\t".join(map(str, weight))
+                handle.write(f"filter{i}\t{s}\n")
 
-                s = sequences[j][:,ix:ix+motif_length]
-                # activated_sequences_list.append(s)
-
-                # Build PFM
-                pfms[i] = np.add(pfms[i], s)
-
-        # # If activated sequences...
-        # if activated_sequences_list:
-
-        #     # Convert activated sequences to array
-        #     activated_sequences_arr = np.stack(activated_sequences_list)
-
-        #     # Build PFM
-        #     pfms[i] = np.sum(activated_sequences_arr, axis=0)
-
-            # # Save sites that activated the filter
-            # for s in activated_sequences_list:
-            #     sites[i].append(one_hot_decode(s))
-
-    # return(pfms, sites)
-    return(pfms)
-
-def _get_Xs_ys(fasta_file, debugging=False, reverse_complement=False):
+def _get_Xs_ys_seq_ids_seqs(fasta_file, debugging=False,
+    reverse_complement=False):
 
     # Initialize
     Xs = []
     ys = []
+    seq_ids = []
+    seqs = []
 
     # Xs / ys
     handle = __get_handle(fasta_file)
@@ -282,6 +216,8 @@ def _get_Xs_ys(fasta_file, debugging=False, reverse_complement=False):
         _, y_list = record.description.split()
         Xs.append(one_hot_encode(str(record.seq).upper()))
         ys.append([float(y) for y in y_list.split(";")])
+        seq_ids.append((record.id, "+"))
+        seqs.append(str(record.seq))
 
     # Reverse complement
     if reverse_complement:
@@ -289,34 +225,116 @@ def _get_Xs_ys(fasta_file, debugging=False, reverse_complement=False):
         for i in range(n):
             Xs.append(rc_one_hot_encoding(Xs[i]))
             ys.append(ys[i])
+            seq_ids.append((seq_ids[i][0], "-"))
+            seqs.append(rc(seqs[i]))
 
     # Return 1,000 sequences
     if debugging:
-        return(np.array(Xs)[:10000], np.array(ys)[:10000])
+        return(np.array(Xs)[:10000], np.array(ys)[:10000], 
+               np.array(seq_ids)[:10000])
 
-    return(np.array(Xs), np.array(ys))
+    return(np.array(Xs), np.array(ys), np.array(seq_ids), seqs)
 
-def _get_data_loader(Xs_train, ys_train, batch_size=2**6, threads=1):
+def _predict(model, data_loader, input_data):
 
-    # TensorDatasets
-    train_set = TensorDataset(torch.Tensor(Xs_train), torch.Tensor(ys_train))
+    # Initialize
+    outputs = []
+    labels = []
 
-    # DataLoaders
-    kwargs = dict(batch_size=batch_size, num_workers=threads)
-    train_loader = DataLoader(train_set, **kwargs)
+    with torch.no_grad():
+        for x, label in tqdm(iter(data_loader), total=len(data_loader),
+                             bar_format=bar_format):
 
-    return(train_loader)
+            # Get outputs
+            x = x.to(device)
+            out = model(x)
+            if input_data == "binary":
+                out = torch.sigmoid(out)
+            outputs.extend(out.detach().cpu().numpy())
 
-def __get_handle(file_name):
-    if file_name.endswith("gz"):
-        handle = gzip.open(file_name, "rt")
-    else:
-        handle = open(file_name, "rt")
-    return(handle)
+            # Get labels
+            labels.extend(label.numpy())
 
-def _release_memory(my_object):
-   del my_object
-   gc.collect()
+    return(np.array(outputs), np.array(labels))
+
+def _get_activations(model, data_loader, activations):
+
+    # Counter
+    idx = 0
+
+    with torch.no_grad():
+        for x, _ in tqdm(data_loader, total=len(data_loader),
+                bar_format=bar_format):
+
+            # Get activations
+            x = x.to(device)
+            x = x.repeat(1, model._options["cnn_units"], 1)
+            activations[idx:idx+x.shape[0], :, :] = model.linears[:3](x).cpu()
+            idx += x.shape[0]           
+
+    return(activations.numpy())
+
+def _get_sites(idxs, seq_ids, seqs, activations, threshold, kernel_size=19):
+    """
+    For each filter and each sequence, get sites reaching at least ½ of the
+    maximum activation value for that filter.
+    """
+
+    # Initialize
+    sites = []
+
+    # For each sequence...
+    for i in idxs:
+
+        # Get start positions of sequence sites activating this filter
+        starts = np.where(activations[i, :] > threshold)
+
+        # For each start...
+        for j in starts[0]:
+
+            # Get site
+            record_id = seq_ids[i][0]
+            strand = seq_ids[i][1]
+            start = j
+            end = j+kernel_size
+            seq = Seq(seqs[i][start:end])
+            seq_id = "%s_%s_from=%s_to=%s" % (record_id, strand, start, end)
+            sites.append(SeqRecord(seq, id=seq_id, name="", description=""))
+
+    return(sites)
+
+def _get_motif(sites_file):
+    """
+    From https://github.com/biopython/biopython/blob/master/Bio/motifs/__init__.py
+    Read the motif from JASPAR .sites file.
+    """
+
+    # Initialize
+    alphabet = "ACGTN"
+    instances = []
+    pfm = {}
+
+    with open(sites_file) as handle:
+        for line in handle:
+            if not line.startswith(">"):
+                break
+            # line contains the header ">...."
+            # now read the actual sequence
+            line = next(handle)
+            instance = ""
+            for c in line.strip().upper():
+                if c == c.upper():
+                    instance += c
+            instance = Seq(instance)
+            instances.append(instance)
+
+    instances = motifs.Instances(instances, alphabet)
+    motif = motifs.Motif(alphabet=alphabet, instances=instances)
+
+    for nt in alphabet[:-1]:
+        pfm.setdefault(nt, motif.counts[nt])
+
+    return(motifs.Motif(counts=pfm))
 
 if __name__ == "__main__":
     main()

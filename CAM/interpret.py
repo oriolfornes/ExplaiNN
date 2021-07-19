@@ -5,6 +5,7 @@ from Bio import motifs
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 import click
+import gc
 import numpy as np
 import os
 import torch
@@ -155,6 +156,14 @@ def main(**params):
         l_idxs = np.argsort(-labels.flatten())[:int(max(labels.shape) * .1)]
         o_idxs = np.argsort(-outputs.flatten())[:int(max(outputs.shape) * .1)]
         idxs = np.intersect1d(l_idxs, o_idxs)
+
+    # Free memory
+    del Xs
+    del ys
+    del outputs
+    del labels
+    del data_loader
+    gc.collect()
 
     # For each filter, get the activation threshold (i.e. ≥50%)
     thresholds = 0.5 * np.amax(activations[idxs, :, :], axis=(0, 2))

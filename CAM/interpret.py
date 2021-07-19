@@ -304,6 +304,9 @@ def _get_sites(handle, idxs, seq_ids, seqs, activations, threshold,
     maximum activation value for that filter.
     """
 
+    # Initialize
+    count = 0
+
     # For each sequence...
     for i in idxs:
 
@@ -322,6 +325,11 @@ def _get_sites(handle, idxs, seq_ids, seqs, activations, threshold,
             seq_id = "%s_%s_from=%s_to=%s" % (record_id, strand, start, end)
             record = SeqRecord(seq, id=seq_id, name="", description="")
             handle.write(record.format("fasta"))
+
+            # If count >100K, this filter is way too ubiquitous!!!
+            count += 1
+            if count == 100000:
+                return
 
 def _get_motif(handle):
     """

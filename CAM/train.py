@@ -58,13 +58,13 @@ CONTEXT_SETTINGS = {
     help="Reverse complement training sequences.",
     is_flag=True,
 )
-@click.option(
-    "-t", "--threads",
-    help="Number of CPU threads to use.",
-    type=int,
-    default=1,
-    show_default=True,
-)
+# @click.option(
+#     "-t", "--threads",
+#     help="Number of CPU threads to use.",
+#     type=int,
+#     default=1,
+#     show_default=True,
+# )
 @click.option(
     "-v", "--val-samples",
     help="Number of validation samples to use. " + \
@@ -164,7 +164,8 @@ def main(**params):
     # Get DataLoaders
     train_loader, val_loader = _get_data_loaders(list(Xs_train),
         list(ys_train), list(Xs_val), list(ys_val), params["batch_size"],
-        params["threads"], params["val_samples"])
+        # params["threads"], params["val_samples"])
+        params["val_samples"])
     data_loaders = dict({"train": train_loader, "validation": val_loader})
 
     ##############
@@ -250,7 +251,8 @@ def _get_Xs_ys(fasta_file, debugging=False, reverse_complement=False):
     return(np.array(Xs), np.array(ys))
 
 def _get_data_loaders(Xs_train, ys_train, Xs_val=None, ys_val=None,
-    batch_size=2**6, threads=1, val_samples=None):
+    # batch_size=2**6, threads=1, val_samples=None):
+    batch_size=2**6, val_samples=None):
 
     # Initialize
     ix = 0
@@ -279,7 +281,8 @@ def _get_data_loaders(Xs_train, ys_train, Xs_val=None, ys_val=None,
             val_set = TensorDataset(torch.Tensor(Xs_val), torch.Tensor(ys_val))
 
     # DataLoaders
-    kwargs = dict(batch_size=batch_size, num_workers=threads)
+    # kwargs = dict(batch_size=batch_size, num_workers=threads)
+    kwargs = dict(batch_size=batch_size)
     train_loader = DataLoader(train_set, **kwargs)
     if Xs_val is not None and ys_val is not None:
         val_loader = DataLoader(val_set, **kwargs)

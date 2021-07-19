@@ -13,7 +13,7 @@ bar_format = "{percentage:3.0f}%|{bar:20}{r_bar}"
 
 # Local imports
 from architectures import CAM
-from jaspar import get_figure, reformat_jaspar_motif
+from jaspar import get_figure, reformat_motif
 from sequence import one_hot_encode, rc_one_hot_encoding, rc
 from train import _get_data_loaders, __get_handle
 
@@ -79,6 +79,9 @@ def main(**params):
     # Initialize #
     ############## 
 
+    # Initialize
+    torch.set_num_threads(params["threads"])
+
     # Create output dirs
     if not os.path.isdir(params["output_dir"]):
         os.makedirs(params["output_dir"])
@@ -110,7 +113,8 @@ def main(**params):
 
     # Get DataLoader
     train_loader = _get_data_loaders(list(Xs), list(ys),
-        batch_size=params["batch_size"], threads=params["threads"])
+        # batch_size=params["batch_size"], threads=params["threads"])
+        batch_size=params["batch_size"])
     data_loader = train_loader
 
     ##############
@@ -191,6 +195,11 @@ def main(**params):
             if not os.path.exists(logo_file):
                 fig = get_figure(motif_file, reverse_complement)
                 fig.savefig(logo_file, bbox_inches="tight", pad_inches=0)
+
+    # Get motifs in MEME format
+    meme_file = os.path.join(params["output_dir"], "motifs", "filters.meme")
+    if not os.path.exists(meme_file):
+        reformat_motif(jaspar_motifs, "meme", meme_file)
 
     # Get weights
     weights_file = os.path.join(params["output_dir"], "weights.tsv")

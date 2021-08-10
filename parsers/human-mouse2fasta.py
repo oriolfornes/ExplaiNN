@@ -37,7 +37,7 @@ def main(**params):
     validation = []
     test = []
 
-    # For species...
+    # For each species...
     for s in ["human", "mouse"]:
 
         # Initialize

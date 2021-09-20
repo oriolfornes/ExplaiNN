@@ -47,13 +47,20 @@ CONTEXT_SETTINGS = {
 
 def main(**params):
 
+    # Initialize
+    global intensity_files
+    intensity_files = {}
+
     # Create output dir
     if not os.path.exists(params["output_dir"]):
         os.makedirs(params["output_dir"])
 
     # Get intensity files
     d = params["intensities_dir"]
-    intensity_files = [os.path.join(d, f) for f in os.listdir(d)]
+    for intensity_file in os.listdir(d):
+        m = re.search("^(\S+)@\S+@\S+@\w+\.\S+\.\S+\.tsv$", intensity_file)
+        intensity_files.setdefault(m.group(1), [])
+        intensity_files[m.group(1)].append(os.path.join(d, intensity_file))
 
     # Get FASTA sequences
     kwargs = {"total": len(intensity_files), "bar_format": bar_format}
@@ -63,66 +70,45 @@ def main(**params):
     for _ in tqdm(pool.imap(p, intensity_files), **kwargs):
         pass
 
-def __get_FASTA_sequences(intensity_file, no_linker=False, output_dir="./"):
+def __get_FASTA_sequences(tf, no_linker=False, output_dir="./"):
 
     # Initialize
     records = []
-    # YY1.NA@PBM.ME@PBM14342.5GTGAAATTGTTATCCGCTCT@QNZS.wimpy-thistle-catfish.Train.tsv
-    # YY1.NA@PBM.HK@PBM14358.5GTGAAATTGTTATCCGCTCT@QNZS.breezy-magnolia-dane.Val.tsv
-    # YY1.NA@PBM.ME@PBM14342.5GTGAAATTGTTATCCGCTCT@SDQN.squirrely-blue-quokka.Train.tsv
-    # YY1.NA@PBM.HK@PBM14358.5GTGAAATTGTTATCCGCTCT@SDQN.scanty-xanthic-bulldog.Val.tsv
-    m = re.search("^(\S+)@\S+@\S+@\w+\.(\S+)\.\S+\.tsv$",
-        os.path.split(intensity_file)[1])
-    prefix = "%s@%s" % (m.group(1), m.group(2))
-    sequences_file = os.path.join(output_dir, "%s.fa.gz" % prefix)
+    words = []
+    cols = [4, 5, 6, 7]
+    names = ["name", "sequence", "linker_sequence", "signal"]
 
-    # Intensities as pandas DataFrame
-    df = pd.read_csv(intensity_file, sep="\t", skiprows=1, usecols=[4, 5, 6, 7],
-        names=["name", "sequence", "linker_sequence", "signal"])
-    # df.sort_values(by="signal", ascending=False, inplace=True)
-    # positives = df.iloc[:int(df.shape[0]/2.), :].copy()
-    # negatives = df.iloc[int(df.shape[0]/2.):, :].copy()
-    # negatives.sort_values(by="signal", inplace=True)
+    # For each intensity file...
+    for intensity_file in intensity_files[tf]:
+
+        # Initialize
+        m = re.search("^\S+@\S+@\S+@\w+\.(\S+)\.\S+\.tsv$",
+            os.path.split(intensity_file)[1])
+        #prefix = "%s@%s" % (m.group(1), m.group(2))
+        words.append(m.group(1))
+
+        # Intensities as pandas DataFrame
+        df = pd.read_csv(intensity_file, sep="\t", skiprows=1, usecols=cols,
+            names=names)
+        df["name"] = [f"{words[-1]}::{n}" for n in df["name"].tolist()]
+
+        # Save records
+        for _, row in df.iterrows():
+            if no_linker:
+                s = Seq(row["sequence"])
+            else:
+                s = Seq(row["sequence"] + row["linker_sequence"])
+            r = SeqRecord(s, row["name"], description=str(row["signal"]))
+            records.append(r)
 
     # Save sequences
-    for _, row in df.iterrows():
-        if no_linker:
-            s = Seq(row["sequence"])
-        else:
-            s = Seq(row["sequence"] + row["linker_sequence"])
-        r = SeqRecord(s, row["name"], description=str(row["signal"]))
-        records.append(r)
     random.shuffle(records)
-    # records.append([])
-    # for _, row in positives.iterrows():
-    #     if no_linker:
-    #         s = Seq(row["sequence"])
-    #     else:
-    #         s = Seq(row["sequence"] + row["linker_sequence"])
-    #     record = SeqRecord(s, row["name"], description=str(row["signal"]))
-    #     records[-1].append(record)
-    # records.append([])
-    # for _, row in negatives.iterrows():
-    #     if no_linker:
-    #         s = Seq(row["sequence"])
-    #     else:
-    #         s = Seq(row["sequence"] + row["linker_sequence"])
-    #     record = SeqRecord(s, row["name"], description=str(row["signal"]))
-    #     records[-1].append(record)
+    prefix = "%s@%s" % (tf, "+".join(sorted(words)))
+    sequences_file = os.path.join(output_dir, "%s.fa.gz" % prefix)
+    if os.path.exists(sequences_file):
+        return
     with gzip.open(sequences_file, "wt") as handle:
         SeqIO.write(records, handle, "fasta")
-        # sequences = []
-        # while True:
-        #     exit_loop = True
-        #     for i in range(len(records)):
-        #         if len(records[i]) > 0:
-        #             exit_loop = False
-        #             sequences.append(records[i].pop())
-        #         else:
-        #             pass
-        #     if exit_loop:
-        #         break
-        # SeqIO.write(sequences, handle, "fasta")
 
 if __name__ == "__main__":
     main()

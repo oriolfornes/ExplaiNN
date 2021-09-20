@@ -4,7 +4,7 @@
 eval "$(conda shell.bash hook)"
 
 # Create conda environment
-conda create -n CAM \
+conda create -n Chinook \
     -c bioconda -c conda-forge -c pytorch \
     biasaway=3.3.0 \
     biopython=1.78 \
@@ -23,6 +23,6 @@ conda create -n CAM \
     tqdm=4.60.0
 
 # Pip install
-conda activate deep-motif-discovery-pipeline
-pip install genomepy
-pip install snakemake
+#conda activate deep-motif-discovery-pipeline
+#pip install genomepy
+#pip install snakemake

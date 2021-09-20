@@ -1,0 +1,191 @@
+[W 2021-07-14 13:55:44.588 LabApp] 'port' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
+[W 2021-07-14 13:55:44.588 LabApp] 'port' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
+[W 2021-07-14 13:55:44.588 LabApp] 'port' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
+[I 2021-07-14 13:55:44.592 LabApp] JupyterLab extension loaded from /mnt/md1/home/oriol/.conda/envs/jmodisco/lib/python3.6/site-packages/jupyterlab
+[I 2021-07-14 13:55:44.592 LabApp] JupyterLab application directory is /mnt/md1/home/oriol/.conda/envs/jmodisco/share/jupyter/lab
+[I 13:55:44.595 NotebookApp] Serving notebooks from local directory: /mnt/md1/home/oriol/deep-motif-discovery/CAM
+[I 13:55:44.595 NotebookApp] Jupyter Notebook 6.2.0 is running at:
+[I 13:55:44.595 NotebookApp] http://localhost:9998/?token=0a0c1eecb2295b3bafb07c2b402da029ae9239893fcd3716
+[I 13:55:44.595 NotebookApp]  or http://127.0.0.1:9998/?token=0a0c1eecb2295b3bafb07c2b402da029ae9239893fcd3716
+[I 13:55:44.595 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+[C 13:55:44.599 NotebookApp] 
+    
+    To access the notebook, open this file in a browser:
+        file:///mnt/md1/home/oriol/.local/share/jupyter/runtime/nbserver-121103-open.html
+    Or copy and paste one of these URLs:
+        http://localhost:9998/?token=0a0c1eecb2295b3bafb07c2b402da029ae9239893fcd3716
+     or http://127.0.0.1:9998/?token=0a0c1eecb2295b3bafb07c2b402da029ae9239893fcd3716
+[I 13:56:11.912 NotebookApp] 302 POST /login?next=%2Ftree (127.0.0.1) 2.330000ms
+[I 13:56:16.593 NotebookApp] Kernel started: 8036e8bc-d719-4aef-9ffa-1f87434c8115, name: python3
+[W 13:56:16.758 NotebookApp] 404 GET /nbextensions/widgets/notebook/js/extension.js?v=20210714135544 (127.0.0.1) 10.740000ms referer=http://localhost:8888/notebooks/interpret.ipynb
+[I 13:56:16.975 NotebookApp] Adapting from protocol version 5.1 (kernel 8036e8bc-d719-4aef-9ffa-1f87434c8115) to 5.3 (client).
+[I 13:57:09.485 NotebookApp] Saving file at /interpret.ipynb
+[I 13:57:19.770 NotebookApp] Saving file at /interpret.ipynb
+[I 13:57:40.645 NotebookApp] Saving file at /interpret.ipynb
+[I 13:57:48.276 NotebookApp] Saving file at /interpret.ipynb
+[I 13:57:52.909 NotebookApp] Saving file at /interpret.ipynb
+[I 13:57:54.889 NotebookApp] Kernel interrupted: 8036e8bc-d719-4aef-9ffa-1f87434c8115
+[I 13:57:56.313 NotebookApp] Starting buffering for 8036e8bc-d719-4aef-9ffa-1f87434c8115:4c624d026734499e8411cc23cf9d633d
+[I 13:57:56.627 NotebookApp] Kernel restarted: 8036e8bc-d719-4aef-9ffa-1f87434c8115
+[I 13:57:56.681 NotebookApp] Adapting from protocol version 5.1 (kernel 8036e8bc-d719-4aef-9ffa-1f87434c8115) to 5.3 (client).
+[I 13:57:56.682 NotebookApp] Restoring connection for 8036e8bc-d719-4aef-9ffa-1f87434c8115:4c624d026734499e8411cc23cf9d633d
+[I 13:57:57.186 NotebookApp] Replaying 3 buffered messages
+[I 13:58:16.631 NotebookApp] Saving file at /interpret.ipynb
+[I 14:00:16.626 NotebookApp] Saving file at /interpret.ipynb
+[I 14:02:16.629 NotebookApp] Saving file at /interpret.ipynb
+[I 14:02:48.396 NotebookApp] Saving file at /interpret.ipynb
+[I 14:02:51.935 NotebookApp] Saving file at /interpret.ipynb
+[I 14:04:16.615 NotebookApp] Saving file at /interpret.ipynb
+[I 14:05:48.673 NotebookApp] Saving file at /interpret.ipynb
+[I 14:06:16.619 NotebookApp] Saving file at /interpret.ipynb
+[I 14:08:16.626 NotebookApp] Saving file at /interpret.ipynb
+[I 14:10:18.057 NotebookApp] Saving file at /interpret.ipynb
+[I 14:13:40.054 NotebookApp] Adapting from protocol version 5.1 (kernel 8036e8bc-d719-4aef-9ffa-1f87434c8115) to 5.3 (client).
+[W 14:13:40.138 NotebookApp] 404 GET /nbextensions/widgets/notebook/js/extension.js?v=20210714135544 (127.0.0.1) 2.120000ms referer=http://localhost:8888/notebooks/interpret.ipynb
+[I 14:13:59.475 NotebookApp] Saving file at /interpret.ipynb
+[I 14:14:02.645 NotebookApp] Saving file at /interpret.ipynb
+[I 14:15:40.862 NotebookApp] Saving file at /interpret.ipynb
+[I 14:17:40.844 NotebookApp] Saving file at /interpret.ipynb
+[I 14:19:41.272 NotebookApp] Saving file at /interpret.ipynb
+[I 15:46:09.760 NotebookApp] Saving file at /interpret.ipynb
+[I 15:46:13.449 NotebookApp] Saving file at /interpret.ipynb
+[I 15:46:48.670 NotebookApp] Saving file at /interpret.ipynb
+[I 15:47:00.125 NotebookApp] Saving file at /interpret.ipynb
+[I 15:47:14.878 NotebookApp] Saving file at /interpret.ipynb
+[I 15:47:24.803 NotebookApp] Saving file at /interpret.ipynb
+[I 15:47:31.129 NotebookApp] Saving file at /interpret.ipynb
+[I 15:47:34.242 NotebookApp] Saving file at /interpret.ipynb
+[I 15:47:36.253 NotebookApp] Kernel interrupted: 8036e8bc-d719-4aef-9ffa-1f87434c8115
+[I 15:47:38.181 NotebookApp] Starting buffering for 8036e8bc-d719-4aef-9ffa-1f87434c8115:3d58daef70914d968445b9e42bed60ed
+[I 15:47:39.497 NotebookApp] Kernel restarted: 8036e8bc-d719-4aef-9ffa-1f87434c8115
+[I 15:47:39.551 NotebookApp] Adapting from protocol version 5.1 (kernel 8036e8bc-d719-4aef-9ffa-1f87434c8115) to 5.3 (client).
+[I 15:47:39.552 NotebookApp] Restoring connection for 8036e8bc-d719-4aef-9ffa-1f87434c8115:3d58daef70914d968445b9e42bed60ed
+[I 15:47:39.941 NotebookApp] Replaying 3 buffered messages
+[I 15:47:40.297 NotebookApp] Saving file at /interpret.ipynb
+[I 15:49:41.090 NotebookApp] Saving file at /interpret.ipynb
+[I 16:09:57.102 NotebookApp] Saving file at /interpret.ipynb
+[I 16:09:59.578 NotebookApp] Saving file at /interpret.ipynb
+[I 16:11:40.929 NotebookApp] Saving file at /interpret.ipynb
+[I 16:13:40.341 NotebookApp] Saving file at /interpret.ipynb
+[I 16:15:13.139 NotebookApp] Kernel interrupted: 8036e8bc-d719-4aef-9ffa-1f87434c8115
+[I 16:15:13.739 NotebookApp] Kernel interrupted: 8036e8bc-d719-4aef-9ffa-1f87434c8115
+[I 16:15:13.944 NotebookApp] Kernel interrupted: 8036e8bc-d719-4aef-9ffa-1f87434c8115
+[I 16:15:14.142 NotebookApp] Kernel interrupted: 8036e8bc-d719-4aef-9ffa-1f87434c8115
+[I 16:15:16.119 NotebookApp] Starting buffering for 8036e8bc-d719-4aef-9ffa-1f87434c8115:3d58daef70914d968445b9e42bed60ed
+[I 16:15:17.034 NotebookApp] Kernel restarted: 8036e8bc-d719-4aef-9ffa-1f87434c8115
+[I 16:15:17.076 NotebookApp] Adapting from protocol version 5.1 (kernel 8036e8bc-d719-4aef-9ffa-1f87434c8115) to 5.3 (client).
+[I 16:15:17.076 NotebookApp] Restoring connection for 8036e8bc-d719-4aef-9ffa-1f87434c8115:3d58daef70914d968445b9e42bed60ed
+[I 16:15:17.400 NotebookApp] Replaying 3 buffered messages
+[I 16:25:32.052 NotebookApp] Saving file at /interpret.ipynb
+[I 16:25:35.659 NotebookApp] Saving file at /interpret.ipynb
+[I 16:25:40.344 NotebookApp] Saving file at /interpret.ipynb
+[I 16:25:53.654 NotebookApp] Saving file at /interpret.ipynb
+[I 16:25:56.582 NotebookApp] Saving file at /interpret.ipynb
+[I 16:25:56.923 NotebookApp] Saving file at /interpret.ipynb
+[I 16:25:57.195 NotebookApp] Saving file at /interpret.ipynb
+[I 16:25:57.536 NotebookApp] Saving file at /interpret.ipynb
+[I 16:26:17.356 NotebookApp] Saving file at /interpret.ipynb
+[I 16:26:48.081 NotebookApp] Saving file at /interpret.ipynb
+[I 16:26:50.952 NotebookApp] Saving file at /interpret.ipynb
+[I 16:27:09.296 NotebookApp] Saving file at /interpret.ipynb
+[I 16:27:40.164 NotebookApp] Saving file at /interpret.ipynb
+[I 16:28:03.800 NotebookApp] Saving file at /interpret.ipynb
+[I 16:28:04.700 NotebookApp] Saving file at /interpret.ipynb
+[I 16:28:18.490 NotebookApp] Saving file at /interpret.ipynb
+[I 16:28:18.790 NotebookApp] Saving file at /interpret.ipynb
+[I 16:28:23.308 NotebookApp] Saving file at /interpret.ipynb
+[I 16:28:26.684 NotebookApp] Saving file at /interpret.ipynb
+[I 16:28:33.378 NotebookApp] Saving file at /interpret.ipynb
+[I 16:29:40.969 NotebookApp] Saving file at /interpret.ipynb
+[I 18:58:16.044 NotebookApp] Saving file at /interpret.ipynb
+[I 18:58:16.410 NotebookApp] Saving file at /interpret.ipynb
+[I 18:58:16.531 NotebookApp] Saving file at /interpret.ipynb
+[W 06:43:47.077 NotebookApp] WebSocket ping timeout after 119987 ms.
+[I 06:43:52.081 NotebookApp] Starting buffering for 8036e8bc-d719-4aef-9ffa-1f87434c8115:3d58daef70914d968445b9e42bed60ed
+[W 07:57:11.999 NotebookApp] 404 GET /nbextensions/widgets/notebook/js/extension.js?v=20210714135544 (127.0.0.1) 1.670000ms referer=http://localhost:8888/notebooks/interpret.ipynb
+[I 07:57:12.124 NotebookApp] Adapting from protocol version 5.1 (kernel 8036e8bc-d719-4aef-9ffa-1f87434c8115) to 5.3 (client).
+[I 07:57:16.052 NotebookApp] Kernel interrupted: 8036e8bc-d719-4aef-9ffa-1f87434c8115
+[I 07:57:16.797 NotebookApp] Kernel interrupted: 8036e8bc-d719-4aef-9ffa-1f87434c8115
+[I 07:57:19.015 NotebookApp] Starting buffering for 8036e8bc-d719-4aef-9ffa-1f87434c8115:15fabbfe48a746ba8bc32280b58c5257
+[I 07:57:19.727 NotebookApp] Kernel restarted: 8036e8bc-d719-4aef-9ffa-1f87434c8115
+[I 07:57:19.771 NotebookApp] Adapting from protocol version 5.1 (kernel 8036e8bc-d719-4aef-9ffa-1f87434c8115) to 5.3 (client).
+[I 07:57:19.772 NotebookApp] Restoring connection for 8036e8bc-d719-4aef-9ffa-1f87434c8115:15fabbfe48a746ba8bc32280b58c5257
+[I 07:57:20.277 NotebookApp] Replaying 3 buffered messages
+[I 07:57:22.603 NotebookApp] Kernel interrupted: 8036e8bc-d719-4aef-9ffa-1f87434c8115
+[I 07:57:26.016 NotebookApp] Starting buffering for 8036e8bc-d719-4aef-9ffa-1f87434c8115:15fabbfe48a746ba8bc32280b58c5257
+[I 07:57:26.525 NotebookApp] Kernel restarted: 8036e8bc-d719-4aef-9ffa-1f87434c8115
+[I 07:57:26.767 NotebookApp] Adapting from protocol version 5.1 (kernel 8036e8bc-d719-4aef-9ffa-1f87434c8115) to 5.3 (client).
+[I 07:57:26.768 NotebookApp] Restoring connection for 8036e8bc-d719-4aef-9ffa-1f87434c8115:15fabbfe48a746ba8bc32280b58c5257
+[I 07:57:26.912 NotebookApp] Replaying 3 buffered messages
+[I 07:57:42.084 NotebookApp] Saving file at /interpret.ipynb
+[I 07:59:12.187 NotebookApp] Saving file at /interpret.ipynb
+[I 08:03:12.235 NotebookApp] Saving file at /interpret.ipynb
+[I 08:05:12.508 NotebookApp] Saving file at /interpret.ipynb
+[I 08:07:12.466 NotebookApp] Saving file at /interpret.ipynb
+[I 08:17:15.160 NotebookApp] Saving file at /interpret.ipynb
+[I 08:21:12.483 NotebookApp] Saving file at /interpret.ipynb
+[I 08:23:55.465 NotebookApp] Saving file at /interpret.ipynb
+[I 08:32:19.489 NotebookApp] Saving file at /interpret.ipynb
+[I 08:32:28.404 NotebookApp] Kernel interrupted: 8036e8bc-d719-4aef-9ffa-1f87434c8115
+[I 08:32:30.550 NotebookApp] Starting buffering for 8036e8bc-d719-4aef-9ffa-1f87434c8115:15fabbfe48a746ba8bc32280b58c5257
+[I 08:32:32.066 NotebookApp] Kernel restarted: 8036e8bc-d719-4aef-9ffa-1f87434c8115
+[I 08:32:32.104 NotebookApp] Adapting from protocol version 5.1 (kernel 8036e8bc-d719-4aef-9ffa-1f87434c8115) to 5.3 (client).
+[I 08:32:32.105 NotebookApp] Restoring connection for 8036e8bc-d719-4aef-9ffa-1f87434c8115:15fabbfe48a746ba8bc32280b58c5257
+[I 08:32:32.609 NotebookApp] Replaying 3 buffered messages
+[I 08:33:12.470 NotebookApp] Saving file at /interpret.ipynb
+[I 08:37:12.558 NotebookApp] Saving file at /interpret.ipynb
+[I 09:00:32.449 NotebookApp] Saving file at /interpret.ipynb
+[I 09:00:46.677 NotebookApp] Saving file at /interpret.ipynb
+[I 09:00:47.573 NotebookApp] Kernel interrupted: 8036e8bc-d719-4aef-9ffa-1f87434c8115
+[I 09:00:50.209 NotebookApp] Kernel interrupted: 8036e8bc-d719-4aef-9ffa-1f87434c8115
+[I 09:00:51.955 NotebookApp] Starting buffering for 8036e8bc-d719-4aef-9ffa-1f87434c8115:15fabbfe48a746ba8bc32280b58c5257
+[I 09:00:53.671 NotebookApp] Kernel restarted: 8036e8bc-d719-4aef-9ffa-1f87434c8115
+[I 09:00:53.716 NotebookApp] Adapting from protocol version 5.1 (kernel 8036e8bc-d719-4aef-9ffa-1f87434c8115) to 5.3 (client).
+[I 09:00:53.716 NotebookApp] Restoring connection for 8036e8bc-d719-4aef-9ffa-1f87434c8115:15fabbfe48a746ba8bc32280b58c5257
+[I 09:00:54.220 NotebookApp] Replaying 3 buffered messages
+[I 09:01:12.218 NotebookApp] Saving file at /interpret.ipynb
+[I 09:01:20.972 NotebookApp] Saving file at /interpret.ipynb
+[I 09:01:25.497 NotebookApp] Saving file at /interpret.ipynb
+[I 09:05:12.533 NotebookApp] Saving file at /interpret.ipynb
+[I 09:06:00.423 NotebookApp] Saving file at /interpret.ipynb
+[I 09:07:12.229 NotebookApp] Saving file at /interpret.ipynb
+[I 09:09:12.536 NotebookApp] Saving file at /interpret.ipynb
+[I 07:56:08.296 NotebookApp] Starting buffering for 8036e8bc-d719-4aef-9ffa-1f87434c8115:15fabbfe48a746ba8bc32280b58c5257
+[I 10:10:00.658 NotebookApp] Adapting from protocol version 5.1 (kernel 8036e8bc-d719-4aef-9ffa-1f87434c8115) to 5.3 (client).
+[W 10:10:00.923 NotebookApp] 404 GET /nbextensions/widgets/notebook/js/extension.js?v=20210714135544 (127.0.0.1) 1.820000ms referer=http://localhost:8888/notebooks/interpret.ipynb
+[I 10:10:20.226 NotebookApp] Saving file at /interpret.ipynb
+[I 10:10:25.240 NotebookApp] Kernel interrupted: 8036e8bc-d719-4aef-9ffa-1f87434c8115
+[I 10:10:27.266 NotebookApp] Starting buffering for 8036e8bc-d719-4aef-9ffa-1f87434c8115:46027a20e3de463586c2111f4a9ed1c4
+[I 10:10:29.277 NotebookApp] Kernel restarted: 8036e8bc-d719-4aef-9ffa-1f87434c8115
+[I 10:10:29.345 NotebookApp] Adapting from protocol version 5.1 (kernel 8036e8bc-d719-4aef-9ffa-1f87434c8115) to 5.3 (client).
+[I 10:10:29.346 NotebookApp] Restoring connection for 8036e8bc-d719-4aef-9ffa-1f87434c8115:46027a20e3de463586c2111f4a9ed1c4
+[I 10:10:29.669 NotebookApp] Replaying 3 buffered messages
+[I 10:11:40.403 NotebookApp] Saving file at /interpret.ipynb
+[I 10:11:42.537 NotebookApp] Saving file at /interpret.ipynb
+[I 10:11:42.871 NotebookApp] Saving file at /interpret.ipynb
+[I 10:11:47.739 NotebookApp] Saving file at /interpret.ipynb
+[I 10:11:51.968 NotebookApp] Saving file at /interpret.ipynb
+[I 10:12:00.656 NotebookApp] Saving file at /interpret.ipynb
+[I 10:12:00.857 NotebookApp] Saving file at /interpret.ipynb
+[I 10:12:02.356 NotebookApp] Saving file at /interpret.ipynb
+[I 10:12:08.060 NotebookApp] Saving file at /interpret.ipynb
+[I 10:12:17.570 NotebookApp] Saving file at /interpret.ipynb
+[I 10:12:37.251 NotebookApp] Saving file at /interpret.ipynb
+[I 10:12:37.713 NotebookApp] Saving file at /interpret.ipynb
+[I 10:12:38.309 NotebookApp] Saving file at /interpret.ipynb
+[I 10:13:01.222 NotebookApp] Saving file at /interpret.ipynb
+[I 10:13:01.468 NotebookApp] Saving file at /interpret.ipynb
+[I 10:13:05.742 NotebookApp] Kernel interrupted: 8036e8bc-d719-4aef-9ffa-1f87434c8115
+[I 10:13:08.180 NotebookApp] Starting buffering for 8036e8bc-d719-4aef-9ffa-1f87434c8115:46027a20e3de463586c2111f4a9ed1c4
+[I 10:13:08.999 NotebookApp] Kernel restarted: 8036e8bc-d719-4aef-9ffa-1f87434c8115
+[I 10:13:09.102 NotebookApp] Adapting from protocol version 5.1 (kernel 8036e8bc-d719-4aef-9ffa-1f87434c8115) to 5.3 (client).
+[I 10:13:09.103 NotebookApp] Restoring connection for 8036e8bc-d719-4aef-9ffa-1f87434c8115:46027a20e3de463586c2111f4a9ed1c4
+[I 10:13:09.438 NotebookApp] Replaying 3 buffered messages
+[I 10:13:47.068 NotebookApp] Saving file at /interpret.ipynb
+[I 10:14:01.666 NotebookApp] Saving file at /interpret.ipynb
+[I 10:14:11.285 NotebookApp] Kernel interrupted: 8036e8bc-d719-4aef-9ffa-1f87434c8115
+[I 10:15:15.420 NotebookApp] Starting buffering for 8036e8bc-d719-4aef-9ffa-1f87434c8115:46027a20e3de463586c2111f4a9ed1c4
+[C 01:02:22.409 NotebookApp] received signal 15, stopping
+[I 01:02:22.639 NotebookApp] Shutting down 1 kernel
+[I 01:02:22.722 NotebookApp] Kernel shutdown: 8036e8bc-d719-4aef-9ffa-1f87434c8115
+[I 01:02:22.761 NotebookApp] Shutting down 0 terminals

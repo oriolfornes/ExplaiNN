@@ -55,13 +55,20 @@ CONTEXT_SETTINGS = {
 
 def main(**params):
 
+    # Initialize
+    global reads_files
+    reads_files = {}
+
     # Create output dir
     if not os.path.exists(params["output_dir"]):
         os.makedirs(params["output_dir"])
 
     # Get reads files
     d = params["reads_dir"]
-    reads_files = [os.path.join(d, f) for f in os.listdir(d)]
+    for reads_file in os.listdir(d):
+        m = re.search("^(\S+)@\S+@\S+@\w+\.\S+\.\S+\.fastq.gz$", reads_file)
+        reads_files.setdefault(m.group(1), [])
+        reads_files[m.group(1)].append(os.path.join(d, reads_file))
 
     # Get FASTA sequences
     kwargs = {"total": len(reads_files), "bar_format": bar_format}
@@ -71,26 +78,38 @@ def main(**params):
     for _ in tqdm(pool.imap(p, reads_files), **kwargs):
         pass
 
-def __get_FASTA_sequences(reads_file, dummy_dir="/tmp/", kmer=2,
+def __get_FASTA_sequences(tf, dummy_dir="/tmp/", kmer=2,
     output_dir="./"):
 
     # Initialize
+    sequences = []
     positives = []
     negatives = []
-    # YY1.NA@SMS@SRR3405098.5GCTCTTCCGATCTTTGGATC.3GATCCAAGATCGGAAGAGCT@Reads.tasty-beige-bonobo.Train.fastq.gz
-    # YY1.NA@SMS@SRR3405097.5GCTCTTCCGATCTGATGCCA.3TGGCATCGATCGGAAGAGCT@Reads.skinny-olivine-dunker.Val.fastq.gz
-    m = re.search("^(\S+)@\S+@\S+@\w+\.(\S+)\.\S+\.fastq.gz$",
-        os.path.basename(reads_file))
-    prefix = "%s@%s" % (m.group(1), m.group(2))
+    words = []
+
+    # For each intervals file...
+    for reads_file in reads_files[tf]:
+
+        # Initialize
+        m = re.search("^\S+@\S+@\S+@\w+\.(\S+)\.\S+\.fastq.gz$",
+            os.path.split(reads_file)[1])
+        words.append(m.group(1))
+
+        # For each sequence...
+        for s in SeqIO.parse(gzip.open(reads_file, "rt"), "fastq"):
+            if s.seq.count("N") > 0:
+                continue
+            s.id = f"{words[-1]}::{s.id}"
+            sequences.append(s)
+
+    # Positive sequences
+    prefix = "%s@%s" % (tf, "+".join(sorted(words)))
     dummy_file = os.path.join(dummy_dir, "%s.fa" % prefix)
     sequences_file = os.path.join(output_dir, "%s.fa.gz" % prefix)
     if os.path.exists(sequences_file):
         return
-
-    # Positive sequences
     with open(dummy_file, "wt") as handle:
-        for s in SeqIO.parse(gzip.open(reads_file, "rt"), "fastq"):
-            if s.seq.count("N") > 0: continue
+        for s in sequences:
             handle.write(s.format("fasta"))
             positives.append(SeqRecord(s.seq, id=s.id, description="1."))
     random.shuffle(positives)

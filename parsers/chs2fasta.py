@@ -3,6 +3,7 @@
 from Bio import SeqIO
 from Bio.SeqRecord import SeqRecord
 import click
+import copy
 from functools import partial
 import gzip
 from multiprocessing import Pool
@@ -61,6 +62,10 @@ CONTEXT_SETTINGS = {
 
 def main(**params):
 
+    # Initialize
+    global intervals_files
+    intervals_files = {}
+
     # Create output dir
     if not os.path.exists(params["output_dir"]):
         os.makedirs(params["output_dir"])
@@ -70,7 +75,10 @@ def main(**params):
 
     # Get intervals files
     d = params["intervals_dir"]
-    intervals_files = [os.path.join(d, f) for f in os.listdir(d)]
+    for intervals_file in os.listdir(d):
+        m = re.search("^(\S+)@\S+@\S+@\w+\.\S+\.\S+\.peaks$", intervals_file)
+        intervals_files.setdefault(m.group(1), [])
+        intervals_files[m.group(1)].append(os.path.join(d, intervals_file))
 
     # Get FASTA sequences
     kwargs = {"total": len(intervals_files), "bar_format": bar_format}
@@ -93,25 +101,35 @@ def __get_chrom_sizes(genome_file):
 
     return(chrom_sizes)
 
-def __get_FASTA_sequences(intervals_file, genome_file, chrom_sizes,
-    dummy_dir="/tmp/", kmer=2, output_dir="./"):
+def __get_FASTA_sequences(tf, genome_file, chrom_sizes, dummy_dir="/tmp/",
+    kmer=2, output_dir="./"):
 
     # Initialize
     positives = []
     negatives = []
-    # ZNF189.FL@CHS@SI0201@Peaks.wiggy-green-bombay.Train.peaks
-    # ZNF189.FL@CHS@SI0201@Peaks.flabby-thistle-numbat.Val-B.peaks
-    m = re.search("^(\S+)@\S+@\S+@\w+\.(\S+)\.\S+\.peaks$",
-        os.path.split(intervals_file)[1])
-    prefix = "%s@%s" % (m.group(1), m.group(2))
-    dummy_file = os.path.join(dummy_dir, "%s.fa" % prefix)
-    sequences_file = os.path.join(output_dir, "%s.fa.gz" % prefix)
-    if os.path.exists(sequences_file):
-        return
+    words = []
+    cols = [0, 3, 8]
+    names = ["chrom", "summit", "name"]
+    df = None
 
-    # Intervals as pandas DataFrame
-    df = pd.read_csv(intervals_file, sep="\t", skiprows=1, usecols=[0, 3, 8],
-        names=["chrom", "summit", "name"])
+    # For each intervals file...
+    for intervals_file in intervals_files[tf]:
+
+        # Initialize
+        m = re.search("^\S+@\S+@\S+@\w+\.(\S+)\.\S+\.peaks$",
+            os.path.split(intervals_file)[1])
+        words.append(m.group(1))
+
+        # Intervals as pandas DataFrame
+        tmp = pd.read_csv(intervals_file, sep="\t", skiprows=1, usecols=cols,
+            names=names)
+        tmp["name"] = [f"{words[-1]}::{n}" for n in tmp["name"].tolist()]
+        if df is None:
+            df = copy.deepcopy(tmp)
+        else:
+            df = df.append(tmp, ignore_index=True, verify_integrity=True)
+
+    # Get start & end
     df["start"] = df["summit"] - 1
     df["end"] = df["summit"]
     df = df[["chrom", "start", "end", "name"]]
@@ -124,6 +142,11 @@ def __get_FASTA_sequences(intervals_file, genome_file, chrom_sizes,
     a.sequence(fi=genome_file, name=True)
 
     # Positive sequences
+    prefix = "%s@%s" % (tf, "+".join(sorted(words)))
+    dummy_file = os.path.join(dummy_dir, "%s.fa" % prefix)
+    sequences_file = os.path.join(output_dir, "%s.fa.gz" % prefix)
+    if os.path.exists(sequences_file):
+        return
     with open(dummy_file, "wt") as handle:
         for s in SeqIO.parse(a.seqfn, "fasta"):
             handle.write(s.format("fasta"))

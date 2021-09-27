@@ -223,9 +223,10 @@ def _get_Xs_ys(fasta_file, debugging=False, reverse_complement=False):
 
     # Return 1,000 sequences
     if debugging:
-        return(np.array(Xs)[:1000], np.array(ys)[:1000])
+        return(np.array(Xs, dtype=object)[:1000],
+            np.array(ys, dtype=object)[:1000])
 
-    return(np.array(Xs), np.array(ys))
+    return(np.array(Xs, dtype=object), np.array(ys, dtype=object))
 
 def _get_data_loaders(Xs_train, ys_train, Xs_val=None, ys_val=None,
     # batch_size=2**6, threads=1, val_samples=None):

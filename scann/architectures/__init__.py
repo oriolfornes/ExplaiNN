@@ -37,8 +37,9 @@ class _Model(nn.Module):
             ord_dict[keys[i]] = v
         self.load_state_dict(ord_dict)
 
-class Chinook(_Model):
-    """Chinook: a glass-box deep learning model for genomics."""
+class Scann(_Model):
+    """SCANN (Shallow Convolutional Additive Neural Network):
+    a glass-box deep learning model for genomics."""
 
     def __init__(self, cnn_units, kernel_size, sequence_length, n_features=1,
         clamp_weights=False, no_padding=False, weights_file=None):
@@ -56,7 +57,7 @@ class Chinook(_Model):
         weights_file : pass
             ...
         """
-        super(Chinook, self).__init__()
+        super(Scann, self).__init__()
 
         self._options = {
             "cnn_units": cnn_units,
@@ -116,10 +117,80 @@ class Chinook(_Model):
     def forward(self, x):
         """Forward propagation of a batch."""
         x = x.repeat(1, self._options["cnn_units"], 1)
-        outs = self.linears(x)
-        outs = self.final(outs)
+        o = self.linears(x)
 
-        return(outs)
+        return(self.final(o))
+
+# class Basset(nn.Module):
+#     """Basset architecture (Kelley, Snoek & Rinn, 2016)."""
+
+#     def __init__(self, sequence_length, n_features=1, output="binary"):
+#         """
+#         Parameters
+#         ----------
+#         sequence_length : int
+#             Input sequence length
+#         n_features : int
+#             Total number of features to predict
+#         """
+#         super(Basset, self).__init__()
+
+#         padding = math.floor((200 - sequence_length) / 2.)
+
+#         self.blk1 = nn.Sequential(
+#             nn.Conv1d(4, 100, kernel_size=19, padding=padding),
+#             nn.BatchNorm1d(100),
+#             nn.ReLU(inplace=True)
+#         )
+#         self.max_pool = nn.MaxPool1d(kernel_size=3, stride=3)
+    
+#         self.blk2 = nn.Sequential(
+#             nn.Conv1d(100, 200, kernel_size=7),
+#             nn.BatchNorm1d(200),
+#             nn.ReLU(inplace=True),
+#             nn.MaxPool1d(kernel_size=3, stride=3)
+#         )
+
+#         self.blk3 = nn.Sequential(
+#             nn.Conv1d(200, 200, kernel_size=4),
+#             nn.BatchNorm1d(200),
+#             nn.ReLU(inplace=True),
+#             nn.MaxPool1d(kernel_size=3, stride=3)
+#         )
+
+#         self.fc1 = nn.Sequential(
+#             nn.Linear(1000, 1000),
+#             nn.BatchNorm1d(1000, 1e-05, 0.1, True),
+#             nn.ReLU(inplace=True),
+#             nn.Dropout(0.3)
+#         )
+
+#         self.fc2 = nn.Sequential(
+#             nn.Linear(1000, 1000),
+#             nn.BatchNorm1d(1000, 1e-05, 0.1, True),
+#             nn.ReLU(inplace=True),
+#             nn.Dropout(0.3)
+#         )
+
+#         self.fc3 = nn.Sequential(
+#             nn.Linear(1000, n_features)
+#         )
+#         if output == "binary":
+#             self.fc3.add_module("Sigmoid", nn.Sigmoid())
+
+#     def forward(self, x):
+#         """Forward propagation of a batch."""
+#         o = self.blk1(x)
+#         # Save activations from 1st layer
+#         # (activations, act_index) = torch.max(o, dim=2)
+#         o = self.max_pool(0)
+#         o = self.blk2(o)
+#         o = self.blk3(o)
+#         o = torch.flatten(o, start_dim=1)
+#         o = self.fc1(o)
+#         o = self.fc2(o)
+
+#         return(self.fc3(o))
 
 # DanQ Pytorch implementation 
 # From: https://github.com/PuYuQian/PyDanQ/blob/master/DanQ_train.py
@@ -171,18 +242,17 @@ class DanQ(_Model):
 
     def forward(self, x):
         """Forward propagation of a batch."""
-        x = self.Conv1(x)
-        x = nn.functional.relu(x)
-        x = self.Maxpool(x)
-        x = self.Drop1(x)
-        x_x = torch.transpose(x, 1, 2)
-        x, _ = self.BiLSTM(x_x)
-        x = x.contiguous().view(-1, self.__n_channels*640)
-        x = self.Linear1(x)
-        x = nn.functional.relu(x)
-        out = self.Linear2(x)
+        o = self.Conv1(x)
+        o = nn.functional.relu(o)
+        o = self.Maxpool(o)
+        o = self.Drop1(o)
+        o_o = torch.transpose(o, 1, 2)
+        o , _ = self.BiLSTM(o_o)
+        o = o.contiguous().view(-1, self.__n_channels*640)
+        o = self.Linear1(o)
+        o = nn.functional.relu(o)
 
-        return(out)
+        return(self.Linear2(o))
 
 # def _flip(x, dim):
 #     """

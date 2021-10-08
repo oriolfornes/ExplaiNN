@@ -13,7 +13,7 @@ from tqdm import tqdm
 bar_format = "{percentage:3.0f}%|{bar:20}{r_bar}"
 
 # Local imports
-from architectures import Chinook
+from architectures import Scann
 from jaspar import get_figure, reformat_motif
 from sequence import one_hot_encode, rc_one_hot_encoding, rc
 from train import _get_data_loaders, __get_handle
@@ -92,7 +92,7 @@ def main(**params):
 
     # Get model
     selene_dict = torch.load(params["model_file"])
-    model = Chinook(
+    model = Scann(
         selene_dict["options"]["cnn_units"],
         selene_dict["options"]["kernel_size"],
         selene_dict["options"]["sequence_length"],

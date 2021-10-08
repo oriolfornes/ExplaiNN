@@ -71,7 +71,7 @@ CONTEXT_SETTINGS = {
          "By default, it uses all samples.",
     type=int,
 )
-@optgroup.group("CAM")
+@optgroup.group("SCANN")
 @optgroup.option(
     "--clamp-weights",
     help="Constrain weights to being non-negative.",
@@ -283,12 +283,12 @@ def _train(sequence_length, n_features, data_loaders, input_data,
            no_padding=False, lr=1e-03, max_epochs=128, patience=16, threads=1,
            output_dir="./", checkpoint_resume=None):
 
-    from architectures import Chinook, get_loss, get_metrics, get_optimizer
+    from architectures import Scann, get_loss, get_metrics, get_optimizer
     from selene import Trainer
 
     # Train
-    model = Chinook(cnn_units, kernel_size, sequence_length, n_features,
-                    clamp_weights=clamp_weights, no_padding=no_padding)
+    model = Scann(cnn_units, kernel_size, sequence_length, n_features,
+        clamp_weights=clamp_weights, no_padding=no_padding)
     loss_criterion = get_loss(input_data=input_data)
     metrics = get_metrics(input_data=input_data)
     optimizer = get_optimizer(model.parameters(), lr)

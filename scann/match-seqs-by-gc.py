@@ -23,7 +23,7 @@ CONTEXT_SETTINGS = {
 @click.option(
     "-f", "--filter-masked",
     help="Filter masked DNA sequences.",
-    is_flag=True
+    is_flag=True,
 )
 @click.option(
     "-o", "--output-file",
@@ -46,7 +46,7 @@ def cli(**params):
             gc_groups.setdefault(gc, [[] for i in range(len(params["fasta_file"]))])
             gc_groups[gc][i].append(record)
 
-    # Downsampling
+    # Matching
     sampled = []
     random_seed = 123
     for i in sorted(gc_groups):

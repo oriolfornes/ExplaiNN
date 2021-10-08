@@ -47,24 +47,24 @@ def cli(**params):
             gc_groups[gc][i].append(record)
 
     # Matching
-    sampled = []
+    matched = []
     random_seed = 123
     for i in sorted(gc_groups):
         for j in range(len(gc_groups[i])):
             random.Random(random_seed).shuffle(gc_groups[i][j])
         min_len = min(len(gc_groups[i][j]) for j in range(len(gc_groups[i])))
         for j in range(min_len):
-            sampled.append([i])
+            matched.append([i])
             for k in range(len(gc_groups[i])):
                 record = gc_groups[i][k][j]
-                sampled[-1].extend([record.id, str(record.seq)])
+                matched[-1].extend([record.id, str(record.seq)])
 
     # Write
     if params["output_file"] is not None:
         handle = __get_handle(params["output_file"], "wt")
     else:
         handle = sys.stdout
-    json.dump(sampled, handle, indent=4, sort_keys=True)
+    json.dump(matched, handle, indent=4, sort_keys=True)
     handle.close()
 
 if __name__ == "__main__":

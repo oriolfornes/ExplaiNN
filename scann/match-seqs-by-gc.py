@@ -47,7 +47,7 @@ def cli(**params):
             gc_groups[gc][i].append(record)
 
     # Matching
-    matched = []
+    matched = [["labels"] + list(params["fasta_file"])]
     random_seed = 123
     for i in sorted(gc_groups):
         for j in range(len(gc_groups[i])):
@@ -57,7 +57,7 @@ def cli(**params):
             matched.append([i])
             for k in range(len(gc_groups[i])):
                 record = gc_groups[i][k][j]
-                matched[-1].extend([record.id, str(record.seq)])
+                matched[-1].extend([[record.id, str(record.seq)]])
 
     # Write
     if params["output_file"] is not None:

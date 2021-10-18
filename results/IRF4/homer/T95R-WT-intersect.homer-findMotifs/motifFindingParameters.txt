@@ -1,0 +1,1 @@
+cmd = T95R-WT-intersect.fa fasta T95R-WT-intersect.homer-findMotifs -fasta T95R-WT-intersect.scrambled.fa

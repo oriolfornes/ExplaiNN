@@ -1,0 +1,1 @@
+cmd = WT.201bp.fa fasta WT.201bp.homer-findMotifs -fasta WT.201bp.scrambled.fa

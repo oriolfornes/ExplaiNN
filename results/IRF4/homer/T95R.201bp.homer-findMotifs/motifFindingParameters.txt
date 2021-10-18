@@ -1,0 +1,1 @@
+cmd = T95R.201bp.fa fasta T95R.201bp.homer-findMotifs -fasta T95R.201bp.scrambled.fa

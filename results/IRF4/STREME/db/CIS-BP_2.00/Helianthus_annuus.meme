@@ -1,0 +1,23 @@
+MEME version 4
+
+ALPHABET= ACGT
+
+strands: + -
+
+Background letter frequencies (from uniform background):
+A 0.25000 C 0.25000 G 0.25000 T 0.25000 
+
+MOTIF M00865_2.00 (Q39944_HELAN)_(Arabidopsis_thaliana)_(DBD_0.58)
+
+letter-probability matrix: alength= 4 w= 8 nsites= 1 E= 0
+  0.256337	  0.220632	  0.261516	  0.261516	
+  0.252175	  0.270460	  0.237489	  0.239876	
+  0.223001	  0.272374	  0.171945	  0.332679	
+  0.247044	  0.298737	  0.273025	  0.181193	
+  0.325403	  0.250903	  0.220316	  0.203378	
+  0.231735	  0.283042	  0.193561	  0.291662	
+  0.262551	  0.249746	  0.200426	  0.287277	
+  0.289937	  0.314085	  0.230364	  0.165614	
+
+URL http://cisbp.ccbr.utoronto.ca/TFreport.php?versionNumber=2.00&searchTF=T226940_2.00
+

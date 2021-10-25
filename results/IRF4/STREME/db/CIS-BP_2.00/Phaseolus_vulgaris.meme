@@ -1,0 +1,25 @@
+MEME version 4
+
+ALPHABET= ACGT
+
+strands: + -
+
+Background letter frequencies (from uniform background):
+A 0.25000 C 0.25000 G 0.25000 T 0.25000 
+
+MOTIF M01156_2.00 (Q41109_PHAVU)_(Cannabis_sativa)_(DBD_0.77)
+
+letter-probability matrix: alength= 4 w= 10 nsites= 1 E= 0
+  0.185651	  0.213549	  0.285393	  0.315408	
+  0.133202	  0.183436	  0.404181	  0.279182	
+  0.363231	  0.495238	  0.105113	  0.036417	
+  0.029585	  0.834874	  0.000269	  0.135271	
+  0.937984	  0.000034	  0.061789	  0.000193	
+  0.088378	  0.602820	  0.187095	  0.121707	
+  0.146644	  0.194029	  0.560040	  0.099286	
+  0.162411	  0.177706	  0.146956	  0.512926	
+  0.246395	  0.269599	  0.286270	  0.197736	
+  0.293459	  0.147192	  0.337558	  0.221791	
+
+URL http://cisbp.ccbr.utoronto.ca/TFreport.php?versionNumber=2.00&searchTF=T070488_2.00
+

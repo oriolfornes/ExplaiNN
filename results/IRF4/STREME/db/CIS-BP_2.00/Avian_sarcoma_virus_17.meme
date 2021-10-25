@@ -1,0 +1,24 @@
+MEME version 4
+
+ALPHABET= ACGT
+
+strands: + -
+
+Background letter frequencies (from uniform background):
+A 0.25000 C 0.25000 G 0.25000 T 0.25000 
+
+MOTIF M00995_2.00 (JUN_AVIS1)_(Mus_musculus)_(DBD_0.98)
+
+letter-probability matrix: alength= 4 w= 9 nsites= 1 E= 0
+  0.411742	  0.164709	  0.258840	  0.164709	
+  0.000103	  0.000103	  0.000103	  0.999690	
+  0.000103	  0.053395	  0.892111	  0.054391	
+  0.999690	  0.000103	  0.000103	  0.000103	
+  0.000103	  0.999690	  0.000103	  0.000103	
+  0.000103	  0.053395	  0.530029	  0.416473	
+  0.053395	  0.583320	  0.000103	  0.363182	
+  0.700860	  0.298933	  0.000103	  0.000103	
+  0.448473	  0.155620	  0.085394	  0.310513	
+
+URL http://cisbp.ccbr.utoronto.ca/TFreport.php?versionNumber=2.00&searchTF=T070484_2.00
+

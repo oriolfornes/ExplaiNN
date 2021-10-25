@@ -1,0 +1,24 @@
+MEME version 4
+
+ALPHABET= ACGT
+
+strands: + -
+
+Background letter frequencies (from uniform background):
+A 0.25000 C 0.25000 G 0.25000 T 0.25000 
+
+MOTIF M02424_2.00 Q95WG3_ACRMI
+
+letter-probability matrix: alength= 4 w= 9 nsites= 1 E= 0
+  0.445561	  0.243383	  0.155528	  0.155528	
+  0.456324	  0.000121	  0.543434	  0.000121	
+  0.999636	  0.000121	  0.000121	  0.000121	
+  0.000121	  0.000121	  0.999636	  0.000121	
+  0.000121	  0.000121	  0.999636	  0.000121	
+  0.000121	  0.000121	  0.000121	  0.999636	
+  0.000121	  0.999636	  0.000121	  0.000121	
+  0.999636	  0.000121	  0.000121	  0.000121	
+  0.279656	  0.294605	  0.177165	  0.248575	
+
+URL http://cisbp.ccbr.utoronto.ca/TFreport.php?versionNumber=2.00&searchTF=T306953_2.00
+

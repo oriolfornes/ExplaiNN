@@ -5,7 +5,6 @@ from Bio import motifs
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 import click
-import gc
 import numpy as np
 import os
 import torch
@@ -13,10 +12,11 @@ from tqdm import tqdm
 bar_format = "{percentage:3.0f}%|{bar:20}{r_bar}"
 
 # Local imports
-from architectures import CAM
+from architectures import CAM, get_metrics
 from jaspar import get_figure, reformat_motif
 from sequence import one_hot_encode, rc_one_hot_encoding, rc
 from train import _get_data_loaders, __get_handle
+from predict import _predict
 
 # CUDA
 device = "cpu"
@@ -74,24 +74,24 @@ CONTEXT_SETTINGS = {
     show_default=True,
 )
 
-def main(**params):
+def main(**args):
 
     ##############
     # Initialize #
     ############## 
 
     # Initialize
-    torch.set_num_threads(params["threads"])
+    torch.set_num_threads(args["threads"])
 
     # Create output dirs
-    if not os.path.isdir(params["output_dir"]):
-        os.makedirs(params["output_dir"])
+    if not os.path.isdir(args["output_dir"]):
+        os.makedirs(args["output_dir"])
     for subdir in ["sites", "motifs", "logos"]:
-        if not os.path.isdir(os.path.join(params["output_dir"], subdir)):
-            os.makedirs(os.path.join(params["output_dir"], subdir))
+        if not os.path.isdir(os.path.join(args["output_dir"], subdir)):
+            os.makedirs(os.path.join(args["output_dir"], subdir))
 
     # Get model
-    selene_dict = torch.load(params["model_file"])
+    selene_dict = torch.load(args["model_file"])
     model = CAM(
         selene_dict["options"]["cnn_units"],
         selene_dict["options"]["kernel_size"],
@@ -109,13 +109,12 @@ def main(**params):
     ##############
 
     # Get data
-    Xs, ys, seq_ids, seqs = _get_Xs_ys_seq_ids_seqs(params["training_file"],
-        params["debugging"], params["rev_complement"])
+    Xs, ys, seq_ids, seqs = _get_Xs_ys_seq_ids_seqs(args["training_file"],
+        args["debugging"], args["rev_complement"])
 
     # Get DataLoader
     train_loader = _get_data_loaders(list(Xs), list(ys),
-        # batch_size=params["batch_size"], threads=params["threads"])
-        batch_size=params["batch_size"])
+        batch_size=args["batch_size"])
     data_loader = train_loader
 
     ##############
@@ -157,14 +156,6 @@ def main(**params):
         o_idxs = np.argsort(-outputs.flatten())[:int(max(outputs.shape) * .1)]
         idxs = np.intersect1d(l_idxs, o_idxs)
 
-    # Free memory
-    del Xs
-    del ys
-    del outputs
-    del labels
-    del data_loader
-    gc.collect()
-
     # For each filter, get the activation threshold (i.e. ≥50%)
     thresholds = 0.5 * np.amax(activations[idxs, :, :], axis=(0, 2))
 
@@ -174,7 +165,7 @@ def main(**params):
                   bar_format=bar_format):
 
         # Get sites
-        sites_file = os.path.join(params["output_dir"], "sites",
+        sites_file = os.path.join(args["output_dir"], "sites",
             f"filter{i}.fa.gz")
         if not os.path.exists(sites_file):
             handle = __get_handle(sites_file, "wt")
@@ -183,14 +174,14 @@ def main(**params):
             handle.close()
 
         # Get motif
-        motif_file = os.path.join(params["output_dir"], "motifs",
+        motif_file = os.path.join(args["output_dir"], "motifs",
             f"filter{i}.jaspar")
         if not os.path.exists(motif_file):
             handle = __get_handle(sites_file)
             motif = _get_motif(handle)
             handle.close()
             motif.matrix_id = f"filter{i}"
-            motif.name = params["name"]
+            motif.name = args["name"]
             handle = __get_handle(motif_file, "wt")
             handle.write(format(motif, "jaspar"))
             handle.close()
@@ -199,22 +190,34 @@ def main(**params):
         # Get logos
         for reverse_complement in [False, True]:
             if reverse_complement:
-                logo_file = os.path.join(params["output_dir"], "logos",
+                logo_file = os.path.join(args["output_dir"], "logos",
                     f"filter{i}.rev.png")
             else:
-                logo_file = os.path.join(params["output_dir"], "logos",
+                logo_file = os.path.join(args["output_dir"], "logos",
+                    f"filter{i}.fwd.png")
+            if not os.path.exists(logo_file):
+                fig = get_figure(motif_file, reverse_complement)
+                fig.savefig(logo_file, bbox_inches="tight", pad_inches=0)
+
+        # Get filters
+        for reverse_complement in [False, True]:
+            if reverse_complement:
+                logo_file = os.path.join(args["output_dir"], "logos",
+                    f"filter{i}.rev.png")
+            else:
+                logo_file = os.path.join(args["output_dir"], "logos",
                     f"filter{i}.fwd.png")
             if not os.path.exists(logo_file):
                 fig = get_figure(motif_file, reverse_complement)
                 fig.savefig(logo_file, bbox_inches="tight", pad_inches=0)
 
     # Get motifs in MEME format
-    meme_file = os.path.join(params["output_dir"], "motifs", "filters.meme")
+    meme_file = os.path.join(args["output_dir"], "motifs", "filters.meme")
     if not os.path.exists(meme_file):
         reformat_motif(jaspar_motifs, "meme", meme_file)
 
     # Get weights
-    weights_file = os.path.join(params["output_dir"], "weights.tsv")
+    weights_file = os.path.join(args["output_dir"], "weights.tsv")
     if not os.path.exists(weights_file):
         weights = model.final.weight.detach().cpu().numpy()
         handle = __get_handle(weights_file, "wt")
@@ -223,8 +226,27 @@ def main(**params):
             handle.write(f"filter{i}\t{s}\n")
         handle.close()
 
-def _get_Xs_ys_seq_ids_seqs(fasta_file, debugging=False,
-    reverse_complement=False):
+    # For each performance metric...
+    for metric_name, metric in get_metrics(input_data=input_data).items():
+
+        # Get performance metric
+        metric_file = os.path.join(output_dir, f"{metric_name}.tsv")
+        handle = __get_handle(metric_file, "wt")
+
+        # For each filter...
+        for i in tqdm(range(selene_dict["options"]["cnn_units"]),
+            total=selene_dict["options"]["cnn_units"],
+            bar_format=bar_format):
+
+            # Get performances
+            performances = _get_performances(activations["validation"][:, i, :],
+                ys["validation"], metrics[m], reverse_complement)
+            s = "\t".join(map(str, scores))
+            handle.write(f"filter{i}\t{s}\n")
+
+        handle.close()
+
+def _get_Xs_ys_seq_ids_seqs(fasta_file, debugging=False, rc=False):
 
     # Initialize
     Xs = []
@@ -243,7 +265,7 @@ def _get_Xs_ys_seq_ids_seqs(fasta_file, debugging=False,
     handle.close()
 
     # Reverse complement
-    if reverse_complement:
+    if rc:
         n = len(Xs)
         for i in range(n):
             Xs.append(rc_one_hot_encoding(Xs[i]))
@@ -253,8 +275,8 @@ def _get_Xs_ys_seq_ids_seqs(fasta_file, debugging=False,
 
     # Return 1,000 sequences
     if debugging:
-        return(np.array(Xs)[:10000], np.array(ys)[:10000], 
-               np.array(seq_ids)[:10000])
+        return(np.array(Xs)[:1000], np.array(ys)[:1000], 
+               np.array(seq_ids)[:1000])
 
     return(np.array(Xs), np.array(ys), np.array(seq_ids), seqs)
 
@@ -362,6 +384,22 @@ def _get_motif(handle):
         pfm.setdefault(nt, motif.counts[nt])
 
     return(motifs.Motif(counts=pfm))
+
+def _get_performances(activations, ys, metric, rc=False):
+   
+    # Initialize
+    performances = []
+    if rc:
+        fwd = activations[:len(activations)//2]
+        rev = activations[len(activations)//2:]
+        activations = np.concatenate((fwd, rev), axis=1)
+        ys = ys[:len(ys)//2]
+    max_activations = np.max(activations, axis=1)
+
+    for y in ys.T:
+        performances.append(metric(y, max_activations))
+
+    return(performances)
 
 if __name__ == "__main__":
     main()

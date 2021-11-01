@@ -126,28 +126,27 @@ CONTEXT_SETTINGS = {
     show_default=True,
 )
 
-def main(**params):
+def main(**args):
 
     ##############
     # Load Data  #
     ##############
 
     # Get data
-    Xs_train, ys_train = _get_Xs_ys(params["training_file"],
-        params["debugging"], params["rev_complement"])
-    Xs_val, ys_val = _get_Xs_ys(params["training_file"],
-        params["debugging"], params["rev_complement"])
+    Xs_train, ys_train = _get_Xs_ys(args["training_file"], args["debugging"],
+        args["rev_complement"])
+    Xs_val, ys_val = _get_Xs_ys(args["training_file"], args["debugging"],
+        args["rev_complement"])
 
     # Get DataLoaders
     train_loader, val_loader = _get_data_loaders(list(Xs_train),
-        list(ys_train), list(Xs_val), list(ys_val), params["batch_size"],
-        # params["threads"], params["val_samples"])
-        params["val_samples"])
+        list(ys_train), list(Xs_val), list(ys_val), args["batch_size"],
+        args["val_samples"])
     data_loaders = dict({"train": train_loader, "validation": val_loader})
 
     ##############
     # Train      #
-    ############## 
+    ##############
 
     # Initialize
     sequence_length = max(Xs_train[0].shape)
@@ -157,16 +156,16 @@ def main(**params):
     else:
         input_data = "linear"
     steps_per_epoch = math.ceil(
-        len(train_loader.dataset) / float(params["batch_size"])
+        len(train_loader.dataset) / float(args["batch_size"])
     )
 
     # For each initialization...
     best_init_loss = None
     best_init_model = None
-    for i in range(params["initialize"]):
+    for i in range(args["initialize"]):
 
         # Skip if already done
-        init_dir = os.path.join(params["output_dir"], f"init.{i}")
+        init_dir = os.path.join(args["output_dir"], f"init.{i}")
         if not os.path.exists(init_dir):
 
             # Create output dir
@@ -174,10 +173,10 @@ def main(**params):
 
             # Train
             _train(sequence_length, n_features, data_loaders, input_data,
-                steps_per_epoch, params["cnn_units"], params["kernel_size"],
-                params["clamp_weights"], params["no_padding"], params["lr"],
-                int(params["patience"] * .5), params["patience"],
-                params["threads"], init_dir)
+                steps_per_epoch, args["cnn_units"], args["kernel_size"],
+                args["clamp_weights"], args["no_padding"], args["lr"],
+                int(args["patience"] * .5), args["patience"],
+                args["threads"], init_dir)
 
         # Get best initialized
         df = pd.read_csv(os.path.join(init_dir, "validation.txt"), sep="\t")
@@ -191,12 +190,12 @@ def main(**params):
             best_init_model = init_model
 
     # Train
-    shutil.copy(best_init_model, params["output_dir"])
+    shutil.copy(best_init_model, args["output_dir"])
     _train(sequence_length, n_features, data_loaders, input_data,
-        steps_per_epoch, params["cnn_units"], params["kernel_size"],
-        params["clamp_weights"], params["no_padding"], params["lr"],
-        params["max_epochs"], params["patience"], params["threads"],
-        params["output_dir"], best_init_model)
+        steps_per_epoch, args["cnn_units"], args["kernel_size"],
+        args["clamp_weights"], args["no_padding"], args["lr"],
+        args["max_epochs"], args["patience"], args["threads"],
+        args["output_dir"], best_init_model)
 
 def _get_Xs_ys(fasta_file, debugging=False, reverse_complement=False):
 
@@ -238,16 +237,16 @@ def _get_data_loaders(Xs_train, ys_train, Xs_val=None, ys_val=None,
     ys_val_nested = []
     random.seed(123)
 
-    # Shuffle validation data (i.e. if multiple validation sets were provided)
-    if Xs_val is not None and ys_val is not None:
-        while ix < len(Xs_val):
-            Xs_val_nested.append(Xs_val[ix:ix+2])
-            ys_val_nested.append(ys_val[ix:ix+2])
-            ix += 2
-        z = list(zip(Xs_val_nested, ys_val_nested))
-        random.shuffle(z)
-        Xs_val = [j for i in z for j in i[0]]
-        ys_val = [j for i in z for j in i[1]]
+    # # Shuffle validation data (i.e. if multiple validation sets were provided)
+    # if Xs_val is not None and ys_val is not None:
+    #     while ix < len(Xs_val):
+    #         Xs_val_nested.append(Xs_val[ix:ix+2])
+    #         ys_val_nested.append(ys_val[ix:ix+2])
+    #         ix += 2
+    #     z = list(zip(Xs_val_nested, ys_val_nested))
+    #     random.shuffle(z)
+    #     Xs_val = [j for i in z for j in i[0]]
+    #     ys_val = [j for i in z for j in i[1]]
 
     # TensorDatasets
     train_set = TensorDataset(torch.Tensor(Xs_train), torch.Tensor(ys_train))
@@ -271,7 +270,7 @@ def _get_data_loaders(Xs_train, ys_train, Xs_val=None, ys_val=None,
         return(train_loader)
 
 def __get_handle(file_name, mode="rt"):
-    if file_name.endswith("gz"):
+    if file_name.endswith(".gz"):
         handle = gzip.open(file_name, mode)
     else:
         handle = open(file_name, mode)

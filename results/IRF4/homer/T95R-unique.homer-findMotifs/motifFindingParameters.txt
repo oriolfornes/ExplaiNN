@@ -1,1 +1,0 @@
-cmd = T95R-unique.fa fasta T95R-unique.homer-findMotifs -fasta T95R-unique.scrambled.fa

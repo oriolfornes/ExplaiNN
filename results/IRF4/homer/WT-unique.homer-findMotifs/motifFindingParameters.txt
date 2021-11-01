@@ -1,1 +1,0 @@
-cmd = WT-unique.fa fasta WT-unique.homer-findMotifs -fasta WT-unique.scrambled.fa

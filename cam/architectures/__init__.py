@@ -121,6 +121,89 @@ class CAM(_Model):
 
         return(self.final(o))
 
+class PWM(_Model):
+    """PWM (Position Weight Matrix)."""
+
+    # def __init__(self, cnn_units, kernel_size, sequence_length, n_features=1,
+    #     clamp_weights=False, no_padding=False, weights_file=None):
+    #     """
+    #     Parameters
+    #     ----------
+    #     cnn_units : int
+    #         Total number of individual CNN units
+    #     kernel_size : int
+    #         Convolutional kernel size
+    #     sequence_length : int
+    #         Input sequence length
+    #     n_features : int
+    #         Total number of features to predict
+    #     weights_file : pass
+    #         ...
+    #     """
+    #     super(CAM, self).__init__()
+
+    #     self._options = {
+    #         "cnn_units": cnn_units,
+    #         "kernel_size": kernel_size,
+    #         "sequence_length": sequence_length,
+    #         "n_features": n_features,
+    #         "clamp_weights": clamp_weights,
+    #         "no_padding": no_padding,
+    #         "weights_file": weights_file,
+    #     }
+
+    #     if no_padding:
+    #         self.__n_channels = math.floor((sequence_length-kernel_size+1)/7.)
+    #         self.__padding = 0
+    #     else:
+    #         self.__n_channels = math.floor((sequence_length+kernel_size+1)/7.)
+    #         self.__padding = kernel_size
+
+    #     self.linears = nn.Sequential(
+    #         nn.Conv1d(
+    #             in_channels=4*cnn_units,
+    #             out_channels=1*cnn_units,
+    #             kernel_size=kernel_size,
+    #             padding=self.__padding,
+    #             groups=cnn_units,
+    #         ),
+    #         nn.BatchNorm1d(cnn_units),
+    #         ExpAct(),
+    #         nn.MaxPool1d(7, 7),
+    #         nn.Flatten(), 
+    #         UnSqueeze(),
+    #         nn.Conv1d(
+    #             in_channels=self.__n_channels*cnn_units,
+    #             out_channels=100*cnn_units,
+    #             kernel_size=1,
+    #             groups=cnn_units,
+    #         ),
+    #         nn.BatchNorm1d(100*cnn_units, 1e-05, 0.1, True),
+    #         nn.ReLU(),
+    #         nn.Dropout(0.3),
+    #         nn.Conv1d(
+    #             in_channels=100*cnn_units,
+    #             out_channels=1*cnn_units,
+    #             kernel_size=1,
+    #             groups=cnn_units
+    #         ),
+    #         nn.BatchNorm1d(1*cnn_units, 1e-05, 0.1, True),
+    #         nn.ReLU(),
+    #         nn.Flatten(),
+    #     )
+
+    #     self.final = nn.Linear(cnn_units, n_features)
+
+    #     if weights_file is not None:
+    #         self.load_weights(weights_file)
+
+    # def forward(self, x):
+    #     """Forward propagation of a batch."""
+    #     x = x.repeat(1, self._options["cnn_units"], 1)
+    #     o = self.linears(x)
+
+    #     return(self.final(o))
+
 # class Basset(nn.Module):
 #     """Basset architecture (Kelley, Snoek & Rinn, 2016)."""
 

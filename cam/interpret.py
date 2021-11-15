@@ -230,7 +230,7 @@ def main(**args):
     for metric_name, metric in get_metrics(input_data=input_data).items():
 
         # Get performance metric
-        metric_file = os.path.join(output_dir, f"{metric_name}.tsv")
+        metric_file = os.path.join(args["output_dir"], f"{metric_name}.tsv")
         handle = __get_handle(metric_file, "wt")
 
         # For each filter...
@@ -246,7 +246,7 @@ def main(**args):
 
         handle.close()
 
-def _get_Xs_ys_seq_ids_seqs(fasta_file, debugging=False, rc=False):
+def _get_Xs_ys_seq_ids_seqs(fasta_file, debugging=False, rev_complement=False):
 
     # Initialize
     Xs = []
@@ -265,7 +265,7 @@ def _get_Xs_ys_seq_ids_seqs(fasta_file, debugging=False, rc=False):
     handle.close()
 
     # Reverse complement
-    if rc:
+    if rev_complement:
         n = len(Xs)
         for i in range(n):
             Xs.append(rc_one_hot_encoding(Xs[i]))
@@ -385,11 +385,11 @@ def _get_motif(handle):
 
     return(motifs.Motif(counts=pfm))
 
-def _get_performances(activations, ys, metric, rc=False):
+def _get_performances(activations, ys, metric, rev_complement=False):
    
     # Initialize
     performances = []
-    if rc:
+    if rev_complement:
         fwd = activations[:len(activations)//2]
         rev = activations[len(activations)//2:]
         activations = np.concatenate((fwd, rev), axis=1)

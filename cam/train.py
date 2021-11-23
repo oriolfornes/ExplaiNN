@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 
-from Bio import SeqIO
 import click
 from click_option_group import optgroup
-import gzip
 import math
 import numpy as np
 import pandas as pd
@@ -221,15 +219,13 @@ def _get_data_loader(Xs, ys, batch_size=2**6):
     # TensorDatasets
     dataset = TensorDataset(torch.Tensor(Xs), torch.Tensor(ys))
 
-    return(DataLoader(dataset, batch_size))
+    # Avoid Error: Expected more than 1 value per channel when training
+    if len(dataset) % batch_size == 1:
+        drop_last = True
+    else:
+        drop_last=False
 
-# def __get_handle(file_name, mode="rt"):
-#     if file_name.endswith(".gz"):
-#         handle = gzip.open(file_name, mode)
-#     else:
-#         handle = open(file_name, mode)
-
-#     return(handle)
+    return(DataLoader(dataset, batch_size, drop_last=drop_last))
 
 def _train(sequence_length, n_features, data_loaders, input_data,
            steps_per_epoch, cnn_units=2**4, kernel_size=19, lr=1e-03,

@@ -116,19 +116,9 @@ def main(**args):
     # Create output dirs
     if not os.path.isdir(args["output_dir"]):
         os.makedirs(args["output_dir"])
-    for subdir in ["sites", "motifs", "logos", "feat-effects"]:
+    for subdir in ["sites", "motifs", "logos"]:
         if not os.path.isdir(os.path.join(args["output_dir"], subdir)):
             os.makedirs(os.path.join(args["output_dir"], subdir))
-
-    # Get weights
-    weights = model.final.weight.detach().cpu().numpy()
-    weights_file = os.path.join(args["output_dir"], "weights.tsv")
-    if not os.path.exists(weights_file):
-        data = []
-        for i, weight in enumerate(weights.T):
-            data.append([f"filter{i}"] + weight.tolist())
-        df = pd.DataFrame(data)
-        df.to_csv(weights_file, sep="\t", header=False, index=False)
 
     # Get activations, labels, outputs, and predictions
     for train_validation in ["train", "validation"]:
@@ -182,14 +172,29 @@ def main(**args):
                 fig = get_figure(motif_file, reverse_complement)
                 fig.savefig(logo_file, bbox_inches="tight", pad_inches=0)
 
-    #     # Get feature effects
-    #     feat_effects_file = os.path.join(args["output_dir"], "feat-effects",
-    #         f"filter{i}.jaspar")
-    #     if not os.path.exists(feat_effects_file):
-    #         feature_effects = outputs["train"] * weights
-    #         cols = [f"filter{i}" for i in range(model._options["cnn_units"])]
-    #         df = pd.DataFrame(feature_effects[idxs, :].tolist(), columns=cols)
-    # print(df)
+    # Get weights
+    weights = model.final.weight.detach().cpu().numpy()
+    weights_file = os.path.join(args["output_dir"], "weights.tsv")
+    if not os.path.exists(weights_file):
+        data = []
+        for i, weight in enumerate(weights.T):
+            data.append([f"filter{i}"] + weight.tolist())
+        df = pd.DataFrame(data)
+        df.to_csv(weights_file, sep="\t", index=False)
+
+    # Get feature effects
+    dfs = []
+    kwargs = {"total": weights.shape[0], "bar_format": bar_format}
+    feat_effects_file = os.path.join(args["output_dir"], "feat-effects.tsv.gz")
+    if not os.path.exists(feat_effects_file):
+        for i in tqdm(range(weights.shape[0]), **kwargs):
+            feat_effects = outputs["train"] * weights[i]
+            c = [f"filter{j}" for j in range(model._options["cnn_units"])]
+            df = pd.DataFrame(feat_effects[idxs, :].tolist(), columns=c)
+            df["class"] = i
+            dfs.append(df)
+        df = pd.concat(dfs)
+        df.to_csv(feat_effects_file, sep="\t", index=False, compression="gzip")
 
     # Get motifs in MEME format
     meme_file = os.path.join(args["output_dir"], "motifs", "filters.meme")
@@ -208,13 +213,12 @@ def main(**args):
     for m in metrics:
         data = []
         performance_file = os.path.join(args["output_dir"], f"{m}.tsv")
-        for i in tqdm(range(model._options["cnn_units"]),
-            total=model._options["cnn_units"], bar_format=bar_format):
+        for i in tqdm(range(model._options["cnn_units"]), **kwargs):
             scores = _get_filter_performances(
                 activations["validation"][:, i, :], ys_val, metrics[m])
             data.append([f"filter{i}"] + scores)
         df = pd.DataFrame(data)
-        df.to_csv(performance_file, sep="\t", header=False, index=False)
+        df.to_csv(performance_file, sep="\t", index=False, compression="gzip")
 
 def _get_sequences(tsv_file):
 

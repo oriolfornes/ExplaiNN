@@ -7,9 +7,6 @@ import json
 import random
 import sys
 
-# Local imports
-from train import __get_handle
-
 CONTEXT_SETTINGS = {
     "help_option_names": ["-h", "--help"],
 }
@@ -40,7 +37,7 @@ def cli(**params):
         fasta_file = params["fasta_file"][i]
         for record in SeqIO.parse(fasta_file, "fasta"):
             if params["filter_masked"]:
-                if record.seq.count("N") or record.seq.count("n"):
+                if record.seq.upper().count("N"):
                     continue
             gc = round(GC(record.seq))
             gc_groups.setdefault(gc, [[] for i in range(len(params["fasta_file"]))])
@@ -61,7 +58,7 @@ def cli(**params):
 
     # Write
     if params["output_file"] is not None:
-        handle = __get_handle(params["output_file"], "wt")
+        handle = open(params["output_file"], "wt")
     else:
         handle = sys.stdout
     json.dump(matched, handle, indent=4, sort_keys=True)

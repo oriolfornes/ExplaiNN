@@ -1,465 +1,642 @@
-[W 2021-11-01 09:06:54.869 LabApp] 'port' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
-[W 2021-11-01 09:06:54.869 LabApp] 'port' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
-[W 2021-11-01 09:06:54.869 LabApp] 'port' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
-[I 2021-11-01 09:06:54.876 LabApp] JupyterLab extension loaded from /mnt/md1/home/oriol/.conda/envs/cam/lib/python3.9/site-packages/jupyterlab
-[I 2021-11-01 09:06:54.876 LabApp] JupyterLab application directory is /mnt/md1/home/oriol/.conda/envs/cam/share/jupyter/lab
-[I 09:06:54.880 NotebookApp] Serving notebooks from local directory: /mnt/md1/home/oriol/CAM/cam
-[I 09:06:54.880 NotebookApp] Jupyter Notebook 6.4.3 is running at:
-[I 09:06:54.880 NotebookApp] http://localhost:8889/?token=cc77ae37a31d079681ca50b1f8578b87806600e6c41c46e8
-[I 09:06:54.880 NotebookApp]  or http://127.0.0.1:8889/?token=cc77ae37a31d079681ca50b1f8578b87806600e6c41c46e8
-[I 09:06:54.880 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
-[C 09:06:54.883 NotebookApp] 
-    
-    To access the notebook, open this file in a browser:
-        file:///mnt/md1/home/oriol/.local/share/jupyter/runtime/nbserver-3066-open.html
-    Or copy and paste one of these URLs:
-        http://localhost:8889/?token=cc77ae37a31d079681ca50b1f8578b87806600e6c41c46e8
-     or http://127.0.0.1:8889/?token=cc77ae37a31d079681ca50b1f8578b87806600e6c41c46e8
-[W 09:06:59.898 NotebookApp] 404 GET /api/kernels/aa21d0bd-fa11-4bf1-b8a2-e6a4ca0ef946/channels?session_id=cefebd4ba20547ca8ee6464905bf76c6 (127.0.0.1): Kernel does not exist: aa21d0bd-fa11-4bf1-b8a2-e6a4ca0ef946
-[W 09:06:59.923 NotebookApp] 404 GET /api/kernels/aa21d0bd-fa11-4bf1-b8a2-e6a4ca0ef946/channels?session_id=cefebd4ba20547ca8ee6464905bf76c6 (127.0.0.1) 26.780000ms referer=None
-[W 09:07:11.109 NotebookApp] 404 GET /api/contents/cam/interpret.ipynb?content=0&_=1635782753531 (127.0.0.1): No such file or directory: cam/interpret.ipynb
-[W 09:07:11.109 NotebookApp] No such file or directory: cam/interpret.ipynb
-[W 09:07:11.109 NotebookApp] 404 GET /api/contents/cam/interpret.ipynb?content=0&_=1635782753531 (127.0.0.1) 1.270000ms referer=http://localhost:8888/notebooks/cam/interpret.ipynb
-[I 09:07:11.143 NotebookApp] Uploading file to /cam/interpret.ipynb
-[E 09:07:11.264 NotebookApp] Error while saving file: cam/interpret.ipynb [Errno 2] No such file or directory: '/mnt/md1/home/oriol/CAM/cam/cam/interpret.ipynb'
-    Traceback (most recent call last):
-      File "/mnt/md1/home/oriol/.conda/envs/cam/lib/python3.9/site-packages/notebook/services/contents/filemanager.py", line 477, in save
-        self._save_notebook(os_path, nb)
-      File "/mnt/md1/home/oriol/.conda/envs/cam/lib/python3.9/site-packages/notebook/services/contents/fileio.py", line 290, in _save_notebook
-        with self.atomic_writing(os_path, encoding='utf-8') as f:
-      File "/mnt/md1/home/oriol/.conda/envs/cam/lib/python3.9/contextlib.py", line 117, in __enter__
-        return next(self.gen)
-      File "/mnt/md1/home/oriol/.conda/envs/cam/lib/python3.9/site-packages/notebook/services/contents/fileio.py", line 210, in atomic_writing
-        with atomic_writing(os_path, *args, log=self.log, **kwargs) as f:
-      File "/mnt/md1/home/oriol/.conda/envs/cam/lib/python3.9/contextlib.py", line 117, in __enter__
-        return next(self.gen)
-      File "/mnt/md1/home/oriol/.conda/envs/cam/lib/python3.9/site-packages/notebook/services/contents/fileio.py", line 105, in atomic_writing
-        fileobj = io.open(path, 'w', encoding=encoding, **kwargs)
-    FileNotFoundError: [Errno 2] No such file or directory: '/mnt/md1/home/oriol/CAM/cam/cam/interpret.ipynb'
-[W 09:07:11.291 NotebookApp] 500 PUT /api/contents/cam/interpret.ipynb (127.0.0.1): Unexpected error while saving file: cam/interpret.ipynb [Errno 2] No such file or directory: '/mnt/md1/home/oriol/CAM/cam/cam/interpret.ipynb'
-[W 09:07:11.291 NotebookApp] Unexpected error while saving file: cam/interpret.ipynb [Errno 2] No such file or directory: '/mnt/md1/home/oriol/CAM/cam/cam/interpret.ipynb'
-[E 09:07:11.291 NotebookApp] {
-      "Host": "localhost:8888",
-      "Connection": "keep-alive",
-      "Content-Length": "21358",
-      "Sec-Ch-Ua": "\"Google Chrome\";v=\"95\", \"Chromium\";v=\"95\", \";Not A Brand\";v=\"99\"",
-      "Sec-Ch-Ua-Mobile": "?0",
-      "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Safari/537.36",
-      "Content-Type": "application/json",
-      "Accept": "application/json, text/javascript, */*; q=0.01",
-      "X-Requested-With": "XMLHttpRequest",
-      "X-Xsrftoken": "2|2407a6ff|63ec2126fd893120fe3e664ea5a0c423|1634923119",
-      "Sec-Ch-Ua-Platform": "\"macOS\"",
-      "Origin": "http://localhost:8888",
-      "Sec-Fetch-Site": "same-origin",
-      "Sec-Fetch-Mode": "cors",
-      "Sec-Fetch-Dest": "empty",
-      "Referer": "http://localhost:8888/notebooks/cam/interpret.ipynb",
-      "Accept-Encoding": "gzip, deflate, br",
-      "Accept-Language": "en-US,en;q=0.9,ca;q=0.8,es;q=0.7",
-      "Cookie": "_xsrf=2|2407a6ff|63ec2126fd893120fe3e664ea5a0c423|1634923119; username-localhost-8888=\"2|1:0|10:1635177370|23:username-localhost-8888|44:NGNjN2ZiNTY3ZjYxNDUyN2FhNWQzYWE3YzZkZWM0ODg=|bc0b79e41715ee23afbe6d2a152c3ffe99fdafd5ddd6652e6311c12b1e0ad762\""
-    }
-[E 09:07:11.291 NotebookApp] 500 PUT /api/contents/cam/interpret.ipynb (127.0.0.1) 151.620000ms referer=http://localhost:8888/notebooks/cam/interpret.ipynb
-[W 09:07:13.455 NotebookApp] 404 GET /api/contents/cam/interpret.ipynb?content=0&_=1635782753532 (127.0.0.1): No such file or directory: cam/interpret.ipynb
-[W 09:07:13.455 NotebookApp] No such file or directory: cam/interpret.ipynb
-[W 09:07:13.456 NotebookApp] 404 GET /api/contents/cam/interpret.ipynb?content=0&_=1635782753532 (127.0.0.1) 1.070000ms referer=http://localhost:8888/notebooks/cam/interpret.ipynb
-[W 09:07:13.470 NotebookApp] 404 GET /notebooks/cam/interpret.ipynb (127.0.0.1): No such file or directory: cam/interpret.ipynb
-[W 09:07:13.472 NotebookApp] 404 GET /notebooks/cam/interpret.ipynb (127.0.0.1) 1.580000ms referer=http://localhost:8888/tree/cam
-[I 09:07:13.504 NotebookApp] Uploading file to /cam/interpret.ipynb
-[E 09:07:13.550 NotebookApp] Error while saving file: cam/interpret.ipynb [Errno 2] No such file or directory: '/mnt/md1/home/oriol/CAM/cam/cam/interpret.ipynb'
-    Traceback (most recent call last):
-      File "/mnt/md1/home/oriol/.conda/envs/cam/lib/python3.9/site-packages/notebook/services/contents/filemanager.py", line 477, in save
-        self._save_notebook(os_path, nb)
-      File "/mnt/md1/home/oriol/.conda/envs/cam/lib/python3.9/site-packages/notebook/services/contents/fileio.py", line 290, in _save_notebook
-        with self.atomic_writing(os_path, encoding='utf-8') as f:
-      File "/mnt/md1/home/oriol/.conda/envs/cam/lib/python3.9/contextlib.py", line 117, in __enter__
-        return next(self.gen)
-      File "/mnt/md1/home/oriol/.conda/envs/cam/lib/python3.9/site-packages/notebook/services/contents/fileio.py", line 210, in atomic_writing
-        with atomic_writing(os_path, *args, log=self.log, **kwargs) as f:
-      File "/mnt/md1/home/oriol/.conda/envs/cam/lib/python3.9/contextlib.py", line 117, in __enter__
-        return next(self.gen)
-      File "/mnt/md1/home/oriol/.conda/envs/cam/lib/python3.9/site-packages/notebook/services/contents/fileio.py", line 105, in atomic_writing
-        fileobj = io.open(path, 'w', encoding=encoding, **kwargs)
-    FileNotFoundError: [Errno 2] No such file or directory: '/mnt/md1/home/oriol/CAM/cam/cam/interpret.ipynb'
-[W 09:07:13.552 NotebookApp] 500 PUT /api/contents/cam/interpret.ipynb (127.0.0.1): Unexpected error while saving file: cam/interpret.ipynb [Errno 2] No such file or directory: '/mnt/md1/home/oriol/CAM/cam/cam/interpret.ipynb'
-[W 09:07:13.552 NotebookApp] Unexpected error while saving file: cam/interpret.ipynb [Errno 2] No such file or directory: '/mnt/md1/home/oriol/CAM/cam/cam/interpret.ipynb'
-[E 09:07:13.552 NotebookApp] {
-      "Host": "localhost:8888",
-      "Connection": "keep-alive",
-      "Content-Length": "21358",
-      "Sec-Ch-Ua": "\"Google Chrome\";v=\"95\", \"Chromium\";v=\"95\", \";Not A Brand\";v=\"99\"",
-      "Sec-Ch-Ua-Mobile": "?0",
-      "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Safari/537.36",
-      "Content-Type": "application/json",
-      "Accept": "application/json, text/javascript, */*; q=0.01",
-      "X-Requested-With": "XMLHttpRequest",
-      "X-Xsrftoken": "2|2407a6ff|63ec2126fd893120fe3e664ea5a0c423|1634923119",
-      "Sec-Ch-Ua-Platform": "\"macOS\"",
-      "Origin": "http://localhost:8888",
-      "Sec-Fetch-Site": "same-origin",
-      "Sec-Fetch-Mode": "cors",
-      "Sec-Fetch-Dest": "empty",
-      "Referer": "http://localhost:8888/notebooks/cam/interpret.ipynb",
-      "Accept-Encoding": "gzip, deflate, br",
-      "Accept-Language": "en-US,en;q=0.9,ca;q=0.8,es;q=0.7",
-      "Cookie": "_xsrf=2|2407a6ff|63ec2126fd893120fe3e664ea5a0c423|1634923119; username-localhost-8888=\"2|1:0|10:1635177370|23:username-localhost-8888|44:NGNjN2ZiNTY3ZjYxNDUyN2FhNWQzYWE3YzZkZWM0ODg=|bc0b79e41715ee23afbe6d2a152c3ffe99fdafd5ddd6652e6311c12b1e0ad762\""
-    }
-[E 09:07:13.552 NotebookApp] 500 PUT /api/contents/cam/interpret.ipynb (127.0.0.1) 57.190000ms referer=http://localhost:8888/notebooks/cam/interpret.ipynb
-[I 09:07:17.448 NotebookApp] 302 GET / (127.0.0.1) 0.450000ms
-[W 09:07:21.459 NotebookApp] 404 GET /nbextensions/widgets/notebook/js/extension.js?v=20211101090654 (127.0.0.1) 2.210000ms referer=http://localhost:8888/notebooks/interpret.ipynb
-[I 09:07:21.875 NotebookApp] Kernel started: 71a837f8-7e53-4e5d-ac2e-664c488b4afe, name: python3
-[I 09:09:27.652 NotebookApp] Saving file at /interpret.ipynb
-[I 10:02:55.382 NotebookApp] Saving file at /interpret.ipynb
-[I 10:02:57.076 NotebookApp] Saving file at /interpret.ipynb
-[I 10:03:21.967 NotebookApp] Saving file at /interpret.ipynb
-[I 10:03:36.205 NotebookApp] Saving file at /interpret.ipynb
-[I 10:03:36.311 NotebookApp] Saving file at /interpret.ipynb
-[I 10:03:46.122 NotebookApp] Saving file at /interpret.ipynb
-[I 10:03:47.419 NotebookApp] Saving file at /interpret.ipynb
-[I 10:03:59.628 NotebookApp] Saving file at /interpret.ipynb
-[I 10:04:19.931 NotebookApp] Saving file at /interpret.ipynb
-[I 10:04:19.989 NotebookApp] Saving file at /interpret.ipynb
-[I 10:04:33.091 NotebookApp] Saving file at /interpret.ipynb
-[I 10:04:46.259 NotebookApp] Saving file at /interpret.ipynb
-[I 10:05:02.317 NotebookApp] Saving file at /interpret.ipynb
-[I 10:05:26.318 NotebookApp] Saving file at /interpret.ipynb
-[I 10:05:45.778 NotebookApp] Saving file at /interpret.ipynb
-[I 10:05:48.435 NotebookApp] Saving file at /interpret.ipynb
-[I 10:06:20.837 NotebookApp] Saving file at /interpret.ipynb
-[I 10:06:25.836 NotebookApp] Saving file at /interpret.ipynb
-[I 10:06:27.326 NotebookApp] Saving file at /interpret.ipynb
-[I 10:06:30.948 NotebookApp] Saving file at /interpret.ipynb
-[I 10:06:37.498 NotebookApp] Saving file at /interpret.ipynb
-[I 10:06:50.739 NotebookApp] Saving file at /interpret.ipynb
-[I 10:06:57.971 NotebookApp] Saving file at /interpret.ipynb
-[I 10:06:58.714 NotebookApp] Saving file at /interpret.ipynb
-[I 10:07:10.580 NotebookApp] Saving file at /interpret.ipynb
-[W 10:08:05.082 NotebookApp] 404 GET /api/contents/cam?type=directory&_=1635782742825 (127.0.0.1): No such file or directory: cam
-[W 10:08:05.082 NotebookApp] No such file or directory: cam
-[W 10:08:05.082 NotebookApp] 404 GET /api/contents/cam?type=directory&_=1635782742825 (127.0.0.1) 1.140000ms referer=http://localhost:8888/tree/cam
-[I 10:08:08.054 NotebookApp] Kernel interrupted: 71a837f8-7e53-4e5d-ac2e-664c488b4afe
-[I 10:08:08.844 NotebookApp] Kernel interrupted: 71a837f8-7e53-4e5d-ac2e-664c488b4afe
-[I 10:08:09.308 NotebookApp] Kernel interrupted: 71a837f8-7e53-4e5d-ac2e-664c488b4afe
-[I 10:08:09.525 NotebookApp] Kernel interrupted: 71a837f8-7e53-4e5d-ac2e-664c488b4afe
-[I 10:08:11.295 NotebookApp] Starting buffering for 71a837f8-7e53-4e5d-ac2e-664c488b4afe:f7be47a3855a4e519b0fdc4a920b457f
-[I 10:08:13.917 NotebookApp] Kernel restarted: 71a837f8-7e53-4e5d-ac2e-664c488b4afe
-[I 10:08:13.966 NotebookApp] Restoring connection for 71a837f8-7e53-4e5d-ac2e-664c488b4afe:f7be47a3855a4e519b0fdc4a920b457f
-[I 10:08:17.101 NotebookApp] Replaying 3 buffered messages
-[W 10:39:42.007 NotebookApp] 404 GET /api/contents/cam?type=directory&_=1635782742828 (127.0.0.1): No such file or directory: cam
-[W 10:39:42.007 NotebookApp] No such file or directory: cam
-[W 10:39:42.007 NotebookApp] 404 GET /api/contents/cam?type=directory&_=1635782742828 (127.0.0.1) 1.000000ms referer=http://localhost:8888/tree/cam
-[I 10:39:43.438 NotebookApp] Starting buffering for 71a837f8-7e53-4e5d-ac2e-664c488b4afe:f7be47a3855a4e519b0fdc4a920b457f
-[I 13:37:40.648 NotebookApp] 302 GET / (127.0.0.1) 0.470000ms
-[W 13:37:45.879 NotebookApp] 404 GET /nbextensions/widgets/notebook/js/extension.js?v=20211101090654 (127.0.0.1) 1.820000ms referer=http://localhost:8888/notebooks/interpret.ipynb
-[I 13:38:13.842 NotebookApp] Saving file at /interpret.ipynb
-[I 13:39:46.332 NotebookApp] Saving file at /interpret.ipynb
-[I 13:41:46.318 NotebookApp] Saving file at /interpret.ipynb
-[I 13:43:46.719 NotebookApp] Saving file at /interpret.ipynb
-[I 14:06:52.448 NotebookApp] Saving file at /interpret.ipynb
-[I 14:07:03.287 NotebookApp] Saving file at /interpret.ipynb
-[I 14:07:08.446 NotebookApp] Saving file at /interpret.ipynb
-[I 14:07:09.179 NotebookApp] Saving file at /interpret.ipynb
-[I 14:07:21.870 NotebookApp] Saving file at /interpret.ipynb
-[I 14:07:41.252 NotebookApp] Saving file at /interpret.ipynb
-[I 14:07:41.574 NotebookApp] Saving file at /interpret.ipynb
-[I 14:07:42.926 NotebookApp] Saving file at /interpret.ipynb
-[I 14:07:45.671 NotebookApp] Saving file at /interpret.ipynb
-[I 14:07:46.054 NotebookApp] Saving file at /interpret.ipynb
-[I 14:07:56.858 NotebookApp] Saving file at /interpret.ipynb
-[I 14:07:58.624 NotebookApp] Saving file at /interpret.ipynb
-[I 14:07:59.406 NotebookApp] Saving file at /interpret.ipynb
-[I 14:08:06.838 NotebookApp] Saving file at /interpret.ipynb
-[I 14:08:11.446 NotebookApp] Saving file at /interpret.ipynb
-[I 14:08:25.073 NotebookApp] Saving file at /interpret.ipynb
-[I 14:08:33.322 NotebookApp] Saving file at /interpret.ipynb
-[I 14:08:33.448 NotebookApp] Saving file at /interpret.ipynb
-[I 14:08:36.272 NotebookApp] Saving file at /interpret.ipynb
-[I 14:08:36.388 NotebookApp] Saving file at /interpret.ipynb
-[I 14:09:04.352 NotebookApp] Saving file at /interpret.ipynb
-[I 14:09:05.846 NotebookApp] Saving file at /interpret.ipynb
-[I 14:09:16.976 NotebookApp] Saving file at /interpret.ipynb
-[I 14:09:20.281 NotebookApp] Saving file at /interpret.ipynb
-[I 14:09:49.094 NotebookApp] Saving file at /interpret.ipynb
-[I 14:10:29.923 NotebookApp] Saving file at /interpret.ipynb
-[I 14:10:36.665 NotebookApp] Saving file at /interpret.ipynb
-[I 14:10:50.735 NotebookApp] Saving file at /interpret.ipynb
-[I 14:10:54.143 NotebookApp] Saving file at /interpret.ipynb
-[I 14:11:36.717 NotebookApp] Saving file at /interpret.ipynb
-[I 14:11:48.989 NotebookApp] Saving file at /interpret.ipynb
-[I 14:12:15.485 NotebookApp] Saving file at /interpret.ipynb
-[I 14:12:20.467 NotebookApp] Saving file at /interpret.ipynb
-[I 14:12:58.551 NotebookApp] Saving file at /interpret.ipynb
-[I 14:13:09.787 NotebookApp] Saving file at /interpret.ipynb
-[I 14:13:19.765 NotebookApp] Saving file at /interpret.ipynb
-[I 14:13:27.161 NotebookApp] Saving file at /interpret.ipynb
-[I 14:14:05.255 NotebookApp] Saving file at /interpret.ipynb
-[I 14:14:12.096 NotebookApp] Saving file at /interpret.ipynb
-[I 14:14:24.154 NotebookApp] Saving file at /interpret.ipynb
-[I 14:14:27.453 NotebookApp] Saving file at /interpret.ipynb
-[I 14:14:41.102 NotebookApp] Saving file at /interpret.ipynb
-[I 14:14:46.059 NotebookApp] Saving file at /interpret.ipynb
-[I 14:14:48.890 NotebookApp] Saving file at /interpret.ipynb
-[I 14:14:53.243 NotebookApp] Saving file at /interpret.ipynb
-[I 14:14:55.047 NotebookApp] Saving file at /interpret.ipynb
-[I 14:14:59.055 NotebookApp] Saving file at /interpret.ipynb
-[I 14:15:46.707 NotebookApp] Saving file at /interpret.ipynb
-[I 14:20:37.336 NotebookApp] Saving file at /interpret.ipynb
-[I 14:20:43.388 NotebookApp] Saving file at /interpret.ipynb
-[I 14:21:47.614 NotebookApp] Saving file at /interpret.ipynb
-[I 14:21:48.571 NotebookApp] Saving file at /interpret.ipynb
-[I 14:22:50.732 NotebookApp] Saving file at /interpret.ipynb
-[I 14:23:07.550 NotebookApp] Saving file at /interpret.ipynb
-[I 14:23:15.557 NotebookApp] Saving file at /interpret.ipynb
-[I 14:23:22.193 NotebookApp] Saving file at /interpret.ipynb
-[I 14:23:35.142 NotebookApp] Saving file at /interpret.ipynb
-[I 14:23:49.147 NotebookApp] Saving file at /interpret.ipynb
-[I 14:24:34.123 NotebookApp] Saving file at /interpret.ipynb
-[I 14:24:41.686 NotebookApp] Saving file at /interpret.ipynb
-[I 14:25:06.463 NotebookApp] Saving file at /interpret.ipynb
-[I 14:25:11.709 NotebookApp] Saving file at /interpret.ipynb
-[I 14:25:40.274 NotebookApp] Saving file at /interpret.ipynb
-[I 14:25:46.701 NotebookApp] Saving file at /interpret.ipynb
-[I 14:25:51.768 NotebookApp] Saving file at /interpret.ipynb
-[I 14:26:02.145 NotebookApp] Saving file at /interpret.ipynb
-[I 14:26:06.746 NotebookApp] Saving file at /interpret.ipynb
-[I 14:26:24.526 NotebookApp] Saving file at /interpret.ipynb
-[I 14:26:39.257 NotebookApp] Saving file at /interpret.ipynb
-[I 14:26:43.541 NotebookApp] Saving file at /interpret.ipynb
-[I 14:26:50.767 NotebookApp] Saving file at /interpret.ipynb
-[I 14:27:48.961 NotebookApp] Saving file at /interpret.ipynb
-[I 14:30:47.337 NotebookApp] Saving file at /interpret.ipynb
-[I 14:30:51.892 NotebookApp] Saving file at /interpret.ipynb
-[I 14:31:47.052 NotebookApp] Saving file at /interpret.ipynb
-[I 14:42:20.737 NotebookApp] Saving file at /interpret.ipynb
-[I 14:42:34.049 NotebookApp] Saving file at /interpret.ipynb
-[I 14:43:47.050 NotebookApp] Saving file at /interpret.ipynb
-[I 14:44:23.290 NotebookApp] Saving file at /interpret.ipynb
-[I 14:45:47.060 NotebookApp] Saving file at /interpret.ipynb
-[I 14:48:02.937 NotebookApp] Saving file at /interpret.ipynb
-[I 15:06:00.629 NotebookApp] Saving file at /interpret.ipynb
-[I 15:09:04.650 NotebookApp] Saving file at /interpret.ipynb
-[I 15:12:17.268 NotebookApp] Saving file at /interpret.ipynb
-[W 07:41:16.330 NotebookApp] WebSocket ping timeout after 119979 ms.
-[I 07:41:21.332 NotebookApp] Starting buffering for 71a837f8-7e53-4e5d-ac2e-664c488b4afe:9e01c515aa03493888d98b620dc1f703
-[IPKernelApp] WARNING | Parent appears to have exited, shutting down.
-[W 2021-11-04 16:28:43.529 LabApp] 'port' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
-[W 2021-11-04 16:28:43.537 LabApp] 'port' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
-[W 2021-11-04 16:28:43.538 LabApp] 'port' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
-[I 2021-11-04 16:28:43.549 LabApp] JupyterLab extension loaded from /mnt/md1/home/oriol/.conda/envs/cam/lib/python3.9/site-packages/jupyterlab
-[I 2021-11-04 16:28:43.549 LabApp] JupyterLab application directory is /mnt/md1/home/oriol/.conda/envs/cam/share/jupyter/lab
-[I 16:28:43.553 NotebookApp] Serving notebooks from local directory: /mnt/md1/home/oriol/CAM/cam
-[I 16:28:43.553 NotebookApp] Jupyter Notebook 6.4.3 is running at:
-[I 16:28:43.553 NotebookApp] http://localhost:8889/?token=5dee82d8046fefe1c5f27d1ea1f1aa1a5d72245956855f9e
-[I 16:28:43.553 NotebookApp]  or http://127.0.0.1:8889/?token=5dee82d8046fefe1c5f27d1ea1f1aa1a5d72245956855f9e
-[I 16:28:43.553 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
-[C 16:28:43.563 NotebookApp] 
-    
-    To access the notebook, open this file in a browser:
-        file:///mnt/md1/home/oriol/.local/share/jupyter/runtime/nbserver-32474-open.html
-    Or copy and paste one of these URLs:
-        http://localhost:8889/?token=5dee82d8046fefe1c5f27d1ea1f1aa1a5d72245956855f9e
-     or http://127.0.0.1:8889/?token=5dee82d8046fefe1c5f27d1ea1f1aa1a5d72245956855f9e
-[I 16:31:41.669 NotebookApp] 302 GET /?token=5dee82d8046fefe1c5f27d1ea1f1aa1a5d72245956855f9e (127.0.0.1) 0.630000ms
-[W 16:32:42.665 NotebookApp] Notebook predict.ipynb is not trusted
-[W 16:32:42.694 NotebookApp] 404 GET /nbextensions/widgets/notebook/js/extension.js?v=20211104162841 (127.0.0.1) 18.120000ms referer=http://localhost:8890/notebooks/predict.ipynb
-[I 16:32:43.385 NotebookApp] Kernel started: 4d26f71d-4588-411e-bd63-cb1edde22520, name: python3
-[I 16:34:22.336 NotebookApp] Starting buffering for 4d26f71d-4588-411e-bd63-cb1edde22520:70637b1fa8d44f13806e1c656ff4685f
-[I 16:34:25.056 NotebookApp] Kernel restarted: 4d26f71d-4588-411e-bd63-cb1edde22520
-[I 16:34:26.653 NotebookApp] Restoring connection for 4d26f71d-4588-411e-bd63-cb1edde22520:70637b1fa8d44f13806e1c656ff4685f
-[I 16:34:26.657 NotebookApp] Replaying 6 buffered messages
-[I 16:34:44.510 NotebookApp] Saving file at /predict.ipynb
-[I 16:36:02.964 NotebookApp] Saving file at /predict.ipynb
-[I 16:36:37.877 NotebookApp] Saving file at /predict.ipynb
-[I 16:36:43.746 NotebookApp] Saving file at /predict.ipynb
-[I 16:37:05.118 NotebookApp] Saving file at /predict.ipynb
-[I 16:37:37.614 NotebookApp] Saving file at /predict.ipynb
-[I 16:38:46.328 NotebookApp] Saving file at /predict.ipynb
-[I 16:40:56.756 NotebookApp] Saving file at /predict.ipynb
-[I 16:40:58.301 NotebookApp] Starting buffering for 4d26f71d-4588-411e-bd63-cb1edde22520:70637b1fa8d44f13806e1c656ff4685f
-[I 16:43:50.600 NotebookApp] 302 GET /?token=5dee82d8046fefe1c5f27d1ea1f1aa1a5d72245956855f9e (127.0.0.1) 0.600000ms
-[W 16:44:00.993 NotebookApp] Notebook interpret.ipynb is not trusted
-[W 16:44:01.130 NotebookApp] 404 GET /nbextensions/widgets/notebook/js/extension.js?v=20211104162841 (127.0.0.1) 2.690000ms referer=http://localhost:8890/notebooks/interpret.ipynb
-[W 16:44:08.599 NotebookApp] 404 GET /nbextensions/widgets/notebook/js/extension.js?v=20211104162841 (127.0.0.1) 2.200000ms referer=http://localhost:8890/notebooks/predict.ipynb
-[I 16:44:12.420 NotebookApp] Kernel started: 94075dd9-c252-46ff-a874-6fbfe858f876, name: python3
-[I 16:45:23.850 NotebookApp] Saving file at /predict.ipynb
-[I 16:46:08.525 NotebookApp] Saving file at /predict.ipynb
-[I 16:46:21.109 NotebookApp] Saving file at /predict.ipynb
-[I 16:46:27.096 NotebookApp] Saving file at /predict.ipynb
-[I 16:46:53.846 NotebookApp] Saving file at /predict.ipynb
-[I 16:47:21.410 NotebookApp] Saving file at /predict.ipynb
-[I 16:47:26.950 NotebookApp] Saving file at /predict.ipynb
-[I 16:47:34.825 NotebookApp] Saving file at /predict.ipynb
-[I 16:47:48.467 NotebookApp] Saving file at /predict.ipynb
-[I 16:47:59.601 NotebookApp] Saving file at /predict.ipynb
-[I 16:48:08.547 NotebookApp] Saving file at /predict.ipynb
-[I 16:48:11.795 NotebookApp] Saving file at /predict.ipynb
-[I 16:48:15.959 NotebookApp] Saving file at /predict.ipynb
-[I 16:48:26.898 NotebookApp] Saving file at /predict.ipynb
-[I 16:48:31.665 NotebookApp] Saving file at /predict.ipynb
-[I 16:49:30.427 NotebookApp] Saving file at /predict.ipynb
-[I 16:50:09.464 NotebookApp] Saving file at /predict.ipynb
-[W 16:50:26.718 NotebookApp] Notebook plots.ipynb is not trusted
-[W 16:50:27.723 NotebookApp] 404 GET /nbextensions/widgets/notebook/js/extension.js?v=20211104162841 (127.0.0.1) 2.080000ms referer=http://localhost:8890/notebooks/plots.ipynb
-[I 16:50:27.893 NotebookApp] Kernel started: 3eb802b5-0ef6-4bf0-b97a-7f7f86158f13, name: python3
-[I 16:52:28.137 NotebookApp] Saving file at /plots.ipynb
-[I 16:53:29.296 NotebookApp] Saving file at /plots.ipynb
-[I 16:54:02.962 NotebookApp] Saving file at /plots.ipynb
-[I 16:54:10.866 NotebookApp] Saving file at /plots.ipynb
-[I 16:54:28.227 NotebookApp] Saving file at /plots.ipynb
-[I 16:54:36.313 NotebookApp] Saving file at /plots.ipynb
-[I 16:54:46.547 NotebookApp] Saving file at /plots.ipynb
-[I 16:54:55.522 NotebookApp] Saving file at /plots.ipynb
-[I 16:55:23.725 NotebookApp] Saving file at /plots.ipynb
-[I 16:55:31.934 NotebookApp] Saving file at /plots.ipynb
-[I 16:55:38.183 NotebookApp] Saving file at /plots.ipynb
-[I 16:56:11.410 NotebookApp] Saving file at /plots.ipynb
-[I 20:18:50.577 NotebookApp] Starting buffering for 3eb802b5-0ef6-4bf0-b97a-7f7f86158f13:5550540824bf463cba51deac3c9bc859
-[I 20:18:50.578 NotebookApp] Starting buffering for 94075dd9-c252-46ff-a874-6fbfe858f876:4494455c755d4058a4d6ed1a9b80a800
-[I 20:18:50.578 NotebookApp] Starting buffering for 4d26f71d-4588-411e-bd63-cb1edde22520:5651ad9c306146ee963bd0c5a1a04119
-[I 08:27:08.675 NotebookApp] 302 GET / (127.0.0.1) 113.110000ms
-[I 08:27:09.039 NotebookApp] 302 GET /tree? (127.0.0.1) 59.920000ms
-[I 08:27:49.429 NotebookApp] 302 POST /login?next=%2Ftree%3F (127.0.0.1) 26.870000ms
-[W 08:29:00.432 NotebookApp] Notebook predict.ipynb is not trusted
-[W 08:29:01.107 NotebookApp] 404 GET /nbextensions/widgets/notebook/js/extension.js?v=20211104162841 (127.0.0.1) 16.410000ms referer=http://localhost:8888/notebooks/predict.ipynb
-[I 08:29:49.622 NotebookApp] Kernel interrupted: 4d26f71d-4588-411e-bd63-cb1edde22520
-[I 08:29:51.538 NotebookApp] Starting buffering for 4d26f71d-4588-411e-bd63-cb1edde22520:a1663bc0da2c44dd91e3fd67ce15469c
-[I 08:29:54.304 NotebookApp] Kernel restarted: 4d26f71d-4588-411e-bd63-cb1edde22520
-[I 08:29:55.016 NotebookApp] Restoring connection for 4d26f71d-4588-411e-bd63-cb1edde22520:a1663bc0da2c44dd91e3fd67ce15469c
-[I 08:29:58.239 NotebookApp] Replaying 3 buffered messages
-[I 08:30:11.447 NotebookApp] Kernel interrupted: 4d26f71d-4588-411e-bd63-cb1edde22520
-[I 08:30:12.539 NotebookApp] Kernel interrupted: 4d26f71d-4588-411e-bd63-cb1edde22520
-[I 08:30:13.294 NotebookApp] Kernel interrupted: 4d26f71d-4588-411e-bd63-cb1edde22520
-[I 08:30:13.778 NotebookApp] Kernel interrupted: 4d26f71d-4588-411e-bd63-cb1edde22520
-[I 08:30:15.353 NotebookApp] Starting buffering for 4d26f71d-4588-411e-bd63-cb1edde22520:a1663bc0da2c44dd91e3fd67ce15469c
-[I 08:30:17.966 NotebookApp] Kernel restarted: 4d26f71d-4588-411e-bd63-cb1edde22520
-[I 08:30:18.619 NotebookApp] Restoring connection for 4d26f71d-4588-411e-bd63-cb1edde22520:a1663bc0da2c44dd91e3fd67ce15469c
-[I 08:30:18.623 NotebookApp] Replaying 26 buffered messages
-[I 08:31:01.828 NotebookApp] Saving file at /predict.ipynb
-[W 08:31:01.830 NotebookApp] Notebook predict.ipynb is not trusted
-[I 08:32:29.076 NotebookApp] Saving file at /predict.ipynb
-[I 08:35:36.070 NotebookApp] Saving file at /predict.ipynb
-[I 08:35:59.864 NotebookApp] Saving file at /predict.ipynb
-[I 08:36:10.075 NotebookApp] Saving file at /predict.ipynb
-[I 08:38:41.010 NotebookApp] Saving file at /predict.ipynb
-[W 11:48:18.620 NotebookApp] WebSocket ping timeout after 119675 ms.
-[I 11:48:23.639 NotebookApp] Starting buffering for 4d26f71d-4588-411e-bd63-cb1edde22520:a1663bc0da2c44dd91e3fd67ce15469c
-[I 13:53:38.390 NotebookApp] 302 GET /?token=197d8aa04c19aed639c973d7d5a6463082471d2bffe1ad97 (127.0.0.1) 0.540000ms
-[I 13:53:38.411 NotebookApp] 302 GET /tree?token=197d8aa04c19aed639c973d7d5a6463082471d2bffe1ad97 (127.0.0.1) 0.680000ms
-[W 13:53:54.146 NotebookApp] 401 POST /login?next=%2Ftree%3Ftoken%3D197d8aa04c19aed639c973d7d5a6463082471d2bffe1ad97 (127.0.0.1) 2.800000ms referer=http://localhost:8899/login?next=%2Ftree%3Ftoken%3D197d8aa04c19aed639c973d7d5a6463082471d2bffe1ad97
-[W 13:53:58.184 NotebookApp] 401 POST /login?next=%2Ftree%3Ftoken%3D197d8aa04c19aed639c973d7d5a6463082471d2bffe1ad97 (127.0.0.1) 2.100000ms referer=http://localhost:8899/login?next=%2Ftree%3Ftoken%3D197d8aa04c19aed639c973d7d5a6463082471d2bffe1ad97
-[I 13:54:27.495 NotebookApp] 302 GET /?token=197d8aa04c19aed639c973d7d5a6463082471d2bffe1ad97 (127.0.0.1) 0.490000ms
-[I 13:54:27.518 NotebookApp] 302 GET /tree?token=197d8aa04c19aed639c973d7d5a6463082471d2bffe1ad97 (127.0.0.1) 3.300000ms
-[W 13:54:38.180 NotebookApp] 401 POST /login?next=%2Ftree%3Ftoken%3D197d8aa04c19aed639c973d7d5a6463082471d2bffe1ad97 (127.0.0.1) 2.060000ms referer=http://127.0.0.1:8899/login?next=%2Ftree%3Ftoken%3D197d8aa04c19aed639c973d7d5a6463082471d2bffe1ad97
-[W 14:35:45.223 NotebookApp] Clearing invalid/expired login cookie username-localhost-8888
-[W 14:35:45.223 NotebookApp] Clearing invalid/expired login cookie username-localhost-8888
-[I 14:35:45.224 NotebookApp] 302 GET /tree/Jupyter (127.0.0.1) 2.200000ms
-[W 14:37:00.841 NotebookApp] 401 POST /login?next=%2Ftree%2FJupyter (127.0.0.1) 1.920000ms referer=http://localhost:8888/login?next=%2Ftree%2FJupyter
-[W 14:37:02.528 NotebookApp] 401 POST /login?next=%2Ftree%2FJupyter (127.0.0.1) 1.690000ms referer=http://localhost:8888/login?next=%2Ftree%2FJupyter
-[I 14:38:07.227 NotebookApp] 302 POST /login?next=%2Ftree%2FJupyter (127.0.0.1) 1.450000ms
-[W 14:38:07.256 NotebookApp] 404 GET /tree/Jupyter (127.0.0.1) 1.790000ms referer=http://localhost:8888/login?next=%2Ftree%2FJupyter
-[I 14:38:14.963 NotebookApp] 302 GET /login?next=%2Ftree%2FJupyter (127.0.0.1) 0.840000ms
-[W 14:38:14.986 NotebookApp] 404 GET /tree/Jupyter (127.0.0.1) 1.710000ms referer=None
-[W 14:38:17.607 NotebookApp] 404 GET /tree/Jupyter (127.0.0.1) 1.810000ms referer=None
-[W 14:38:32.213 NotebookApp] Notebook predict.ipynb is not trusted
-[W 14:38:32.250 NotebookApp] 404 GET /nbextensions/widgets/notebook/js/extension.js?v=20211104162841 (127.0.0.1) 1.780000ms referer=http://localhost:8888/notebooks/predict.ipynb
-[I 14:38:42.160 NotebookApp] Starting buffering for 4d26f71d-4588-411e-bd63-cb1edde22520:f0dad2d2c911437bb0edcde60fb39e68
-[I 14:38:44.878 NotebookApp] Kernel restarted: 4d26f71d-4588-411e-bd63-cb1edde22520
-[I 14:38:44.927 NotebookApp] Restoring connection for 4d26f71d-4588-411e-bd63-cb1edde22520:f0dad2d2c911437bb0edcde60fb39e68
-[I 14:38:45.433 NotebookApp] Replaying 3 buffered messages
-[I 14:39:39.885 NotebookApp] Saving file at /predict.ipynb
-[I 14:39:50.396 NotebookApp] Saving file at /predict.ipynb
-[I 14:39:59.239 NotebookApp] Saving file at /predict.ipynb
-[I 14:40:39.670 NotebookApp] Saving file at /predict.ipynb
-[I 14:40:46.524 NotebookApp] Saving file at /predict.ipynb
-[I 14:40:54.110 NotebookApp] Saving file at /predict.ipynb
-[I 14:40:55.727 NotebookApp] Saving file at /predict.ipynb
-[I 14:41:07.366 NotebookApp] Saving file at /predict.ipynb
-[I 14:41:18.710 NotebookApp] Saving file at /predict.ipynb
-[I 14:41:26.024 NotebookApp] Saving file at /predict.ipynb
-[I 14:41:55.607 NotebookApp] Saving file at /predict.ipynb
-[I 14:42:08.750 NotebookApp] Saving file at /predict.ipynb
-[I 14:42:12.546 NotebookApp] Saving file at /predict.ipynb
-[I 14:42:36.660 NotebookApp] Saving file at /predict.ipynb
-[I 14:42:41.349 NotebookApp] Saving file at /predict.ipynb
-[I 14:42:52.775 NotebookApp] Saving file at /predict.ipynb
-[I 14:43:06.808 NotebookApp] Saving file at /predict.ipynb
-[I 14:43:13.386 NotebookApp] Saving file at /predict.ipynb
-[I 14:43:22.130 NotebookApp] Saving file at /predict.ipynb
-[I 14:43:25.264 NotebookApp] Saving file at /predict.ipynb
-[I 14:43:46.111 NotebookApp] Saving file at /predict.ipynb
-[I 14:44:32.562 NotebookApp] Saving file at /predict.ipynb
-[I 14:44:36.163 NotebookApp] Saving file at /predict.ipynb
-[I 14:44:43.880 NotebookApp] Saving file at /predict.ipynb
-[I 14:44:54.009 NotebookApp] Saving file at /predict.ipynb
-[I 14:45:19.425 NotebookApp] Saving file at /predict.ipynb
-[I 14:45:23.744 NotebookApp] Saving file at /predict.ipynb
-[I 14:45:32.220 NotebookApp] Saving file at /predict.ipynb
-[I 14:45:42.481 NotebookApp] Saving file at /predict.ipynb
-[I 14:46:29.362 NotebookApp] Saving file at /predict.ipynb
-[I 14:46:32.590 NotebookApp] Saving file at /predict.ipynb
-[I 14:46:47.357 NotebookApp] Saving file at /predict.ipynb
-[I 14:47:05.846 NotebookApp] Saving file at /predict.ipynb
-[I 14:47:08.109 NotebookApp] Saving file at /predict.ipynb
-[I 14:47:30.970 NotebookApp] Saving file at /predict.ipynb
-[I 14:47:34.576 NotebookApp] Saving file at /predict.ipynb
-[I 14:47:52.978 NotebookApp] Saving file at /predict.ipynb
-[I 14:47:54.254 NotebookApp] Saving file at /predict.ipynb
-[I 14:48:08.761 NotebookApp] Saving file at /predict.ipynb
-[I 14:48:20.180 NotebookApp] Saving file at /predict.ipynb
-[I 14:48:29.777 NotebookApp] Saving file at /predict.ipynb
-[I 14:48:32.061 NotebookApp] Saving file at /predict.ipynb
-[I 14:48:34.588 NotebookApp] Saving file at /predict.ipynb
-[I 14:48:42.774 NotebookApp] Saving file at /predict.ipynb
-[I 14:48:50.175 NotebookApp] Saving file at /predict.ipynb
-[I 14:48:53.416 NotebookApp] Saving file at /predict.ipynb
-[I 14:48:55.999 NotebookApp] Saving file at /predict.ipynb
-[I 14:48:59.967 NotebookApp] Saving file at /predict.ipynb
-[I 14:49:12.999 NotebookApp] Saving file at /predict.ipynb
-[I 14:49:27.062 NotebookApp] Saving file at /predict.ipynb
-[I 14:50:33.371 NotebookApp] Saving file at /predict.ipynb
-[I 14:53:45.464 NotebookApp] Starting buffering for 4d26f71d-4588-411e-bd63-cb1edde22520:f0dad2d2c911437bb0edcde60fb39e68
-[I 14:53:46.472 NotebookApp] Restoring connection for 4d26f71d-4588-411e-bd63-cb1edde22520:f0dad2d2c911437bb0edcde60fb39e68
-[W 14:55:16.474 NotebookApp] WebSocket ping timeout after 90001 ms.
-[I 14:55:21.475 NotebookApp] Starting buffering for 4d26f71d-4588-411e-bd63-cb1edde22520:f0dad2d2c911437bb0edcde60fb39e68
-[W 15:13:57.699 NotebookApp] 404 GET /nbextensions/widgets/notebook/js/extension.js?v=20211104162841 (127.0.0.1) 1.720000ms referer=http://localhost:8888/notebooks/predict.ipynb
-[I 16:02:30.625 NotebookApp] Starting buffering for 4d26f71d-4588-411e-bd63-cb1edde22520:c6971d4affd54f869978b039364b7952
-[I 16:02:32.022 NotebookApp] Restoring connection for 4d26f71d-4588-411e-bd63-cb1edde22520:c6971d4affd54f869978b039364b7952
-[W 16:04:02.024 NotebookApp] WebSocket ping timeout after 90001 ms.
-[I 16:04:07.025 NotebookApp] Starting buffering for 4d26f71d-4588-411e-bd63-cb1edde22520:c6971d4affd54f869978b039364b7952
-[W 2021-11-15 13:03:11.416 LabApp] 'port' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
-[W 2021-11-15 13:03:11.434 LabApp] 'port' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
-[W 2021-11-15 13:03:11.435 LabApp] 'port' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
-[I 2021-11-15 13:03:11.446 LabApp] JupyterLab extension loaded from /mnt/md1/home/oriol/.conda/envs/cam/lib/python3.9/site-packages/jupyterlab
-[I 2021-11-15 13:03:11.446 LabApp] JupyterLab application directory is /mnt/md1/home/oriol/.conda/envs/cam/share/jupyter/lab
-[I 13:03:11.451 NotebookApp] Serving notebooks from local directory: /mnt/md1/home/oriol/CAM/cam
-[I 13:03:11.451 NotebookApp] Jupyter Notebook 6.4.3 is running at:
-[I 13:03:11.451 NotebookApp] http://localhost:8889/?token=0320fd782e30d782602a6891b78ae3da265468d47bf3016c
-[I 13:03:11.451 NotebookApp]  or http://127.0.0.1:8889/?token=0320fd782e30d782602a6891b78ae3da265468d47bf3016c
-[I 13:03:11.451 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
-[C 13:03:11.485 NotebookApp] 
-    
-    To access the notebook, open this file in a browser:
-        file:///mnt/md1/home/oriol/.local/share/jupyter/runtime/nbserver-35432-open.html
-    Or copy and paste one of these URLs:
-        http://localhost:8889/?token=0320fd782e30d782602a6891b78ae3da265468d47bf3016c
-     or http://127.0.0.1:8889/?token=0320fd782e30d782602a6891b78ae3da265468d47bf3016c
-[I 13:04:57.260 NotebookApp] 302 GET /?token=0320fd782e30d782602a6891b78ae3da265468d47bf3016c (127.0.0.1) 0.590000ms
-[W 13:05:05.082 NotebookApp] Notebook interpret.ipynb is not trusted
-[W 13:05:05.257 NotebookApp] 404 GET /nbextensions/widgets/notebook/js/extension.js?v=20211115130308 (127.0.0.1) 34.850000ms referer=http://localhost:8889/notebooks/interpret.ipynb
-[I 13:05:07.171 NotebookApp] Kernel started: baffdd8b-575e-4a0c-a93e-cc08def62459, name: python3
-[I 13:05:19.331 NotebookApp] Saving file at /interpret.ipynb
-[W 13:05:19.332 NotebookApp] Notebook interpret.ipynb is not trusted
-[I 13:05:20.811 NotebookApp] Saving file at /interpret.ipynb
-[W 13:05:20.813 NotebookApp] Notebook interpret.ipynb is not trusted
-[I 13:05:36.326 NotebookApp] Saving file at /interpret.ipynb
-[W 13:05:36.328 NotebookApp] Notebook interpret.ipynb is not trusted
-[I 13:05:47.411 NotebookApp] Saving file at /interpret.ipynb
-[W 13:05:47.413 NotebookApp] Notebook interpret.ipynb is not trusted
-[I 13:05:47.997 NotebookApp] Saving file at /interpret.ipynb
-[W 13:05:47.999 NotebookApp] Notebook interpret.ipynb is not trusted
-[I 13:05:51.059 NotebookApp] Saving file at /interpret.ipynb
-[W 13:05:51.060 NotebookApp] Notebook interpret.ipynb is not trusted
-[I 13:07:07.225 NotebookApp] Saving file at /interpret.ipynb
-[I 13:09:08.293 NotebookApp] Saving file at /interpret.ipynb
-[I 13:11:13.460 NotebookApp] Saving file at /interpret.ipynb
-[I 13:12:59.868 NotebookApp] Starting buffering for baffdd8b-575e-4a0c-a93e-cc08def62459:92b6ff1a26cb4b07bee1363299e3c013
+2021-11-18 18:46:14,795 - Training metrics: loss
+2021-11-18 18:46:14,795 - Validation metrics: loss, aucROC, aucPR
+2021-11-18 18:46:40,894 - [STEP 2140] average number of steps per second: 82.34143698362419
+2021-11-18 18:46:40,895 - Training loss: 0.4359652475915223
+2021-11-18 18:46:42,001 - Validation loss: 0.3343774738434319
+2021-11-18 18:46:42,018 - Validation aucROC: 0.9325911526193075
+2021-11-18 18:46:42,019 - Validation aucPR: 0.9324877393860332
+2021-11-18 18:46:42,032 - Updating `best_model.pth.tar`
+2021-11-18 18:47:06,644 - [STEP 4280] average number of steps per second: 87.29141518757386
+2021-11-18 18:47:06,644 - Training loss: 0.32101967867080855
+2021-11-18 18:47:07,747 - Validation loss: 0.3174631839043626
+2021-11-18 18:47:07,764 - Validation aucROC: 0.940391651261225
+2021-11-18 18:47:07,764 - Validation aucPR: 0.9405010987406393
+2021-11-18 18:47:07,817 - Updating `best_model.pth.tar`
+2021-11-18 18:47:32,751 - [STEP 6420] average number of steps per second: 86.05502946032819
+2021-11-18 18:47:32,752 - Training loss: 0.29388586244780884
+2021-11-18 18:47:33,855 - Validation loss: 0.3116441139829493
+2021-11-18 18:47:33,872 - Validation aucROC: 0.9425597435458299
+2021-11-18 18:47:33,872 - Validation aucPR: 0.9425331388318933
+2021-11-18 18:47:33,918 - Updating `best_model.pth.tar`
+2021-11-18 18:47:58,976 - [STEP 8560] average number of steps per second: 85.6156464827876
+2021-11-18 18:47:58,976 - Training loss: 0.2751271833674373
+2021-11-18 18:48:00,082 - Validation loss: 0.3151579368058766
+2021-11-18 18:48:00,099 - Validation aucROC: 0.9425574798472784
+2021-11-18 18:48:00,099 - Validation aucPR: 0.9424948768092298
+2021-11-18 18:48:24,987 - [STEP 10700] average number of steps per second: 86.20055192950505
+2021-11-18 18:48:24,988 - Training loss: 0.2584824475085485
+2021-11-18 18:48:26,098 - Validation loss: 0.31839120940905863
+2021-11-18 18:48:26,115 - Validation aucROC: 0.9425133121180733
+2021-11-18 18:48:26,115 - Validation aucPR: 0.9424745920982035
+2021-11-18 18:48:50,717 - [STEP 12840] average number of steps per second: 87.28290384525286
+2021-11-18 18:48:50,718 - Training loss: 0.24446413915639167
+2021-11-18 18:48:51,825 - Validation loss: 0.32437115714093234
+2021-11-18 18:48:51,842 - Validation aucROC: 0.9417187027115763
+2021-11-18 18:48:51,842 - Validation aucPR: 0.9417797133199575
+2021-11-18 18:49:16,653 - [STEP 14980] average number of steps per second: 86.46977422627667
+2021-11-18 18:49:16,653 - Training loss: 0.23058104578788594
+2021-11-18 18:49:17,761 - Validation loss: 0.3334371263457236
+2021-11-18 18:49:17,778 - Validation aucROC: 0.940828123412338
+2021-11-18 18:49:17,778 - Validation aucPR: 0.9409465743285939
+2021-11-18 18:49:42,483 - [STEP 17120] average number of steps per second: 86.84117059995522
+2021-11-18 18:49:42,484 - Training loss: 0.21904220589932716
+2021-11-18 18:49:43,595 - Validation loss: 0.34247036037322515
+2021-11-18 18:49:43,612 - Validation aucROC: 0.9394677822774049
+2021-11-18 18:49:43,612 - Validation aucPR: 0.9397737174497305
+2021-11-18 18:50:08,617 - [STEP 19260] average number of steps per second: 85.79491174775734
+2021-11-18 18:50:08,617 - Training loss: 0.20800153395230664
+2021-11-18 18:50:09,731 - Validation loss: 0.3528796678948625
+2021-11-18 18:50:09,748 - Validation aucROC: 0.9383873732465384
+2021-11-18 18:50:09,748 - Validation aucPR: 0.9389631013937129
+2021-11-18 18:50:34,772 - [STEP 21400] average number of steps per second: 85.73142734033684
+2021-11-18 18:50:34,772 - Training loss: 0.19667127993149316
+2021-11-18 18:50:35,886 - Validation loss: 0.3654822221983259
+2021-11-18 18:50:35,903 - Validation aucROC: 0.9374539031762525
+2021-11-18 18:50:35,903 - Validation aucPR: 0.9382789115734618
+2021-11-18 18:50:35,910 - Training metrics: loss
+2021-11-18 18:50:35,910 - Validation metrics: loss, aucROC, aucPR
+2021-11-18 18:51:00,750 - [STEP 2140] average number of steps per second: 86.36862754275145
+2021-11-18 18:51:00,750 - Training loss: 0.44047282631291407
+2021-11-18 18:51:01,855 - Validation loss: 0.34251193022616555
+2021-11-18 18:51:01,872 - Validation aucROC: 0.9298080342656357
+2021-11-18 18:51:01,872 - Validation aucPR: 0.9290133094487256
+2021-11-18 18:51:01,885 - Updating `best_model.pth.tar`
+2021-11-18 18:51:26,476 - [STEP 4280] average number of steps per second: 87.25702180852335
+2021-11-18 18:51:26,476 - Training loss: 0.32267081406071924
+2021-11-18 18:51:27,581 - Validation loss: 0.32141990505646323
+2021-11-18 18:51:27,597 - Validation aucROC: 0.9394777999117192
+2021-11-18 18:51:27,597 - Validation aucPR: 0.9388232042308918
+2021-11-18 18:51:27,627 - Updating `best_model.pth.tar`
+2021-11-18 18:51:52,435 - [STEP 6420] average number of steps per second: 86.48547198886395
+2021-11-18 18:51:52,435 - Training loss: 0.2939237524938082
+2021-11-18 18:51:53,544 - Validation loss: 0.3205411474559909
+2021-11-18 18:51:53,561 - Validation aucROC: 0.9407216800726788
+2021-11-18 18:51:53,561 - Validation aucPR: 0.9400407209753558
+2021-11-18 18:51:53,606 - Updating `best_model.pth.tar`
+2021-11-18 18:52:18,500 - [STEP 8560] average number of steps per second: 86.1853165715614
+2021-11-18 18:52:18,500 - Training loss: 0.2751584949981526
+2021-11-18 18:52:19,612 - Validation loss: 0.32477813234953123
+2021-11-18 18:52:19,629 - Validation aucROC: 0.9410750697068924
+2021-11-18 18:52:19,629 - Validation aucPR: 0.9404923942781741
+2021-11-18 18:52:44,435 - [STEP 10700] average number of steps per second: 86.49034469480965
+2021-11-18 18:52:44,435 - Training loss: 0.25907073165942857
+2021-11-18 18:52:45,540 - Validation loss: 0.3279885998396116
+2021-11-18 18:52:45,556 - Validation aucROC: 0.9412217662502826
+2021-11-18 18:52:45,557 - Validation aucPR: 0.9406563270892502
+2021-11-18 18:53:10,419 - [STEP 12840] average number of steps per second: 86.28986399945887
+2021-11-18 18:53:10,419 - Training loss: 0.24495934653922777
+2021-11-18 18:53:11,528 - Validation loss: 0.33726952084314044
+2021-11-18 18:53:11,544 - Validation aucROC: 0.9404595929467113
+2021-11-18 18:53:11,545 - Validation aucPR: 0.9398850874865972
+2021-11-18 18:53:36,448 - [STEP 14980] average number of steps per second: 86.14794005811922
+2021-11-18 18:53:36,449 - Training loss: 0.23155451555536172
+2021-11-18 18:53:37,558 - Validation loss: 0.3443406570737607
+2021-11-18 18:53:37,575 - Validation aucROC: 0.9390142999510523
+2021-11-18 18:53:37,575 - Validation aucPR: 0.9391403860197424
+2021-11-18 18:54:02,434 - [STEP 17120] average number of steps per second: 86.30446002324962
+2021-11-18 18:54:02,434 - Training loss: 0.21943381906478343
+2021-11-18 18:54:03,543 - Validation loss: 0.3571535574080788
+2021-11-18 18:54:03,560 - Validation aucROC: 0.9384935400257414
+2021-11-18 18:54:03,560 - Validation aucPR: 0.9384784888777931
+2021-11-18 18:54:28,381 - [STEP 19260] average number of steps per second: 86.43486067000545
+2021-11-18 18:54:28,381 - Training loss: 0.20830723388538322
+2021-11-18 18:54:29,484 - Validation loss: 0.36260653359589173
+2021-11-18 18:54:29,501 - Validation aucROC: 0.937325466451646
+2021-11-18 18:54:29,501 - Validation aucPR: 0.9375692797231493
+2021-11-18 18:54:54,293 - [STEP 21400] average number of steps per second: 86.53885333290758
+2021-11-18 18:54:54,293 - Training loss: 0.19835033428890056
+2021-11-18 18:54:55,395 - Validation loss: 0.37459791719077906
+2021-11-18 18:54:55,412 - Validation aucROC: 0.9368362770974618
+2021-11-18 18:54:55,412 - Validation aucPR: 0.9370313368799814
+2021-11-18 18:54:55,419 - Training metrics: loss
+2021-11-18 18:54:55,419 - Validation metrics: loss, aucROC, aucPR
+2021-11-18 18:55:20,204 - [STEP 2140] average number of steps per second: 86.56069046028789
+2021-11-18 18:55:20,205 - Training loss: 0.43330152210927453
+2021-11-18 18:55:21,313 - Validation loss: 0.33475219284262614
+2021-11-18 18:55:21,329 - Validation aucROC: 0.9325189140037651
+2021-11-18 18:55:21,329 - Validation aucPR: 0.9317766033005146
+2021-11-18 18:55:21,342 - Updating `best_model.pth.tar`
+2021-11-18 18:55:46,102 - [STEP 4280] average number of steps per second: 86.64955874547519
+2021-11-18 18:55:46,103 - Training loss: 0.3208738643223437
+2021-11-18 18:55:47,212 - Validation loss: 0.3147688387431831
+2021-11-18 18:55:47,229 - Validation aucROC: 0.940107299311344
+2021-11-18 18:55:47,229 - Validation aucPR: 0.9398100299503085
+2021-11-18 18:55:47,274 - Updating `best_model.pth.tar`
+2021-11-18 18:56:12,133 - [STEP 6420] average number of steps per second: 86.30477453262348
+2021-11-18 18:56:12,133 - Training loss: 0.29287160985589583
+2021-11-18 18:56:13,243 - Validation loss: 0.3126349748852097
+2021-11-18 18:56:13,260 - Validation aucROC: 0.9412581390718058
+2021-11-18 18:56:13,260 - Validation aucPR: 0.941471689980485
+2021-11-18 18:56:13,302 - Updating `best_model.pth.tar`
+2021-11-18 18:56:37,938 - [STEP 8560] average number of steps per second: 87.08666045889449
+2021-11-18 18:56:37,939 - Training loss: 0.2747738329798122
+2021-11-18 18:56:39,074 - Validation loss: 0.31319536442790075
+2021-11-18 18:56:39,090 - Validation aucROC: 0.9419065299406398
+2021-11-18 18:56:39,090 - Validation aucPR: 0.9421283056716923
+2021-11-18 18:57:03,785 - [STEP 10700] average number of steps per second: 86.88178590131878
+2021-11-18 18:57:03,785 - Training loss: 0.25877609868124823
+2021-11-18 18:57:04,896 - Validation loss: 0.3187119304855293
+2021-11-18 18:57:04,913 - Validation aucROC: 0.9413140520845964
+2021-11-18 18:57:04,913 - Validation aucPR: 0.9416596270726549
+2021-11-18 18:57:29,869 - [STEP 12840] average number of steps per second: 85.96839851438568
+2021-11-18 18:57:29,870 - Training loss: 0.24457174224570116
+2021-11-18 18:57:30,982 - Validation loss: 0.3259847308709243
+2021-11-18 18:57:30,999 - Validation aucROC: 0.9402181129890818
+2021-11-18 18:57:30,999 - Validation aucPR: 0.9407027152400487
+2021-11-18 18:57:55,885 - [STEP 14980] average number of steps per second: 86.20871851704197
+2021-11-18 18:57:55,886 - Training loss: 0.23187106155102777
+2021-11-18 18:57:56,996 - Validation loss: 0.3339627252700173
+2021-11-18 18:57:57,013 - Validation aucROC: 0.9392350925036683
+2021-11-18 18:57:57,013 - Validation aucPR: 0.9401299259446029
+2021-11-18 18:58:21,844 - [STEP 17120] average number of steps per second: 86.40297275624812
+2021-11-18 18:58:21,844 - Training loss: 0.2184755354475613
+2021-11-18 18:58:22,953 - Validation loss: 0.3428677569622191
+2021-11-18 18:58:22,970 - Validation aucROC: 0.9381275532334493
+2021-11-18 18:58:22,970 - Validation aucPR: 0.9391451903094252
+2021-11-18 18:58:47,829 - [STEP 19260] average number of steps per second: 86.30219462767116
+2021-11-18 18:58:47,830 - Training loss: 0.20802612614199936
+2021-11-18 18:58:48,933 - Validation loss: 0.3559121719309103
+2021-11-18 18:58:48,949 - Validation aucROC: 0.9364596034628374
+2021-11-18 18:58:48,949 - Validation aucPR: 0.9376128108904758
+2021-11-18 18:59:13,894 - [STEP 21400] average number of steps per second: 86.00949940159565
+2021-11-18 18:59:13,894 - Training loss: 0.19620077013186066
+2021-11-18 18:59:14,997 - Validation loss: 0.3649590932041685
+2021-11-18 18:59:15,014 - Validation aucROC: 0.9360364523070469
+2021-11-18 18:59:15,014 - Validation aucPR: 0.9371445544476631
+2021-11-18 18:59:15,020 - Training metrics: loss
+2021-11-18 18:59:15,020 - Validation metrics: loss, aucROC, aucPR
+2021-11-18 18:59:39,997 - [STEP 2140] average number of steps per second: 85.91146116388826
+2021-11-18 18:59:39,997 - Training loss: 0.43810252232529295
+2021-11-18 18:59:41,100 - Validation loss: 0.3447022577312505
+2021-11-18 18:59:41,117 - Validation aucROC: 0.9280508937477943
+2021-11-18 18:59:41,117 - Validation aucPR: 0.927377541411044
+2021-11-18 18:59:41,130 - Updating `best_model.pth.tar`
+2021-11-18 19:00:05,866 - [STEP 4280] average number of steps per second: 86.7307488628693
+2021-11-18 19:00:05,866 - Training loss: 0.3279418852458769
+2021-11-18 19:00:06,974 - Validation loss: 0.32598898998487774
+2021-11-18 19:00:06,991 - Validation aucROC: 0.9362786356159609
+2021-11-18 19:00:06,991 - Validation aucPR: 0.9359117791175618
+2021-11-18 19:00:07,035 - Updating `best_model.pth.tar`
+2021-11-18 19:00:31,789 - [STEP 6420] average number of steps per second: 86.68681598206395
+2021-11-18 19:00:31,789 - Training loss: 0.29961954071142965
+2021-11-18 19:00:32,900 - Validation loss: 0.3199465230525097
+2021-11-18 19:00:32,917 - Validation aucROC: 0.9386771334897914
+2021-11-18 19:00:32,917 - Validation aucPR: 0.938795109765308
+2021-11-18 19:00:32,942 - Updating `best_model.pth.tar`
+2021-11-18 19:00:57,431 - [STEP 8560] average number of steps per second: 87.71081158535351
+2021-11-18 19:00:57,431 - Training loss: 0.27844897636395194
+2021-11-18 19:00:58,541 - Validation loss: 0.31838785908489586
+2021-11-18 19:00:58,558 - Validation aucROC: 0.9403544897302518
+2021-11-18 19:00:58,558 - Validation aucPR: 0.9408398682432828
+2021-11-18 19:00:58,603 - Updating `best_model.pth.tar`
+2021-11-18 19:01:23,379 - [STEP 10700] average number of steps per second: 86.6098003817145
+2021-11-18 19:01:23,379 - Training loss: 0.2605746184501832
+2021-11-18 19:01:24,490 - Validation loss: 0.3231857857971548
+2021-11-18 19:01:24,507 - Validation aucROC: 0.939901143976964
+2021-11-18 19:01:24,507 - Validation aucPR: 0.9405676134125843
+2021-11-18 19:01:49,154 - [STEP 12840] average number of steps per second: 87.0496565151332
+2021-11-18 19:01:49,154 - Training loss: 0.24660927950813671
+2021-11-18 19:01:50,262 - Validation loss: 0.3304763295383097
+2021-11-18 19:01:50,279 - Validation aucROC: 0.9390488170860551
+2021-11-18 19:01:50,279 - Validation aucPR: 0.9399785921251589
+2021-11-18 19:02:15,359 - [STEP 14980] average number of steps per second: 85.54049554037375
+2021-11-18 19:02:15,359 - Training loss: 0.23321590436988066
+2021-11-18 19:02:16,467 - Validation loss: 0.3400973248843835
+2021-11-18 19:02:16,484 - Validation aucROC: 0.937800740717675
+2021-11-18 19:02:16,484 - Validation aucPR: 0.9389424497945442
+2021-11-18 19:02:40,926 - [STEP 17120] average number of steps per second: 87.87645453238352
+2021-11-18 19:02:40,926 - Training loss: 0.22010040000324774
+2021-11-18 19:02:42,037 - Validation loss: 0.34691257997650965
+2021-11-18 19:02:42,054 - Validation aucROC: 0.9366576600144659
+2021-11-18 19:02:42,054 - Validation aucPR: 0.9380442705785971
+2021-11-18 19:03:06,523 - [STEP 19260] average number of steps per second: 87.68524825262011
+2021-11-18 19:03:06,524 - Training loss: 0.2082795572832714
+2021-11-18 19:03:07,636 - Validation loss: 0.35659269428698814
+2021-11-18 19:03:07,653 - Validation aucROC: 0.936076312863216
+2021-11-18 19:03:07,653 - Validation aucPR: 0.9377252305672863
+2021-11-18 19:03:32,135 - [STEP 21400] average number of steps per second: 87.64304320761404
+2021-11-18 19:03:32,136 - Training loss: 0.19827942756117783
+2021-11-18 19:03:33,235 - Validation loss: 0.3691289686711035
+2021-11-18 19:03:33,252 - Validation aucROC: 0.9344659388824609
+2021-11-18 19:03:33,254 - Validation aucPR: 0.9366226740736997
+2021-11-18 19:03:33,261 - Training metrics: loss
+2021-11-18 19:03:33,261 - Validation metrics: loss, aucROC, aucPR
+2021-11-18 19:03:57,670 - [STEP 2140] average number of steps per second: 87.90098974529484
+2021-11-18 19:03:57,670 - Training loss: 0.4317028978369503
+2021-11-18 19:03:58,776 - Validation loss: 0.33336159625900125
+2021-11-18 19:03:58,793 - Validation aucROC: 0.9332390825540475
+2021-11-18 19:03:58,793 - Validation aucPR: 0.932832699349907
+2021-11-18 19:03:58,805 - Updating `best_model.pth.tar`
+2021-11-18 19:04:23,505 - [STEP 4280] average number of steps per second: 86.86616757309658
+2021-11-18 19:04:23,505 - Training loss: 0.317690396639649
+2021-11-18 19:04:24,614 - Validation loss: 0.312092676313124
+2021-11-18 19:04:24,631 - Validation aucROC: 0.941764248121574
+2021-11-18 19:04:24,631 - Validation aucPR: 0.9412816434321206
+2021-11-18 19:04:24,684 - Updating `best_model.pth.tar`
+2021-11-18 19:04:49,231 - [STEP 6420] average number of steps per second: 87.40726875140453
+2021-11-18 19:04:49,231 - Training loss: 0.2897099933543495
+2021-11-18 19:04:50,345 - Validation loss: 0.3099654988011467
+2021-11-18 19:04:50,362 - Validation aucROC: 0.9435343784450555
+2021-11-18 19:04:50,363 - Validation aucPR: 0.9433923187318309
+2021-11-18 19:04:50,415 - Updating `best_model.pth.tar`
+2021-11-18 19:05:15,060 - [STEP 8560] average number of steps per second: 87.06434605153062
+2021-11-18 19:05:15,061 - Training loss: 0.2702410647071132
+2021-11-18 19:05:16,167 - Validation loss: 0.31301312452164765
+2021-11-18 19:05:16,184 - Validation aucROC: 0.9428418352114862
+2021-11-18 19:05:16,184 - Validation aucPR: 0.943103760044929
+2021-11-18 19:05:40,603 - [STEP 10700] average number of steps per second: 87.94525574468507
+2021-11-18 19:05:40,603 - Training loss: 0.2549539480253915
+2021-11-18 19:05:41,715 - Validation loss: 0.31721677473772353
+2021-11-18 19:05:41,732 - Validation aucROC: 0.9426685444780232
+2021-11-18 19:05:41,732 - Validation aucPR: 0.9430861114582388
+2021-11-18 19:06:00,924 - [STEP 12840] average number of steps per second: 111.77753708515364
+2021-11-18 19:06:00,924 - Training loss: 0.2397766542768924
+2021-11-18 19:06:02,032 - Validation loss: 0.3250362733814204
+2021-11-18 19:06:02,049 - Validation aucROC: 0.9415849481732532
+2021-11-18 19:06:02,049 - Validation aucPR: 0.9424859275012987
+2021-11-18 19:06:21,632 - [STEP 14980] average number of steps per second: 109.56874231752913
+2021-11-18 19:06:21,632 - Training loss: 0.22649245298876663
+2021-11-18 19:06:22,739 - Validation loss: 0.3357368440828591
+2021-11-18 19:06:22,756 - Validation aucROC: 0.9402783451250518
+2021-11-18 19:06:22,756 - Validation aucPR: 0.9413546569765061
+2021-11-18 19:06:47,453 - [STEP 17120] average number of steps per second: 86.87416984587736
+2021-11-18 19:06:47,454 - Training loss: 0.2151588586933702
+2021-11-18 19:06:48,562 - Validation loss: 0.3381980941952946
+2021-11-18 19:06:48,579 - Validation aucROC: 0.9403844060601294
+2021-11-18 19:06:48,579 - Validation aucPR: 0.9417210001585761
+2021-11-18 19:07:13,382 - [STEP 19260] average number of steps per second: 86.50575562618286
+2021-11-18 19:07:13,382 - Training loss: 0.20292980558386892
+2021-11-18 19:07:14,496 - Validation loss: 0.36000993304720547
+2021-11-18 19:07:14,513 - Validation aucROC: 0.9376437670511473
+2021-11-18 19:07:14,513 - Validation aucPR: 0.9388701798622089
+2021-11-18 19:07:39,034 - [STEP 21400] average number of steps per second: 87.50094692333606
+2021-11-18 19:07:39,034 - Training loss: 0.19284137484278077
+2021-11-18 19:07:40,139 - Validation loss: 0.3633093491475159
+2021-11-18 19:07:40,155 - Validation aucROC: 0.9372925574644829
+2021-11-18 19:07:40,156 - Validation aucPR: 0.9386402110436205
+2021-11-18 19:07:40,161 - Training metrics: loss
+2021-11-18 19:07:40,162 - Validation metrics: loss, aucROC, aucPR
+2021-11-18 19:08:04,593 - [STEP 2140] average number of steps per second: 87.82011501331716
+2021-11-18 19:08:04,593 - Training loss: 0.4388462394893726
+2021-11-18 19:08:05,697 - Validation loss: 0.3385842147831605
+2021-11-18 19:08:05,714 - Validation aucROC: 0.9308525809168093
+2021-11-18 19:08:05,714 - Validation aucPR: 0.9297806086997882
+2021-11-18 19:08:05,727 - Updating `best_model.pth.tar`
+2021-11-18 19:08:30,336 - [STEP 4280] average number of steps per second: 87.18622190834347
+2021-11-18 19:08:30,336 - Training loss: 0.32387550660522185
+2021-11-18 19:08:31,444 - Validation loss: 0.31847023618555514
+2021-11-18 19:08:31,461 - Validation aucROC: 0.9391830223154924
+2021-11-18 19:08:31,461 - Validation aucPR: 0.9390314839266072
+2021-11-18 19:08:31,493 - Updating `best_model.pth.tar`
+2021-11-18 19:08:56,156 - [STEP 6420] average number of steps per second: 87.00032493019691
+2021-11-18 19:08:56,157 - Training loss: 0.29501309630191214
+2021-11-18 19:08:57,261 - Validation loss: 0.31476252129144755
+2021-11-18 19:08:57,277 - Validation aucROC: 0.9413223779200688
+2021-11-18 19:08:57,277 - Validation aucPR: 0.9411710953931651
+2021-11-18 19:08:57,320 - Updating `best_model.pth.tar`
+2021-11-18 19:09:21,794 - [STEP 8560] average number of steps per second: 87.67331055088025
+2021-11-18 19:09:21,794 - Training loss: 0.27447685374417036
+2021-11-18 19:09:22,904 - Validation loss: 0.3186263116163628
+2021-11-18 19:09:22,921 - Validation aucROC: 0.941075472597434
+2021-11-18 19:09:22,921 - Validation aucPR: 0.9415287880716873
+2021-11-18 19:09:47,404 - [STEP 10700] average number of steps per second: 87.6385446125245
+2021-11-18 19:09:47,404 - Training loss: 0.2590124946957994
+2021-11-18 19:09:48,514 - Validation loss: 0.3253004243440717
+2021-11-18 19:09:48,531 - Validation aucROC: 0.9400307586442556
+2021-11-18 19:09:48,531 - Validation aucPR: 0.9402571059023859
+2021-11-18 19:10:13,290 - [STEP 12840] average number of steps per second: 86.65632477807726
+2021-11-18 19:10:13,291 - Training loss: 0.2447893095733685
+2021-11-18 19:10:14,401 - Validation loss: 0.3300274005281591
+2021-11-18 19:10:14,418 - Validation aucROC: 0.939668146913831
+2021-11-18 19:10:14,418 - Validation aucPR: 0.9401224900082986
+2021-11-18 19:10:39,049 - [STEP 14980] average number of steps per second: 87.10643248775166
+2021-11-18 19:10:39,050 - Training loss: 0.23161093941846184
+2021-11-18 19:10:40,153 - Validation loss: 0.33913381594085246
+2021-11-18 19:10:40,169 - Validation aucROC: 0.9387306018447197
+2021-11-18 19:10:40,170 - Validation aucPR: 0.9393940629055729
+2021-11-18 19:11:04,918 - [STEP 17120] average number of steps per second: 86.69479194191992
+2021-11-18 19:11:04,919 - Training loss: 0.21963335581506802
+2021-11-18 19:11:06,026 - Validation loss: 0.3503307747785176
+2021-11-18 19:11:06,043 - Validation aucROC: 0.9375260735052624
+2021-11-18 19:11:06,043 - Validation aucPR: 0.9385168582153771
+2021-11-18 19:11:30,559 - [STEP 19260] average number of steps per second: 87.52221666626866
+2021-11-18 19:11:30,559 - Training loss: 0.20720516484335205
+2021-11-18 19:11:31,669 - Validation loss: 0.3584154882302908
+2021-11-18 19:11:31,686 - Validation aucROC: 0.9364001258930512
+2021-11-18 19:11:31,686 - Validation aucPR: 0.9375331207138783
+2021-11-18 19:11:56,834 - [STEP 21400] average number of steps per second: 85.31228696130904
+2021-11-18 19:11:56,834 - Training loss: 0.1964046230992285
+2021-11-18 19:11:57,945 - Validation loss: 0.3688393917178439
+2021-11-18 19:11:57,962 - Validation aucROC: 0.9353874263734607
+2021-11-18 19:11:57,962 - Validation aucPR: 0.9364612417908716
+2021-11-18 19:11:57,969 - Training metrics: loss
+2021-11-18 19:11:57,969 - Validation metrics: loss, aucROC, aucPR
+2021-11-18 19:12:22,982 - [STEP 2140] average number of steps per second: 85.77211911927068
+2021-11-18 19:12:22,982 - Training loss: 0.43788797940327745
+2021-11-18 19:12:24,086 - Validation loss: 0.34132017905467027
+2021-11-18 19:12:24,103 - Validation aucROC: 0.929360655048123
+2021-11-18 19:12:24,103 - Validation aucPR: 0.9294072052000386
+2021-11-18 19:12:24,114 - Updating `best_model.pth.tar`
+2021-11-18 19:12:49,037 - [STEP 4280] average number of steps per second: 86.08311580807656
+2021-11-18 19:12:49,037 - Training loss: 0.32371747334983864
+2021-11-18 19:12:50,147 - Validation loss: 0.3184966435777807
+2021-11-18 19:12:50,164 - Validation aucROC: 0.9393792487880506
+2021-11-18 19:12:50,164 - Validation aucPR: 0.9392169138634936
+2021-11-18 19:12:50,198 - Updating `best_model.pth.tar`
+2021-11-18 19:13:15,159 - [STEP 6420] average number of steps per second: 85.95457524668387
+2021-11-18 19:13:15,159 - Training loss: 0.29273304781902615
+2021-11-18 19:13:16,267 - Validation loss: 0.3120640138042307
+2021-11-18 19:13:16,283 - Validation aucROC: 0.9426291038840288
+2021-11-18 19:13:16,284 - Validation aucPR: 0.9425399990423048
+2021-11-18 19:13:16,333 - Updating `best_model.pth.tar`
+2021-11-18 19:13:39,030 - [STEP 8560] average number of steps per second: 94.52134726385833
+2021-11-18 19:13:39,030 - Training loss: 0.2719769523592196
+2021-11-18 19:13:40,142 - Validation loss: 0.3121763437986374
+2021-11-18 19:13:40,159 - Validation aucROC: 0.943111249482388
+2021-11-18 19:13:40,159 - Validation aucPR: 0.943253211533442
+2021-11-18 19:14:04,685 - [STEP 10700] average number of steps per second: 87.52781375412191
+2021-11-18 19:14:04,686 - Training loss: 0.25547181178998446
+2021-11-18 19:14:05,796 - Validation loss: 0.3169343963404682
+2021-11-18 19:14:05,813 - Validation aucROC: 0.9429164621485018
+2021-11-18 19:14:05,813 - Validation aucPR: 0.943236269370765
+2021-11-18 19:14:30,286 - [STEP 12840] average number of steps per second: 87.7445626794361
+2021-11-18 19:14:30,286 - Training loss: 0.24130297913172535
+2021-11-18 19:14:31,392 - Validation loss: 0.32223682581821333
+2021-11-18 19:14:31,409 - Validation aucROC: 0.942907644649996
+2021-11-18 19:14:31,409 - Validation aucPR: 0.94340223198459
+2021-11-18 19:14:56,168 - [STEP 14980] average number of steps per second: 86.65571572494505
+2021-11-18 19:14:56,168 - Training loss: 0.22793660836868754
+2021-11-18 19:14:57,275 - Validation loss: 0.3310769763783874
+2021-11-18 19:14:57,291 - Validation aucROC: 0.9418864246783158
+2021-11-18 19:14:57,292 - Validation aucPR: 0.9425150800550209
+2021-11-18 19:15:22,032 - [STEP 17120] average number of steps per second: 86.73492341567868
+2021-11-18 19:15:22,033 - Training loss: 0.21458556065074752
+2021-11-18 19:15:23,137 - Validation loss: 0.3427006846137136
+2021-11-18 19:15:23,153 - Validation aucROC: 0.9404417155325094
+2021-11-18 19:15:23,153 - Validation aucPR: 0.9412983716362384
+2021-11-18 19:15:47,925 - [STEP 19260] average number of steps per second: 86.6087875018489
+2021-11-18 19:15:47,926 - Training loss: 0.20236214055879928
+2021-11-18 19:15:49,030 - Validation loss: 0.35414591267287177
+2021-11-18 19:15:49,047 - Validation aucROC: 0.9392539242221617
+2021-11-18 19:15:49,047 - Validation aucPR: 0.9402161912195811
+2021-11-18 19:16:10,919 - [STEP 21400] average number of steps per second: 98.08105501601156
+2021-11-18 19:16:10,919 - Training loss: 0.1934675280448641
+2021-11-18 19:16:12,022 - Validation loss: 0.3622272388539582
+2021-11-18 19:16:12,038 - Validation aucROC: 0.9385690342017196
+2021-11-18 19:16:12,038 - Validation aucPR: 0.9397714676852612
+2021-11-18 19:16:12,043 - Training metrics: loss
+2021-11-18 19:16:12,044 - Validation metrics: loss, aucROC, aucPR
+2021-11-18 19:16:36,543 - [STEP 2140] average number of steps per second: 87.59710858248931
+2021-11-18 19:16:36,543 - Training loss: 0.43012528588699406
+2021-11-18 19:16:37,654 - Validation loss: 0.3320948324749403
+2021-11-18 19:16:37,671 - Validation aucROC: 0.9334476449886973
+2021-11-18 19:16:37,671 - Validation aucPR: 0.9330816341991439
+2021-11-18 19:16:37,684 - Updating `best_model.pth.tar`
+2021-11-18 19:17:02,255 - [STEP 4280] average number of steps per second: 87.34111237695903
+2021-11-18 19:17:02,255 - Training loss: 0.3195297148183127
+2021-11-18 19:17:03,363 - Validation loss: 0.3154453279259049
+2021-11-18 19:17:03,380 - Validation aucROC: 0.9404275853417767
+2021-11-18 19:17:03,380 - Validation aucPR: 0.9404658432620744
+2021-11-18 19:17:03,413 - Updating `best_model.pth.tar`
+2021-11-18 19:17:27,845 - [STEP 6420] average number of steps per second: 87.82594276353704
+2021-11-18 19:17:27,846 - Training loss: 0.292878576040825
+2021-11-18 19:17:28,961 - Validation loss: 0.3141663509273083
+2021-11-18 19:17:28,978 - Validation aucROC: 0.9425811001588618
+2021-11-18 19:17:28,978 - Validation aucPR: 0.9427553992753644
+2021-11-18 19:17:29,054 - Updating `best_model.pth.tar`
+2021-11-18 19:17:53,651 - [STEP 8560] average number of steps per second: 87.26513698295518
+2021-11-18 19:17:53,652 - Training loss: 0.27331981705066477
+2021-11-18 19:17:54,764 - Validation loss: 0.31603457298234244
+2021-11-18 19:17:54,781 - Validation aucROC: 0.9426122814967532
+2021-11-18 19:17:54,781 - Validation aucPR: 0.9428476155854417
+2021-11-18 19:18:19,490 - [STEP 10700] average number of steps per second: 86.83397664646876
+2021-11-18 19:18:19,490 - Training loss: 0.2577368139924708
+2021-11-18 19:18:20,601 - Validation loss: 0.32605848879179106
+2021-11-18 19:18:20,618 - Validation aucROC: 0.9408536574539941
+2021-11-18 19:18:20,618 - Validation aucPR: 0.94147708940112
+2021-11-18 19:18:45,368 - [STEP 12840] average number of steps per second: 86.68577953320616
+2021-11-18 19:18:45,368 - Training loss: 0.24368197584751053
+2021-11-18 19:18:46,478 - Validation loss: 0.32861121018356254
+2021-11-18 19:18:46,495 - Validation aucROC: 0.9408814808016511
+2021-11-18 19:18:46,495 - Validation aucPR: 0.9415842782047874
+2021-11-18 19:19:11,225 - [STEP 14980] average number of steps per second: 86.75534185351404
+2021-11-18 19:19:11,226 - Training loss: 0.23038202116666276
+2021-11-18 19:19:12,336 - Validation loss: 0.33473164143963396
+2021-11-18 19:19:12,353 - Validation aucROC: 0.9398080899191597
+2021-11-18 19:19:12,353 - Validation aucPR: 0.9408546795425986
+2021-11-18 19:19:37,194 - [STEP 17120] average number of steps per second: 86.36687817280007
+2021-11-18 19:19:37,195 - Training loss: 0.21895782229464467
+2021-11-18 19:19:38,306 - Validation loss: 0.34609246876473737
+2021-11-18 19:19:38,323 - Validation aucROC: 0.9386399070866125
+2021-11-18 19:19:38,323 - Validation aucPR: 0.9398076981198701
+2021-11-18 19:20:03,164 - [STEP 19260] average number of steps per second: 86.39070561146137
+2021-11-18 19:20:03,164 - Training loss: 0.20698542019056382
+2021-11-18 19:20:04,276 - Validation loss: 0.3559542034552476
+2021-11-18 19:20:04,293 - Validation aucROC: 0.937990966511192
+2021-11-18 19:20:04,293 - Validation aucPR: 0.9389643073525615
+2021-11-18 19:20:29,071 - [STEP 21400] average number of steps per second: 86.586754871775
+2021-11-18 19:20:29,071 - Training loss: 0.19764861361924385
+2021-11-18 19:20:30,181 - Validation loss: 0.3679279277954146
+2021-11-18 19:20:30,198 - Validation aucROC: 0.9369489857264758
+2021-11-18 19:20:30,198 - Validation aucPR: 0.9381639162221882
+2021-11-18 19:20:30,205 - Training metrics: loss
+2021-11-18 19:20:30,205 - Validation metrics: loss, aucROC, aucPR
+2021-11-18 19:20:54,775 - [STEP 2140] average number of steps per second: 87.38544313742015
+2021-11-18 19:20:54,775 - Training loss: 0.44214452299002177
+2021-11-18 19:20:55,883 - Validation loss: 0.3360067915693622
+2021-11-18 19:20:55,900 - Validation aucROC: 0.9317671475677429
+2021-11-18 19:20:55,900 - Validation aucPR: 0.9310163243400307
+2021-11-18 19:20:55,913 - Updating `best_model.pth.tar`
+2021-11-18 19:21:20,441 - [STEP 4280] average number of steps per second: 87.5430519062936
+2021-11-18 19:21:20,442 - Training loss: 0.31937433302263235
+2021-11-18 19:21:21,553 - Validation loss: 0.3128519939763524
+2021-11-18 19:21:21,570 - Validation aucROC: 0.9410854526741552
+2021-11-18 19:21:21,570 - Validation aucPR: 0.9403683418395686
+2021-11-18 19:21:21,602 - Updating `best_model.pth.tar`
+2021-11-18 19:21:46,384 - [STEP 6420] average number of steps per second: 86.57677532651037
+2021-11-18 19:21:46,384 - Training loss: 0.29081270035321466
+2021-11-18 19:21:47,496 - Validation loss: 0.3102059723896401
+2021-11-18 19:21:47,513 - Validation aucROC: 0.9427123861390359
+2021-11-18 19:21:47,513 - Validation aucPR: 0.9423250971403307
+2021-11-18 19:21:47,544 - Updating `best_model.pth.tar`
+2021-11-18 19:22:12,380 - [STEP 8560] average number of steps per second: 86.39215160787407
+2021-11-18 19:22:12,380 - Training loss: 0.2719793931276442
+2021-11-18 19:22:13,487 - Validation loss: 0.3101810880632044
+2021-11-18 19:22:13,504 - Validation aucROC: 0.9434892581187224
+2021-11-18 19:22:13,504 - Validation aucPR: 0.9434128675532634
+2021-11-18 19:22:13,603 - Updating `best_model.pth.tar`
+2021-11-18 19:22:38,289 - [STEP 10700] average number of steps per second: 86.93053183838848
+2021-11-18 19:22:38,289 - Training loss: 0.254401036651335
+2021-11-18 19:22:39,397 - Validation loss: 0.3140778592256742
+2021-11-18 19:22:39,414 - Validation aucROC: 0.9432862883510825
+2021-11-18 19:22:39,414 - Validation aucPR: 0.9435450715925666
+2021-11-18 19:23:04,310 - [STEP 12840] average number of steps per second: 86.18352745119944
+2021-11-18 19:23:04,311 - Training loss: 0.2400237708204539
+2021-11-18 19:23:05,416 - Validation loss: 0.32127798997631696
+2021-11-18 19:23:05,433 - Validation aucROC: 0.9420081351794733
+2021-11-18 19:23:05,433 - Validation aucPR: 0.9426832397118307
+2021-11-18 19:23:30,288 - [STEP 14980] average number of steps per second: 86.32128077787425
+2021-11-18 19:23:30,288 - Training loss: 0.22665887804023016
+2021-11-18 19:23:31,400 - Validation loss: 0.33014184211459113
+2021-11-18 19:23:31,417 - Validation aucROC: 0.9411267711477929
+2021-11-18 19:23:31,417 - Validation aucPR: 0.9419222774109905
+2021-11-18 19:23:56,203 - [STEP 17120] average number of steps per second: 86.56156030119737
+2021-11-18 19:23:56,203 - Training loss: 0.21469571552648445
+2021-11-18 19:23:57,311 - Validation loss: 0.3389984640841172
+2021-11-18 19:23:57,328 - Validation aucROC: 0.939726577992507
+2021-11-18 19:23:57,328 - Validation aucPR: 0.940830583858912
+2021-11-18 19:24:22,268 - [STEP 19260] average number of steps per second: 86.02384984902476
+2021-11-18 19:24:22,269 - Training loss: 0.20349910147488118
+2021-11-18 19:24:23,380 - Validation loss: 0.3483861210190247
+2021-11-18 19:24:23,397 - Validation aucROC: 0.9394821856142674
+2021-11-18 19:24:23,397 - Validation aucPR: 0.9409086836835976
+2021-11-18 19:24:47,806 - [STEP 21400] average number of steps per second: 87.9551404421695
+2021-11-18 19:24:47,806 - Training loss: 0.19336961472633285
+2021-11-18 19:24:48,917 - Validation loss: 0.36161071017523794
+2021-11-18 19:24:48,934 - Validation aucROC: 0.9377984718976335
+2021-11-18 19:24:48,934 - Validation aucPR: 0.9393804574040985
+2021-11-18 19:24:48,941 - Training metrics: loss
+2021-11-18 19:24:48,941 - Validation metrics: loss, aucROC, aucPR
+2021-11-18 19:25:13,374 - [STEP 2140] average number of steps per second: 87.83714328948766
+2021-11-18 19:25:13,374 - Training loss: 0.43734466603426175
+2021-11-18 19:25:14,486 - Validation loss: 0.34321335208750214
+2021-11-18 19:25:14,503 - Validation aucROC: 0.9286648306466679
+2021-11-18 19:25:14,503 - Validation aucPR: 0.9284986727685345
+2021-11-18 19:25:14,515 - Updating `best_model.pth.tar`
+2021-11-18 19:25:39,265 - [STEP 4280] average number of steps per second: 86.70797902194504
+2021-11-18 19:25:39,266 - Training loss: 0.3244800421539868
+2021-11-18 19:25:40,372 - Validation loss: 0.3156962232612004
+2021-11-18 19:25:40,389 - Validation aucROC: 0.9403006270205985
+2021-11-18 19:25:40,389 - Validation aucPR: 0.9399246268415176
+2021-11-18 19:25:40,496 - Updating `best_model.pth.tar`
+2021-11-18 19:26:04,930 - [STEP 6420] average number of steps per second: 87.81518669109276
+2021-11-18 19:26:04,930 - Training loss: 0.2911773006492686
+2021-11-18 19:26:06,041 - Validation loss: 0.3109948409773479
+2021-11-18 19:26:06,058 - Validation aucROC: 0.9424327544957122
+2021-11-18 19:26:06,058 - Validation aucPR: 0.9423424301967985
+2021-11-18 19:26:06,087 - Updating `best_model.pth.tar`
+2021-11-18 19:26:30,512 - [STEP 8560] average number of steps per second: 87.94052790472783
+2021-11-18 19:26:30,513 - Training loss: 0.2711349243280765
+2021-11-18 19:26:31,622 - Validation loss: 0.311065394577579
+2021-11-18 19:26:31,639 - Validation aucROC: 0.9429318914905148
+2021-11-18 19:26:31,676 - Validation aucPR: 0.9430879343729508
+2021-11-18 19:26:56,235 - [STEP 10700] average number of steps per second: 87.45446321181444
+2021-11-18 19:26:56,236 - Training loss: 0.25515260292547887
+2021-11-18 19:26:57,338 - Validation loss: 0.3161134892534987
+2021-11-18 19:26:57,355 - Validation aucROC: 0.9425032483903499
+2021-11-18 19:26:57,355 - Validation aucPR: 0.9427120400520378
+2021-11-18 19:27:21,797 - [STEP 12840] average number of steps per second: 87.90240926531318
+2021-11-18 19:27:21,797 - Training loss: 0.24115935422340842
+2021-11-18 19:27:22,902 - Validation loss: 0.3223972745170103
+2021-11-18 19:27:22,919 - Validation aucROC: 0.9413138506393257
+2021-11-18 19:27:22,919 - Validation aucPR: 0.9420621417984348
+2021-11-18 19:27:47,729 - [STEP 14980] average number of steps per second: 86.49497456578747
+2021-11-18 19:27:47,729 - Training loss: 0.22802363155914523
+2021-11-18 19:27:48,837 - Validation loss: 0.33243935801715496
+2021-11-18 19:27:48,853 - Validation aucROC: 0.939980457077271
+2021-11-18 19:27:48,853 - Validation aucPR: 0.9411251987872725
+2021-11-18 19:28:13,572 - [STEP 17120] average number of steps per second: 86.8276632814836
+2021-11-18 19:28:13,572 - Training loss: 0.21558263719638932
+2021-11-18 19:28:14,677 - Validation loss: 0.3405941247522274
+2021-11-18 19:28:14,694 - Validation aucROC: 0.9395453250493574
+2021-11-18 19:28:14,694 - Validation aucPR: 0.9405927771285449
+2021-11-18 19:28:38,372 - [STEP 19260] average number of steps per second: 90.60657821679018
+2021-11-18 19:28:38,372 - Training loss: 0.20287431592173943
+2021-11-18 19:28:39,479 - Validation loss: 0.3494724178982672
+2021-11-18 19:28:39,496 - Validation aucROC: 0.9389817392252047
+2021-11-18 19:28:39,496 - Validation aucPR: 0.9401800866636417
+2021-11-18 19:29:03,520 - [STEP 21400] average number of steps per second: 89.30722556870481
+2021-11-18 19:29:03,520 - Training loss: 0.19336880804083056
+2021-11-18 19:29:04,631 - Validation loss: 0.36016099528174533
+2021-11-18 19:29:04,648 - Validation aucROC: 0.9381135203510256
+2021-11-18 19:29:04,648 - Validation aucPR: 0.9394313578970757
+2021-11-18 19:29:04,658 - Training metrics: loss
+2021-11-18 19:29:04,659 - Validation metrics: loss, aucROC, aucPR
+2021-11-18 19:29:04,667 - Resuming from checkpoint: step 6420, min loss 0.3099654988011467
+2021-11-18 19:29:04,679 - [STEP 6420] average number of steps per second: 80.20315129264189
+2021-11-18 19:29:04,680 - Training loss: 0.2241436243057251
+2021-11-18 19:29:05,790 - Validation loss: 0.3092448658335989
+2021-11-18 19:29:05,807 - Validation aucROC: 0.9436297576592907
+2021-11-18 19:29:05,807 - Validation aucPR: 0.9433841902335827
+2021-11-18 19:29:05,882 - Updating `best_model.pth.tar`
+2021-11-18 19:29:30,596 - [STEP 8560] average number of steps per second: 86.81261352383946
+2021-11-18 19:29:30,597 - Training loss: 0.27044456216428325
+2021-11-18 19:29:31,706 - Validation loss: 0.3134264879833872
+2021-11-18 19:29:31,723 - Validation aucROC: 0.9429960142516723
+2021-11-18 19:29:31,723 - Validation aucPR: 0.9431349090926131
+2021-11-18 19:29:56,547 - [STEP 10700] average number of steps per second: 86.42929346239687
+2021-11-18 19:29:56,548 - Training loss: 0.25526543331341206
+2021-11-18 19:29:57,660 - Validation loss: 0.31563609363598244
+2021-11-18 19:29:57,677 - Validation aucROC: 0.9428318978138477
+2021-11-18 19:29:57,677 - Validation aucPR: 0.9432298102246277
+2021-11-18 19:30:22,343 - [STEP 12840] average number of steps per second: 86.98424078986459
+2021-11-18 19:30:22,343 - Training loss: 0.2400925413992639
+2021-11-18 19:30:23,452 - Validation loss: 0.32429803451087985
+2021-11-18 19:30:23,469 - Validation aucROC: 0.941990606026587
+2021-11-18 19:30:23,469 - Validation aucPR: 0.942436921868144
+2021-11-18 19:30:47,949 - [STEP 14980] average number of steps per second: 87.64994817011295
+2021-11-18 19:30:47,950 - Training loss: 0.22758160695851407
+2021-11-18 19:30:49,058 - Validation loss: 0.33102288127781077
+2021-11-18 19:30:49,075 - Validation aucROC: 0.9411238587271828
+2021-11-18 19:30:49,075 - Validation aucPR: 0.9416383082112909
+2021-11-18 19:31:13,918 - [STEP 17120] average number of steps per second: 86.35880871897551
+2021-11-18 19:31:13,919 - Training loss: 0.21506640787854372
+2021-11-18 19:31:15,027 - Validation loss: 0.34088228276678334
+2021-11-18 19:31:15,044 - Validation aucROC: 0.9398539050609607
+2021-11-18 19:31:15,044 - Validation aucPR: 0.9408503332659384
+2021-11-18 19:31:39,980 - [STEP 19260] average number of steps per second: 86.03389858906317
+2021-11-18 19:31:39,981 - Training loss: 0.20283849567749374
+2021-11-18 19:31:41,091 - Validation loss: 0.352494344059552
+2021-11-18 19:31:41,108 - Validation aucROC: 0.9390090726169913
+2021-11-18 19:31:41,108 - Validation aucPR: 0.94006509030904
+2021-11-18 19:32:06,011 - [STEP 21400] average number of steps per second: 86.15707005334833
+2021-11-18 19:32:06,011 - Training loss: 0.1934237954198061
+2021-11-18 19:32:07,124 - Validation loss: 0.3634305383418208
+2021-11-18 19:32:07,141 - Validation aucROC: 0.9379734783302249
+2021-11-18 19:32:07,141 - Validation aucPR: 0.9390875317464004
+2021-11-18 19:32:31,899 - [STEP 23540] average number of steps per second: 86.66032399344917
+2021-11-18 19:32:31,899 - Training loss: 0.18353612796603658
+2021-11-18 19:32:33,009 - Validation loss: 0.3761590066496457
+2021-11-18 19:32:33,026 - Validation aucROC: 0.9367015836193174
+2021-11-18 19:32:33,026 - Validation aucPR: 0.938115495072695
+2021-11-18 19:32:57,652 - [STEP 25680] average number of steps per second: 87.12613822810853
+2021-11-18 19:32:57,652 - Training loss: 0.17413364217451244
+2021-11-18 19:32:58,761 - Validation loss: 0.3837622222220786
+2021-11-18 19:32:58,778 - Validation aucROC: 0.9362890100474072
+2021-11-18 19:32:58,778 - Validation aucPR: 0.9378099875180378
+2021-11-18 19:33:17,475 - [STEP 27820] average number of steps per second: 114.73748389090588
+2021-11-18 19:33:17,475 - Training loss: 0.16546211796442795
+2021-11-18 19:33:18,586 - Validation loss: 0.3974728666176306
+2021-11-18 19:33:18,603 - Validation aucROC: 0.9359559168778087
+2021-11-18 19:33:18,603 - Validation aucPR: 0.9371804776900622
+2021-11-18 19:33:37,294 - [STEP 29960] average number of steps per second: 114.76903069817983
+2021-11-18 19:33:37,294 - Training loss: 0.1573155764855932
+2021-11-18 19:33:38,405 - Validation loss: 0.4073037401398766
+2021-11-18 19:33:38,422 - Validation aucROC: 0.9348242263682163
+2021-11-18 19:33:38,422 - Validation aucPR: 0.9364699057687518
+2021-11-18 19:33:57,108 - [STEP 32100] average number of steps per second: 114.79850844224895
+2021-11-18 19:33:57,109 - Training loss: 0.15148729636011837
+2021-11-18 19:33:58,223 - Validation loss: 0.42005312272878453
+2021-11-18 19:33:58,240 - Validation aucROC: 0.9341437613150785
+2021-11-18 19:33:58,240 - Validation aucPR: 0.9358138104266952
+2021-11-18 19:34:16,954 - [STEP 34240] average number of steps per second: 114.63179664778953
+2021-11-18 19:34:16,954 - Training loss: 0.14419880332512275
+2021-11-18 19:34:18,067 - Validation loss: 0.43310175468431455
+2021-11-18 19:34:18,084 - Validation aucROC: 0.9336601270703112
+2021-11-18 19:34:18,084 - Validation aucPR: 0.9354184200790299
+2021-11-18 19:34:37,324 - [STEP 36380] average number of steps per second: 111.50095590857788
+2021-11-18 19:34:37,324 - Training loss: 0.13759210274182695
+2021-11-18 19:34:38,431 - Validation loss: 0.4456763675697496
+2021-11-18 19:34:38,448 - Validation aucROC: 0.9331890677904991
+2021-11-18 19:34:38,448 - Validation aucPR: 0.9349881647955356
+2021-11-18 19:35:02,794 - [STEP 38520] average number of steps per second: 88.12801925347237
+2021-11-18 19:35:02,795 - Training loss: 0.1329579760757858
+2021-11-18 19:35:03,908 - Validation loss: 0.4552652757719298
+2021-11-18 19:35:03,925 - Validation aucROC: 0.9327506716663335
+2021-11-18 19:35:03,925 - Validation aucPR: 0.9344843366665552
+2021-11-18 19:35:28,562 - [STEP 40660] average number of steps per second: 87.0972810509743
+2021-11-18 19:35:28,562 - Training loss: 0.12567412105071246
+2021-11-18 19:35:29,680 - Validation loss: 0.46702116378278374
+2021-11-18 19:35:29,697 - Validation aucROC: 0.9324112278492147
+2021-11-18 19:35:29,697 - Validation aucPR: 0.93430498686959
+2021-11-18 19:35:29,697 - Early stopping: stop training!

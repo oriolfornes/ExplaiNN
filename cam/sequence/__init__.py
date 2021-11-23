@@ -1,6 +1,17 @@
 from Bio.Seq import Seq
 import numpy as np
 
+def one_hot_encode_many(arr):
+    """One hot encodes a list of sequences."""
+
+    # Initialize
+    encoded_seqs = []
+
+    for seq in arr:
+        encoded_seqs.append(one_hot_encode(seq))
+
+    return(np.array(encoded_seqs))
+
 def one_hot_encode(seq):
     """One hot encodes a sequence."""
 
@@ -21,6 +32,17 @@ def one_hot_encode(seq):
 
     return(encoded_seq)
 
+def one_hot_decode_many(arr):
+    """Reverts the one hot encoding for a list of sequences."""
+
+    # Initialize
+    seqs = []
+
+    for encoded_seq in arr:
+        seqs.append(one_hot_decode(encoded_seq))
+
+    return(np.array(seqs))
+
 def one_hot_decode(encoded_seq):
     """Reverts a sequence's one hot encoding."""
 
@@ -36,9 +58,23 @@ def one_hot_decode(encoded_seq):
 
     return("".join(seq))
 
+def rc_one_hot_encoding_many(arr):
+
+    # Initialize
+    encoded_seqs = []
+
+    for encoded_seq in arr:
+        encoded_seqs.append(rc_one_hot_encoding(encoded_seq))
+
+    return(np.array(encoded_seqs))
+
 def rc_one_hot_encoding(encoded_seq):
     """Reverse complements one hot encoding for one sequence."""
     return(encoded_seq[::-1, ::-1])
+
+def rc_many(arr):
+    """Reverse complements a list of sequences."""
+    return(np.array([rc(seq) for seq in arr]))
 
 def rc(seq):
     """Reverse complements one sequence."""

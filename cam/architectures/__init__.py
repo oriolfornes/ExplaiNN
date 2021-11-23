@@ -41,8 +41,10 @@ class CAM(_Model):
     """CAM (Convolutional Additive Model):
     a glass-box deep learning model for genomics."""
 
+    # def __init__(self, cnn_units, kernel_size, sequence_length, n_features=1,
+    #     clamp_weights=False, no_padding=False, weights_file=None):
     def __init__(self, cnn_units, kernel_size, sequence_length, n_features=1,
-        clamp_weights=False, no_padding=False, weights_file=None):
+        weights_file=None):
         """
         Parameters
         ----------
@@ -55,7 +57,6 @@ class CAM(_Model):
         n_features : int
             Total number of features to predict
         weights_file : pass
-            ...
         """
         super(CAM, self).__init__()
 
@@ -64,24 +65,27 @@ class CAM(_Model):
             "kernel_size": kernel_size,
             "sequence_length": sequence_length,
             "n_features": n_features,
-            "clamp_weights": clamp_weights,
-            "no_padding": no_padding,
+            # "clamp_weights": clamp_weights,
+            # "no_padding": no_padding,
             "weights_file": weights_file,
         }
 
-        if no_padding:
-            self.__n_channels = math.floor((sequence_length-kernel_size+1)/7.)
-            self.__padding = 0
-        else:
-            self.__n_channels = math.floor((sequence_length+kernel_size+1)/7.)
-            self.__padding = kernel_size
+        # if no_padding:
+        #     self.__n_channels = math.floor((sequence_length-kernel_size+1)/7.)
+        #     self.__padding = 0
+        # else:
+        #     self.__n_channels = math.floor((sequence_length+kernel_size+1)/7.)
+        #     self.__padding = kernel_size
+
+        n = math.floor((sequence_length - kernel_size + 1) / 7.)
+        self.__channels_after_maxpool = n
 
         self.linears = nn.Sequential(
             nn.Conv1d(
                 in_channels=4*cnn_units,
                 out_channels=1*cnn_units,
                 kernel_size=kernel_size,
-                padding=self.__padding,
+                # padding=self.__padding,
                 groups=cnn_units,
             ),
             nn.BatchNorm1d(cnn_units),
@@ -90,7 +94,7 @@ class CAM(_Model):
             nn.Flatten(), 
             UnSqueeze(),
             nn.Conv1d(
-                in_channels=self.__n_channels*cnn_units,
+                in_channels=self.__channels_after_maxpool*cnn_units,
                 out_channels=100*cnn_units,
                 kernel_size=1,
                 groups=cnn_units,

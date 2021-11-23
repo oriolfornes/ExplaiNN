@@ -279,8 +279,8 @@ class Trainer(object):
         self.optimizer.zero_grad()
         loss.backward()
         self.optimizer.step()
-        if self.model._options["clamp_weights"]:
-            self.model.final.weight.data.clamp_(0)
+        # if self.model._options["clamp_weights"]:
+        #     self.model.final.weight.data.clamp_(0)
         self._train_loss.append(loss.item())
         t_f = time()
 

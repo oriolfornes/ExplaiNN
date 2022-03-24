@@ -72,7 +72,7 @@ def _to_CAM(fasta_file, kmer=2, output_dir="./", prefix=None, shuffle_lc=False,
     regexp = re.compile(r"[a-z]+")
 
     # Positive sequences
-    fh = get_file_handle(fasta_file, "rt")
+    fh = open(fasta_file, "rt")
     for record in SeqIO.parse(fh, "fasta"):
         s = str(record.seq)
         if shuffle_lc:

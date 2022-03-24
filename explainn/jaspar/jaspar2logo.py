@@ -39,10 +39,13 @@ def get_figure(motif_file, rc=False):
 
     # From https://biopython.readthedocs.io/en/latest/chapter_motifs.html
     m = motifs.read(open(motif_file), "jaspar")
-    m.pseudocounts = {"A": 0.5, "C": 0.5, "G": 0.5, "T": 0.5}
+    pwm = list(m.counts.normalize(pseudocounts=.5).values())
+
+    return(_get_figure(pwm, rc))
+
+def _get_figure(pwm, rc=False):
 
     # From https://www.bioconductor.org/packages/release/bioc/html/seqLogo.html
-    pwm = list(m.pwm.values())
     if rc:
         arr = np.array(pwm)
         pwm = np.flip(arr).tolist()

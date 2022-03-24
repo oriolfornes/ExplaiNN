@@ -9,13 +9,13 @@ import click
 from functools import partial
 import gc
 import gzip
-import matplotlib.pyplot as plt
 from multiprocessing import Pool
 import numpy as np
 import os
 import pandas as pd
 import pickle
 import re
+import subprocess as sp
 import time
 import torch
 from tqdm import tqdm
@@ -24,10 +24,18 @@ bar_format = "{percentage:3.0f}%|{bar:20}{r_bar}"
 # Local imports
 from architectures import get_metrics
 from jaspar import get_figure, reformat_motif
+from pwmscan import meme_to_lpm
 from sequence import rc_many
 from test import _get_acts_outs_preds, __get_fwd_rev, _load_model
 from train import _get_seqs_labels_ids, _get_data_loader
 from utils import get_file_handle
+
+# PWMScan
+pwmscan_dir = f"{os.path.dirname(os.path.realpath(__file__))}/pwmscan"
+pwm_scoring = f"{pwmscan_dir}/pwm_scoring"
+if not os.path.exists(pwm_scoring):
+    cflags = "-O3 -std=gnu99 -W -Wall -pedantic"
+    sp.run([f"gcc {cflags} {pwm_scoring}.c -o {pwm_scoring}"], shell=True)
 
 CONTEXT_SETTINGS = {
     "help_option_names": ["-h", "--help"],
@@ -61,11 +69,11 @@ CONTEXT_SETTINGS = {
     help="Debugging mode.",
     is_flag=True,
 )
-@click.option(
-    "-i", "--ignore-negatives",
-    help="Derive motifs from positive sequences only.",
-    is_flag=True,
-)
+# @click.option(
+#     "-i", "--include-negatives",
+#     help="Use negative sequences for generating motifs.",
+#     is_flag=True,
+# )
 @click.option(
     "-n", "--name",
     help="Name for `Bio.motifs` class.",
@@ -99,9 +107,6 @@ def main(**args):
     # Load Data  #
     ##############
 
-    # Initialize
-    data_loaders = {}
-
     # Get data
     seqs, labels, ids = _get_seqs_labels_ids(args["training_file"],
         args["debugging"], args["rev_complement"])
@@ -129,7 +134,7 @@ def main(**args):
     # Create output dirs
     if not os.path.isdir(args["output_dir"]):
         os.makedirs(args["output_dir"])
-    for subdir in ["sites", "motifs", "logos"]:
+    for subdir in ["sites", "motifs", "logos", ".sequences"]:
         if not os.path.isdir(os.path.join(args["output_dir"], subdir)):
             os.makedirs(os.path.join(args["output_dir"], subdir))
 
@@ -159,9 +164,10 @@ def main(**args):
     # Get activations, outputs, and predictions
     acts, outs, preds = _get_acts_outs_preds(exp_model, data_loader)
 
-    # Get the indices of well predicted sequences
-    idxs = _get_idxs_of_well_predicted_sequences(preds, labels, input_data,
-        args["ignore_negatives"], args["rev_complement"])
+    # Get well predicted sequences
+    idxs = _get_well_predicted_sequences(preds, labels, input_data,
+        args["rev_complement"])
+        # args["include_negatives"], args["rev_complement"])
 
     # For each filter, get the activation threshold (i.e. ≥50%)
     thresholds = _get_act_thresholds(acts, idxs, args["rev_complement"])
@@ -213,8 +219,6 @@ def main(**args):
             fh.close()
 
     # Free memory
-    del seqs
-    del labels
     del ids
     del data_loader
     del seqs_str
@@ -227,6 +231,30 @@ def main(**args):
     del idxs
     del thresholds
     gc.collect()
+
+    # ${PWMSCAN_DIR}/pwm_scoring --lpm -w 0.0001 \
+    #     -m ${ASSAY}/${TF}/${LPM_FILE} \
+    #     ${FASTA_DIR}/${TF}.test.${POS_NEG}_fa \
+    #     > ${ASSAY}/${TF}/${LPM_FILE%.*}.${POS_NEG}_txt
+
+
+    # # Get performance metrics
+    # metrics = get_metrics(input_data=input_data)
+    # tsv_file = os.path.join(args["output_dir"],
+    #     "filter-performance-metrics.tsv")
+    # if not os.path.exists(tsv_file):
+    #     data = []
+    #     for i in tqdm(range(N_motifs), **kwargs):
+    #         for m in metrics:
+    #             p = _get_filter_performances(acts[:, i, :], labels, input_data,
+    #                 metrics[m], args["rev_complement"])
+    #             data.append([f"filter{i}", m] + p)
+    #     column_names = ["filter", "metric", "global"] + list(range(labels.shape[1]))
+    #     df = pd.DataFrame(data, columns=column_names)
+    #     df.sort_values(["metric", column_names[-1]], ascending=False,
+    #         inplace=True)
+    #     df.to_csv(tsv_file, sep="\t", index=False)
+    # exit(0)
 
     # Get motifs in MEME format
     motif_files = []
@@ -244,6 +272,23 @@ def main(**args):
     meme_file = os.path.join(args["output_dir"], "motifs", "filters.meme")
     if not os.path.exists(meme_file):
         reformat_motif(jaspar_motifs, "meme", meme_file)
+
+    # # Get filter performances
+    # lpm_file = os.path.join(args["output_dir"], "motifs", "filter0.lpm")
+    # if not os.path.exists(lpm_file):
+    #     meme_to_lpm(meme_file, os.path.join(args["output_dir"], "motifs"),
+    #         "filter")
+    # tsv_file = os.path.join(args["output_dir"],
+    #     "filter-performance-metrics.tsv")
+    # if not os.path.exists(tsv_file):
+    #     metrics = get_metrics() # i.e. binary
+    #     fasta_file = os.path.join(args["output_dir"], ".sequences.fa")
+    #     records = _get_sequences(seqs, labels)
+        
+    # Free memory
+    del seqs
+    del labels
+    gc.collect()
 
     # Generate logos
     pool = Pool(args["cpu_threads"])
@@ -267,9 +312,9 @@ def _get_sequences(tsv_file):
 
     return(df[1].values)
 
-def _get_idxs_of_well_predicted_sequences(preds, labels, input_data,
-                                          ignore_negatives=False,
-                                          rev_complement=False):
+def _get_well_predicted_sequences(preds, labels, input_data,
+                                #   include_negatives=False,
+                                  rev_complement=False):
 
     # Initialize
     n = .05
@@ -291,21 +336,26 @@ def _get_idxs_of_well_predicted_sequences(preds, labels, input_data,
             p = preds
         ys = labels
 
-    # For binary data such as ChIP-seq, well-predicted sequences are bound
-    # regions (i.e. 1) with a score greater than 0.5, and unbound regions
-    # (i.e. 0) with a score lower or equal than 0.5.
+    # For binary data (e.g. ChIP-seq), well-predicted sequences are those
+    # where the prediction equals the label.
     if input_data == "binary":
         c = Counter(np.where(ys == (p > .5).astype(int))[0])
         idxs = np.array([k for k, v in c.items() if v == ys.shape[1]])
-        if ignore_negatives:
-            idxs = np.intersect1d(idxs, np.where(np.sum(ys, axis=1) != 0)[0])
+        # if include_negatives:
+        #     idxs = np.intersect1d(idxs, np.where(np.sum(ys, axis=1) != 0)[0])
 
-    # For non-binary data such as PBM, well-predicted sequences are defined 
+    # For non-binary data (e.g. PBM), well-predicted sequences are defined 
     # as the top `n` percentile probes with the highest signal intensities
     # and a score in the top `n` percentile.
     else:
-        idxs_ys = np.argsort(-ys.flatten())[:int(max(ys.shape)*n)]
-        idxs_p = np.argsort(-p.flatten())[:int(max(p.shape)*n)]
+        idxs_ys = np.concatenate((
+            np.argsort(-ys.flatten())[:int(max(ys.shape)*n)],
+            #np.argsort(ys.flatten())[:int(max(ys.shape)*n)]
+        ))
+        idxs_p = np.concatenate((
+            np.argsort(-p.flatten())[:int(max(p.shape)*n)],
+            #np.argsort(p.flatten())[:int(max(p.shape)*n)]
+        ))
         idxs = np.intersect1d(idxs_ys, idxs_p)
 
     return(idxs)
@@ -402,6 +452,35 @@ def _sites_to_motif(sites_file):
         pfm.setdefault(nt, motif.counts[nt])
 
     return(motifs.Motif(counts=pfm))
+
+def _get_filter_performances(activations, labels, input_data, metric,
+                             rev_complement=False):
+
+    # Initialize
+    performances = []
+
+    if rev_complement:
+        fwd = __get_fwd_rev(activations, "fwd")
+        rev = __get_fwd_rev(activations, "rev")
+        activations = np.concatenate((fwd, rev), axis=1).sum(axis=1)
+        ys = __get_fwd_rev(labels, "fwd")
+    else:
+        activations = activations.sum(axis=1)
+        ys = labels
+
+    # Fix infs
+    arr = np.where(np.isinf(activations))
+    if arr[0].size > 0:
+        activations[arr[0]] = np.delete(activations, arr[0]).max()
+
+    activations = activations.reshape([ys.shape[0], 1])
+
+    # For each class...
+    performances.append(metric(ys, activations))
+    for i in range(ys.shape[1]):
+        performances.append(metric(ys[:, i], activations))
+
+    return(performances)
 
 def _filter_filter_importances(imps, idxs, acts, threshold):
 

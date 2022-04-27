@@ -95,9 +95,9 @@ def _to_CAM(json_file, output_dir="./", prefix=None, shuffle_lc=False,
     df = df.reindex(sorted(df.columns), axis=1)
 
     # Get data splits
-    train, validation = train_test_split(df, test_size=0.2)
+    train, validation = train_test_split(df, test_size=.2)
     if create_test:
-        validation, test = train_test_split(validation, test_size=0.5)
+        validation, test = train_test_split(validation, test_size=.5)
 
     # Save sequences
     if prefix is None:

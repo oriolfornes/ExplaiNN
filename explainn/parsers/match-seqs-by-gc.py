@@ -1,10 +1,13 @@
 #!/usr/bin/env python
 
 from Bio import SeqIO
+from Bio.Seq import Seq
 from Bio.SeqUtils import GC
 import click
+import copy
 import json
 import random
+import re
 import sys
 
 CONTEXT_SETTINGS = {
@@ -23,6 +26,11 @@ CONTEXT_SETTINGS = {
     is_flag=True,
 )
 @click.option(
+    "-s", "--shuffle-lowercase",
+    help="Shuffle lowercase letters.",
+    is_flag=True
+)
+@click.option(
     "-o", "--output-file",
     help="Output file.  [default: STDOUT]",
     type=click.Path(writable=True, readable=False, resolve_path=True,
@@ -30,6 +38,9 @@ CONTEXT_SETTINGS = {
 )
 
 def main(**args):
+
+    # Initialize
+    regexp = re.compile(r"[a-z]+")
 
     # Group sequences by %GC content
     gc_groups = {}
@@ -54,7 +65,18 @@ def main(**args):
             matched.append([i])
             for k in range(len(gc_groups[i])):
                 record = gc_groups[i][k][j]
-                matched[-1].extend([[record.id, str(record.seq)]])
+                s = str(record.seq)
+                if args["shuffle_lowercase"]:
+                    # 1) extract blocks of lowercase letters;
+                    # 2) shuffle the letters; and
+                    # 3) put the shuffled letters back
+                    l = list(s)
+                    for m in re.finditer(regexp, s):
+                        sublist = l[m.start():m.end()]
+                        random.shuffle(sublist)
+                        l[m.start():m.end()] = copy.copy(sublist)
+                    s = "".join(l)
+                matched[-1].extend([[record.id, s]])
 
     # Write
     if args["output_file"] is not None:

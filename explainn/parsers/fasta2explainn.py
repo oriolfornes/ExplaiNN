@@ -12,8 +12,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import OneHotEncoder
 import subprocess as sp
 
-from utils import get_file_handle
-
 # Globals
 scripts_dir = os.path.dirname(os.path.realpath(__file__))
 
